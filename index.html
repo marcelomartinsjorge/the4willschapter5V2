@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Aheryn, the Eaten Day · The Four Wills</title>
+<meta name="description" content="Capítulo V de As Quatro Vontades como livro interativo: Aheryn, o dia comido e o nascimento de Kronk.">
+<meta name="theme-color" content="#150f0a">
+<meta property="og:title" content="Aheryn, the Eaten Day · The Four Wills">
+<meta property="og:image" content="assets/images/og-cover.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Spectral:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="livro.css">
+<link rel="stylesheet" href="content/cap05/tema.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌑</text></svg>">
+</head>
+<body data-zona="laje">
+
+<div id="bg"></div>
+<canvas id="fx" aria-hidden="true"></canvas>
+<div id="veias" aria-hidden="true"></div>
+<div id="turvo" aria-hidden="true"></div>
+
+<header class="top">
+  <div class="tl"><span class="cap">Chapter V</span><span id="parte">Part I</span></div>
+  <div class="tr">
+    <div id="luz"><span class="lbl">Light</span><span class="bar"><i></i></span><span id="luzV">10</span></div>
+    <button id="cantil" class="ic cantil" disabled aria-label="Odre"><svg viewBox="0 0 24 24"><path d="M9 3h6M10 3v3c-3 1.5-5 4.5-5 8.5C5 19 8 21 12 21s7-2 7-6.5c0-4-2-7-5-8.5V3"/></svg><i class="nivel"></i><span class="qt">6</span></button>
+    <button class="ic lang txt" aria-label="Ler em português">PT</button>
+    <button id="som" class="ic" aria-label="Som"><svg viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4z"/><path class="w" d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12"/><path class="x" d="M16 9l6 6M22 9l-6 6"/></svg></button>
+    <button id="menuReset" class="ic" aria-label="Recomeçar o capítulo" title="Recomeçar o capítulo"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v4h4"/></svg></button>
+  </div>
+</header>
+
+<main id="page">
+  <p id="rhead"></p>
+  <div id="extras"></div>
+  <article id="ptext"></article>
+  <div id="choices"></div>
+  <nav class="nav">
+    <button id="prev" class="navb">← Back</button>
+    <span id="pnum">1</span>
+    <button id="next" class="navb pri">Next</button>
+  </nav>
+</main>
+<div id="prog"></div>
+<div id="toasts"></div>
+<div id="mg"></div>
+
+<section id="cover">
+  <div class="cvin">
+    <p class="eyebrow" id="cvEye"></p>
+    <h1 id="cvTitle">Aheryn</h1>
+    <p id="cvSub" class="sub"></p>
+    <p class="lede" id="cvLede"></p>
+    <div class="cvbtns"><button id="cvCont" class="cta" hidden></button><button id="cvGo" class="cta"></button></div>
+    <p class="hint" id="cvHint"></p>
+    <button class="ic lang txt cvlang" aria-label="Ler em português">PT</button>
+  </div>
+</section>
+
+<section id="codex" role="dialog" aria-modal="true">
+  <div class="cxcard">
+    <div id="cxImg"></div>
+    <div class="cxbody">
+      <p id="cxEye" class="eyebrow"></p><h2 id="cxTitle"></h2>
+      <div id="cxText"></div>
+      <div class="cxnav"><button id="cxPrev">‹</button><span id="cxPg"></span><button id="cxNext">›</button></div>
+    </div>
+    <button id="cxClose" class="ic" aria-label="Fechar">✕</button>
+  </div>
+</section>
+
+<section id="cenaModal"><video id="cenaV" playsinline></video><button id="cenaClose" class="ic" aria-label="Fechar">✕</button></section>
+
+<section id="resumo">
+  <div class="rsin">
+    <p class="eyebrow" id="rsEye"></p>
+    <h2 id="rsH"></h2>
+    <div class="rsluz"><span class="n" id="rsLuz">0</span><span class="l" id="rsLuzL"></span><p id="rsFrase"></p></div>
+    <div id="rsRevela" class="rsrevela"></div>
+    <ul id="rsRel"></ul>
+    <div id="rsPerfil" class="rsperfil"></div>
+    <div id="rsPontos" class="rspontos"></div>
+    <h3 id="rsSuas"></h3>
+    <ul id="rsEsc"></ul>
+    <div class="rsbtns"><a id="rsProx" class="cta" href="#">Capítulo IV</a><button id="rsReler" class="ghost"></button></div>
+  </div>
+</section>
+
+<script src="content/cap05/chapter-config.js"></script>
+<script src="capitulo5.js"></script>
+<script src="jogos5.js"></script>
+<script src="livro.js"></script>
+</body>
+</html>
