@@ -13,25 +13,43 @@ Texto **exato** que está no capítulo (gerado direto do roteiro final, sem cóp
 
 **Direção:** Acordando de bruços na areia, de ressaca. Seco, rouco, com um humor discreto sobre o próprio estado. Frases longas, sem pressa.
 
-> The desert woke me the way it always did, by setting fire to whatever the night had left uncovered. I lay with my face in the sand and took stock. One gourd, empty. Two feet, buried to the ankles, which I did not mind; I have loved few things without reservation in a long life, and sand under the soles is one of them. One head, full of a silence I had paid for in cactus wine and would be paying for again by noon.
+> The desert woke me the way it always did, with a dry wind, stinging and rough. I lay with my face in the sand and took stock. One gourd, empty. Two feet, buried to the ankles, which I did not mind; I have loved few things without reservation in a long life, and sand under the soles is one of them. One head, full of a silence I had paid for in cactus wine and would be paying for again by noon.
 >
-> Thirty years. I had come south to be no one, and the desert, which is generous in exactly one thing, had made me precisely that.
+> I had come south to be no one, and the desert, which is generous in exactly one thing, had made me precisely that.
 
-_110 palavras_
+_105 palavras_
 
-## `voz/a03-alta.mp3`
-*Parte I, p. 3 · só para quem terminou o Cap. I com Luz ≥ 50*
+## `voz/a03-relato.mp3`
+*Parte I, p. 3 · só para quem matou o caçador no Cap. I com Luz ≥ 45 (o registro da Juíza, como no Cap. II)*
 
-**Direção:** Lembrança da travessia com caçadores. Distante, plano, um pouco mais tenso. Mesmo tamanho da variante baixa.
+**Direção:** Lembrança da emboscada no desfiladeiro. Plano, tenso por baixo; o "and I did not look back" firme. O fim quase com alívio.
 
-> I did not come south quietly. Three days past the last ice, hunters found me in a pass of black rock, men with nets and a sealed writ. I remember the nets better than the men. I remember that I did not refuse the light that time, and that the rock remembers it too: there is a place in that pass where nothing grows, and the Burned walk around it.
+> I did not come south in peace. Three weeks past the last ice, in a pass of black rock, men were waiting for me with nets and a writ sealed with the Judge’s scales. Someone had sworn before a judge. I came out of that pass running, with the bolt wound in my shoulder open again, and they stayed behind, turning over stones in search of an old man.
 
-_70 palavras_
+_69 palavras_
 
-## `voz/a03-baixa.mp3`
-*Parte I, p. 3 · Luz do Cap. I < 50, ou quem chega sem o Cap. I*
+## `voz/a03-taverna.mp3`
+*Parte I, p. 3 · só para quem ergueu o gelo diante dos caçadores no Cap. I*
 
-**Direção:** Lembrança da descida silenciosa. Distante, quase aliviado. Mesmo tamanho da variante alta.
+**Direção:** Lembrança irônica: ouvir a própria história numa taverna. Um sorriso escondido na voz; "In the versions I heard later, I died" seco, quase divertido.
+
+> The road south went through Frígia. In a low-roofed tavern near the border, three hunters were telling the story of an old man who lit up his hand in the snow. They told it well: with every round the old man grew taller and the light grew brighter. Nobody believed them, and everybody paid. I paid for a round too, hooded, at the back of the room, and left before the end. In the versions I heard later, I died.
+
+_80 palavras_
+
+## `voz/a03-boato.mp3`
+*Parte I, p. 3 · só para quem terminou o Cap. I com Luz ≥ 60, sem testemunha*
+
+**Direção:** Lembrança da estrada ouvindo boatos sobre si. Leve ironia, cansado; o fim baixo, como regra de vida.
+
+> I came south hearing about myself. In the inns along the road, people who had never been north argued about lights seen over the Edge one night, green or gold depending on the wine. One swore it was a dragon. Another, that it was the Lúmae coming back. No one asked anything of the old man eating alone in the corner. I did what I know how to do: I kept my eyes on my plate and my thoughts on nothing.
+
+_81 palavras_
+
+## `voz/a03-extintos.mp3`
+*Parte I, p. 3 · qualquer outro caso, e quem chega sem o Cap. I*
+
+**Direção:** Lembrança da descida silenciosa. Distante, quase aliviado.
 
 > I came south the way snow leaves a roof, all at once and without a sound. Forty days of walking. The ice turned to scree, the scree to stone, the stone to sand, and in all that long slope of the world nobody thought to look twice at one more old man going downhill. I saw to that: I kept my eyes on my feet and my thoughts on nothing.
 
@@ -42,11 +60,11 @@ _70 palavras_
 
 **Direção:** Observando uma multidão enorme. Frases longas, respiradas, um pouco de assombro contido.
 
-> I had never seen so many of them in one place, and I have seen armies. They stood around the Gullets in rings, the way animals stand around a fire, a hundred deep, the old ones nearest the water and the children nearest nothing at all. That day the Wandering Pyre was there. Every horde that still had legs had come to drink.
+> I had never seen so many of them in one place, and I have seen armies. They stood around the Gullets in rings, a hundred deep, the old ones nearest the water and the children farthest from it. That day the Wandering Pyre was there. Every horde that still had legs had come to drink.
 >
 > The Gullets are three throats in the rock that go down farther than a rope can follow. At the end of the dry season the water sits so low that the Grakh lower boys on ropes to fill the skins, and haul them up again, dripping and proud.
 
-_111 palavras_
+_103 palavras_
 
 ## `voz/b04-minutos.mp3`
 *Parte II, p. 4 · só o 2º parágrafo (toca quando o leitor chega nele)*
@@ -73,11 +91,11 @@ _51 palavras_
 
 > They came without being called. The survivors of the wells, the wounded and the whole, came across the sand in ones and twos and stood around us, around Shaa and me, until there was a wall of them, a hundred deep, and no light came through it but what came from above.
 >
-> Nobody spoke. The Grakh are not a quiet people, and I had never heard a hundred of them make no sound at all. It was the kind of silence that is waiting for something.
+> Nobody spoke. I had never heard a hundred Grakh together make no sound at all.
 >
 > The day had been eaten. They had all heard it said a hundred times, by the old, with a laugh. Now they stood in a ring around a dying woman whose belly was still moving, and nobody was laughing.
 
-_125 palavras_
+_106 palavras_
 
 ## `voz/d04-mao.mp3`
 *Parte IV, p. 4 · só para quem tocou a magia proibida no Cap. I (a mão que parou no ar)*
@@ -101,9 +119,9 @@ _15 palavras_
 >
 > Then it did.
 >
-> It cried the way the Grakh cry, which is to say it roared, small and furious, at the sky, at the sun that had come back, at all of us.
+> It roared, small and furious, at the sky, at the sun that had come back, at all of us. That is how the Grakh cry.
 
-_102 palavras_
+_97 palavras_
 
 ## `voz/e01-partir.mp3`
 *Parte V, p. 1 · abertura da Parte V*
@@ -123,9 +141,9 @@ _87 palavras_
 
 **Direção:** Voz de escrita: íntima, um pouco rachada. Lê a própria página.
 
-> “Twelfth page. The day was eaten at noon and given back a few minutes later, as days usually are. A child was born in the dark of it and named for his first sound. They will say the greatest has come. I only know that a small heart beat fast under my hands, and that I let it be loud. I leave tonight. For once, I leave first.”
+> “Twelfth page. The day was eaten and given back a few minutes later, as days usually are. A child was born in the dark of it and named for his first sound. They will say the greatest has come. I only know that a small heart beat fast under my hands, and that I let it be loud. I leave tonight. For once, I leave first.”
 
-_68 palavras_
+_66 palavras_
 
 ## `voz/e06-fim.mp3`
 *Parte V · a última página*
@@ -143,3 +161,45 @@ _78 palavras_
 ---
 
 **Total:** 12 arquivos. Nenhuma outra personagem é dublada (Shaa, Hessa, Ghru, os soldados e o Tinido ficam só em texto). O coro da roda dizendo "Kronk" é efeito sonoro (`sfx/roda-nome.mp3`), não dublagem.
+
+---
+
+# Falas curtas (os pensamentos que sobem e o corpo que trai)
+
+Como as do Cap. I (a mente, os goles): **sussurro**, perto do microfone, quase para si. Tocam quando o pensamento aparece na tela.
+
+## `voz/p-imitar.mp3`
+*Parte I · o pensamento quando a criança imita o andar dele*
+
+> No one had copied me since I was someone.
+
+## `voz/p-lua.mp3`
+*Parte I · a noite sem lua*
+
+> Two nights without a moon.
+
+## `voz/p-cheiro.mp3`
+*Parte II · o cheiro do unguento na linha de frente*
+
+> I know that smell.
+
+## `voz/p-tabelas.mp3`
+*Parte II · o eclipse (só Luz ≥ 31)*
+
+> The tables.
+
+## `voz/p-maior.mp3`
+*Parte IV · "Greatest be born" (só Luz ≥ 60)*
+
+> Greatest.
+
+## `voz/p-geracoes.mp3`
+*Parte V · antes do rastro (só Luz ≥ 31)*
+
+> They will tell this for generations.
+
+## `voz/c03-trai.mp3`
+*Parte III · o quinto virote: a luz sai sozinha*
+
+> At the fifth, the light came out of me all at once, up to my face, and I did nothing to hold it. There was nothing left to hide from anyone.
+

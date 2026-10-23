@@ -1,272 +1,495 @@
 # Cap. V · Aheryn, o Dia Comido · texto completo (PT + EN)
 
-Gerado do roteiro do jogo. Linhas marcadas com *[se: ...]* só aparecem em certos caminhos; *[variável]* muda conforme as escolhas. Os textos dos minijogos (troca, minutos, ressaca, parto, rastro, diário) estão em capitulo5.js, nas seções de configuração.
+Gerado do roteiro do jogo (capitulo5.js), na ordem do arquivo. Em cada página aparecem todos os trechos possíveis, inclusive os que só surgem em certos caminhos (escolhas, Cap. I, odre). PT primeiro, EN (original) embaixo.
 
-## PARTE I · A Laje / The Slab
-> No deserto, a água não se pede. Troca-se. / In the desert, no one asks for water. They trade for it. — ditado dos Queimados
 
-### a01
-- O deserto me acordou do jeito de sempre, pondo fogo em tudo o que a noite tinha deixado descoberto. Fiquei de cara na areia e fiz o inventário. Uma cabaça, vazia. Dois pés enterrados até o tornozelo, o que não me incomodava; amei poucas coisas sem reservas numa vida longa, e areia sob a sola é uma delas. Uma cabeça cheia de um silêncio que eu tinha pago com vinho de cacto e que voltaria a pagar antes do meio-dia.
-  - *EN:* The desert woke me the way it always did, by setting fire to whatever the night had left uncovered. I lay with my face in the sand and took stock. One gourd, empty. Two feet, buried to the ankles, which I did not mind; I have loved few things without reservation in a long life, and sand under the soles is one of them. One head, full of a silence I had paid for in cactus wine and would be paying for again by noon.
-- Trinta anos. Eu tinha descido para o sul para ser ninguém, e o deserto, que só é generoso numa coisa, me fez exatamente isso.
-  - *EN:* Thirty years. I had come south to be no one, and the desert, which is generous in exactly one thing, had made me precisely that.
+## a00 · abertura jogável
 
-**Escolha: Antes de levantar:**
-- **Sacudir a areia.** / Shake off the sand.
-  - Levantei e bati a areia da roupa como quem quita uma dívida. Ela voltou no passo seguinte. O deserto não aceita pagamento.
-    - *EN:* I stood and beat the sand out of my clothes like a man settling a debt. It was back by the next step. The desert does not accept payment.
-- **Ficar mais um pouco com os pés nela.** / Stay a little longer with my feet in it.
-  - Fiquei. A areia estava fresca a um palmo de fundura, como toda manhã, e toda manhã isso me surpreende, e já não restam muitas coisas que me surpreendam.
-    - *EN:* I stayed. The sand was cool a hand’s depth down, as it is every morning, and every morning it surprises me, and there are not many things left that do.
-- **Procurar a última gota na cabaça.** / Look in the gourd for a last drop.
-  - Virei a cabaça sobre a boca e esperei, com a paciência dos verdadeiramente devotos. Nada caiu. Há manhãs em que até a fé vem vazia.
-    - *EN:* I tipped the gourd over my mouth and waited, with the patience of the truly devout. Nothing came. Some mornings even faith is empty.
+- Desci do gelo quase apagado. Eu sempre fui bom nisso. O que sobrou era uma brasa do tamanho de uma unha, e ela demorou muito para entender que devia ir embora também.
+  - *EN:* I came down from the ice almost dark. I have always been good at that. What was left was an ember the size of a fingernail, and it took a long time to understand that it ought to leave as well.
+- Desci do gelo com a luz pela metade, contando os degraus no escuro.
+  - *EN:* I came down from the ice half lit, counting the steps in the dark.
+- Desci do gelo ainda aceso, uma brasa esquecida na cinza.
+  - *EN:* I came down from the ice still lit, an ember forgotten in the ash.
+- Há jeitos mais rápidos de apagar uma luz, mas nenhum deixa a gente vivo para aproveitar o escuro.
+  - *EN:* There are quicker ways to put out a light, but none of them leaves you alive to enjoy the dark.
+- O primeiro ano. O vinho era ruim e as noites eram compridas, e descobri que um encurtava as outras.
+  - *EN:* The first year. The wine was bad and the nights were long, and I found that the one made the other shorter.
+- O quinto ano. Aprendi qual cacto fermenta e qual mata, mais ou menos nessa ordem.
+  - *EN:* The fifth year. I learned which cactus ferments and which one kills, more or less in that order.
+- O décimo primeiro ano. Choveu uma vez, e por uma tarde a luz levou a melhor. Compensei naquela mesma noite.
+  - *EN:* The eleventh year. It rained once, and for an afternoon the light got the better of me. I made up for it that same night.
+- O vigésimo ano. Parei de contar os riscos na pedra.
+  - *EN:* The twentieth year. I stopped counting the scratches on the rock.
+- O trigésimo ano. O que sobrou da luz cabia debaixo de uma faixa de pano no pulso, e na maioria dos dias eu não saberia dizer se ainda estava ali.
+  - *EN:* The thirtieth year. What was left of the light fitted under a strip of cloth at the wrist, and most days I could not have told you it was there.
+- Na última noite do trigésimo ano bebi até a areia subir ao meu encontro.
+  - *EN:* On the last night of the thirtieth year I drank until the sand came up to meet me.
 
-### a02 · minijogo: ressaca
-- Os pensamentos voltaram com o sol. Sempre voltam. A noite os afoga e o calor os traz de volta, inchados, do jeito que o deserto devolve o que engoliu: anos depois e no lugar errado.
-  - *EN:* The thoughts came back with the sun. They always do. The night drowns them, and the heat brings them up again, swollen, the way the desert gives back whatever it has swallowed: years later, and in the wrong place.
+## PARTE I
 
-*Depois:*
+- A Laje
+  - *EN:* The Slab
+- No deserto, a água não se pede. Troca-se.
+  - *EN:* In the desert, no one asks for water. They trade for it.
+- ditado dos Queimados
+  - *EN:* saying of the Burned
+
+## a01
+
+- O deserto me acordou do jeito de sempre, com um vento seco, ardido e áspero. Fiquei de cara na areia e fiz o inventário. Uma cabaça, vazia. Dois pés enterrados até o tornozelo, o que não me incomodava; amei poucas coisas sem reservas numa vida longa, e areia sob a sola é uma delas. Uma cabeça cheia de um silêncio que eu tinha pago com vinho de cacto e que voltaria a pagar antes do meio-dia.
+  - *EN:* The desert woke me the way it always did, with a dry wind, stinging and rough. I lay with my face in the sand and took stock. One gourd, empty. Two feet, buried to the ankles, which I did not mind; I have loved few things without reservation in a long life, and sand under the soles is one of them. One head, full of a silence I had paid for in cactus wine and would be paying for again by noon.
+- Eu tinha descido para o sul para ser ninguém, e o deserto, que só é generoso numa coisa, me fez exatamente isso.
+  - *EN:* I had come south to be no one, and the desert, which is generous in exactly one thing, had made me precisely that.
+- Antes de levantar:
+  - *EN:* Before getting up:
+- Sacudir a areia.
+  - *EN:* Shake off the sand.
+- Levantei e bati a areia da roupa. No passo seguinte ela estava de volta: nas dobras do pano, nos cílios, entre os dentes.
+  - *EN:* I stood and beat the sand out of my clothes. By the next step it was back: in the folds of the cloth, in my eyelashes, between my teeth.
+- Ficar mais um pouco com os pés nela.
+  - *EN:* Stay a little longer with my feet in it.
+- Fiquei. A um palmo de fundura a areia ainda guardava o frio da noite, e enterrei os dedos até achá-lo.
+  - *EN:* I stayed. A hand’s depth down the sand still kept the cold of the night, and I dug my toes in until I found it.
+- Procurar a última gota na cabaça.
+  - *EN:* Look in the gourd for a last drop.
+- Virei a cabaça sobre a boca e esperei, com a paciência de um Tacet. Nada caiu. Aquilo me deu vontade de voltar para o norte, como se nada tivesse acontecido desde então.
+  - *EN:* I tipped the gourd over my mouth and waited, with the patience of a Tacet. Nothing fell. It made me want to go back north, as if nothing had happened since.
+
+## a02 · minijogo: ressaca
+
+- Os pensamentos voltaram com o sol. O vinho os afoga à noite, e de manhã o calor os traz de volta, um por um, inchados.
+  - *EN:* The thoughts came back with the sun. Wine drowns them at night, and in the morning the heat brings them up again, one by one, swollen.
+- Enterrei todos. Fiquei com a cabeça vazia e a boca seca, que é como começo quase todos os dias.
+  - *EN:* I buried all of them. I was left with an empty head and a dry mouth, which is how I begin most days.
 - Alguns chegaram à superfície antes que eu os impedisse, e ficaram ali no calor, e eu os deixei ficar.
   - *EN:* A few of them reached the surface before I could stop them, and lay there in the heat, and I let them lie.
+- Deixei que viessem. Fiquei sentado na areia com eles até o sol subir demais para ficar ali.
+  - *EN:* I let them come. I sat in the sand with them until the sun was too high to stay.
 
-### a03
-- *[se: (c1(st).luz || 0) >= 50]* Não desci para o sul em silêncio. Três dias depois do último gelo, caçadores me acharam num desfiladeiro de rocha negra, homens com redes e uma ordem lacrada. Lembro mais das redes do que dos homens. Lembro que daquela vez não recusei a luz, e que a rocha também se lembra: há um lugar naquele desfiladeiro onde nada cresce, e os Queimados dão a volta por ele.
-  - *EN:* I did not come south quietly. Three days past the last ice, hunters found me in a pass of black rock, men with nets and a sealed writ. I remember the nets better than the men. I remember that I did not refuse the light that time, and that the rock remembers it too: there is a place in that pass where nothing grows, and the Burned walk around it.
-- *[se: (c1(st).luz || 0) < 50]* Desci para o sul do jeito que a neve sai de um telhado, toda de uma vez e sem ruído. Quarenta dias de caminhada. O gelo virou cascalho, o cascalho virou pedra, a pedra virou areia, e em toda aquela encosta comprida do mundo ninguém pensou em olhar duas vezes para mais um velho descendo a ladeira. Cuidei disso: mantive os olhos nos pés e os pensamentos em coisa nenhuma.
+## a03
+
+- Não desci para o sul em paz. Três semanas depois do último gelo, num desfiladeiro de rocha negra, homens me esperavam com redes e uma ordem lacrada com a balança da Juíza. Alguém tinha jurado diante de um juiz. Saí daquele desfiladeiro correndo, com a ferida da seta aberta outra vez, e eles ficaram lá dentro, revirando as pedras atrás de um velho.
+  - *EN:* I did not come south in peace. Three weeks past the last ice, in a pass of black rock, men were waiting for me with nets and a writ sealed with the Judge’s scales. Someone had sworn before a judge. I came out of that pass running, with the bolt wound in my shoulder open again, and they stayed behind, turning over stones in search of an old man.
+- A estrada para o sul passava por Frígia. Numa taverna de teto baixo, perto da fronteira, três caçadores contavam a história de um velho que acendia a mão na neve. Contavam bem: a cada rodada o velho ficava mais alto e a luz mais forte. Ninguém acreditava, e todo mundo pagava. Paguei uma rodada também, de capuz, no fundo da sala, e saí antes do fim. Nas versões que ouvi depois, eu morria.
+  - *EN:* The road south went through Frígia. In a low-roofed tavern near the border, three hunters were telling the story of an old man who lit up his hand in the snow. They told it well: with every round the old man grew taller and the light grew brighter. Nobody believed them, and everybody paid. I paid for a round too, hooded, at the back of the room, and left before the end. In the versions I heard later, I died.
+- Desci para o sul ouvindo falar de mim. Nas estalagens do caminho, gente que nunca tinha ido ao norte discutia umas luzes vistas sobre a Borda, numa noite, verdes ou douradas conforme o vinho. Um jurava que era um dragão. Outro, que eram os Lúmae voltando. Ninguém perguntou nada ao velho que comia sozinho no canto. Fiz o que sei fazer: mantive os olhos no prato e os pensamentos em coisa nenhuma.
+  - *EN:* I came south hearing about myself. In the inns along the road, people who had never been north argued about lights seen over the Edge one night, green or gold depending on the wine. One swore it was a dragon. Another, that it was the Lúmae coming back. No one asked anything of the old man eating alone in the corner. I did what I know how to do: I kept my eyes on my plate and my thoughts on nothing.
+- Desci para o sul do jeito que a neve sai de um telhado, toda de uma vez e sem ruído. Quarenta dias de caminhada. O gelo virou cascalho, o cascalho virou pedra, a pedra virou areia, e em toda aquela encosta comprida do mundo ninguém pensou em olhar duas vezes para mais um velho descendo a ladeira. Cuidei disso: mantive os olhos nos pés e os pensamentos em coisa nenhuma.
   - *EN:* I came south the way snow leaves a roof, all at once and without a sound. Forty days of walking. The ice turned to scree, the scree to stone, the stone to sand, and in all that long slope of the world nobody thought to look twice at one more old man going downhill. I saw to that: I kept my eyes on my feet and my thoughts on nothing.
-- *[se: !!c1(st).marcado]* Em algum ponto daquela caminhada parei de reparar que a luz já não subia pelo antebraço onde a mão de bronze tinha fechado. A pele ali ficou lisa e fria, como pedra de rio, e a luz passava em volta dela como a água passa em volta de uma pedra.
-  - *EN:* Somewhere on that walk I stopped noticing that the light no longer climbed through the forearm the bronze hand had closed on. The skin there had gone smooth and cold, like a river stone, and the light went around it the way water goes around a stone.
-- *[variável]* A pedra desceu comigo, no mesmo pano, e até hoje não me disse o que é.
-  - *EN:* The stone came south with me, in the same cloth, and has still not told me what it is.
-- *[se: !!c1(st).diario]* O diário também desceu comigo. Em trinta anos acrescentei onze páginas, o que dá mais ou menos uma a cada três anos, o que é mais ou menos a frequência com que tive algo que valesse a pena não esquecer.
-  - *EN:* The diary came south too. In thirty years I have added eleven pages to it, which is roughly one every three years, which is roughly how often I have had something worth not forgetting.
+- Em algum ponto daquela caminhada parei de reparar que a luz já não subia pelo antebraço onde a mão de bronze tinha fechado. A pele ali ficou lisa e fria, e a luz passava em volta dela sem entrar.
+  - *EN:* Somewhere on that walk I stopped noticing that the light no longer climbed through the forearm the bronze hand had closed on. The skin there had gone smooth and cold, and the light went around it without going in.
+- {P1} desceu comigo, no mesmo pano, e até hoje não me disse o que é.
+  - *EN:* {P1} came south with me, in the same cloth, and has still not told me what it is.
+- O diário também desceu comigo. Desde então acrescentei onze páginas, mais ou menos uma a cada três anos.
+  - *EN:* The diary came south too. Since then I have added eleven pages, roughly one every three years.
 
-### a04 · minijogo: laje · pode beber
-- A Laje é uma única língua de pedra que o vento lambe há mais tempo do que o meu povo mantinha registros, e isso é muito tempo. Embaixo dela guardo tudo o que tenho. Não é muito. É exatamente o bastante para um estranho achar que alguém mora aqui, e uma casa não serve para mais nada.
-  - *EN:* The slab is a single tongue of rock that the wind has been licking for longer than my people kept records, which is a long time. Under it I keep everything I own. It is not much. It is exactly enough to make a stranger think somebody lives here, and that is all a house is for.
-- Antes de descer ao acampamento, contei tudo. Trinta anos, e nunca dei por falta de nada. Conto assim mesmo.
-  - *EN:* Before going down to the camp, I counted everything. Thirty years, and I have never once found anything missing. I count anyway.
+## a04 · minijogo: laje
 
-*Depois:*
-- Estava tudo onde eu tinha deixado, menos a água. Peguei o odre vazio e desci.
-  - *EN:* Everything was where I had left it, except the water. I took the empty skin and went down.
+- A Laje é uma língua de pedra comprida, gasta pelo vento, com uma sombra embaixo do tamanho de um homem deitado. Ali eu guardo tudo o que tenho.
+  - *EN:* The slab is a long tongue of rock worn down by the wind, with a shadow underneath the size of a man lying down. That is where I keep everything I own.
+- Antes de descer ao acampamento, contei tudo, como faço toda manhã.
+  - *EN:* Before going down to the camp, I counted everything, as I do every morning.
+- Conferir a Laje
+  - *EN:* Check the slab
+- Sentar na bancada
+  - *EN:* Sit down at the bench
+- Faltava a água, e faltava quase tudo nos potes.
+  - *EN:* The water was missing, and nearly everything in the pots.
+- As cabaças
+  - *EN:* The gourds
+- Fruto de cacto amassado, deixado fermentando no escuro por nove dias. No décimo destilo o que sobrou num alambique de barro que eu mesmo construí. Sai límpido, cheira a açúcar queimado e cachorro velho, e faz o que preciso que faça.
+  - *EN:* Cactus fruit, mashed and left to ferment in the dark for nine days. On the tenth I distill what is left in a clay still I built myself. It comes out clear, smells of burnt sugar and old dogs, and does what I need it to do.
+- Os potes
+  - *EN:* The pots
+- Unguento para feridas, tintura para febre, antídoto para bicho de ferrão, o pó que esconde o cheiro de um homem daquilo que ele caça. No fim da estação seca, quase todos vazios. Sobrava um frasco de tintura. O resto eu teria de fazer na bancada. Quando cheguei, não conhecia nenhuma dessas plantas. Hoje conheço cada uma pelo cheiro.
+  - *EN:* Ointment for wounds, tincture for fever, antidote for things that sting, the powder that hides a man’s smell from whatever he hunts. At the end of the dry season, nearly all of them empty. One flask of tincture was left. The rest I would have to make at the bench. When I came, I knew none of these plants. Now I know each one by its smell.
+- Uma sombra que se mexe
+  - *EN:* A shadow that moves
+- Um escorpião, do tamanho do meu polegar, na sombra de uma pedra. Prendi com a tigela, tirei o ferrão com a ponta da faca e guardei. O resto dele soltei na areia.
+  - *EN:* A scorpion the size of my thumb, in the shade of a stone. I trapped it under the bowl, took the sting off with the point of the knife, and kept it. The rest of him I let go on the sand.
+- Os riscos
+  - *EN:* The marks
+- Um risco para cada estação seca, feito com a ponta da faca. Os primeiros são mais fundos.
+  - *EN:* One scratch for every dry season, made with the point of the knife. The first ones are deeper.
+- O odre
+  - *EN:* The water skin
+- Vazio. No fim da estação seca tudo está vazio, menos os poços, e os poços são onde todos estão. Eu teria de ir às Goelas.
+  - *EN:* Empty. At the end of the dry season everything is empty except the wells, and the wells are where everyone is. I would have to go to the Gullets.
+- Os panos
+  - *EN:* The wraps
+- Faixas compridas de pano cru. O sol daqui queimaria uma pele como a minha numa única tarde, e o pano impede isso. Impede também que alguém veja o que se acende por baixo dela quando eu penso.
+  - *EN:* Long strips of undyed cloth. The sun here would burn skin like mine in a single afternoon, and the cloth stops that. It also stops anyone from seeing what lights up underneath it when I think.
+- A pedra
+  - *EN:* The stone
+- {P1} estava no pano, dentro da tigela. Naquela luz, cinza.
+  - *EN:* {P1} lay in its cloth, in the bowl. In that light, grey.
+- O diário
+  - *EN:* The diary
 
-### a05
-- O acampamento estava três vezes maior que uma semana antes, e crescia enquanto eu olhava. Hordas chegavam de todos os cantos da Boca Seca, longas filas pardas levantando o tipo de poeira que se vê a um dia de distância. No fim da estação seca os Grakh vão às Goelas beber, todos eles, porque não sobra outro lugar onde beber. Naquela semana, a Pira Errante fica onde estiver a água.
-  - *EN:* The camp was three times the size it had been a week before, and growing while I watched. Hordes were coming in from every quarter of the Dry Mouth, long brown lines of them, raising the kind of dust you can see from a day away. At the end of the dry season the Grakh go to the Gullets to drink, all of them, because there is nowhere else left to drink. For that one week, the Wandering Pyre is wherever the water is.
-- Redom sabe disso. Sabe há mais tempo do que estou aqui, e vem todo ano aos mesmos poços na mesma semana, e todo ano os Grakh estão lá. Não se pode pedir a um povo com sede que seja esperto sobre onde vai beber.
-  - *EN:* Redom knows this. Redom has known it for longer than I have been here, and comes every year to the same wells in the same week, and every year the Grakh are there. You cannot ask a thirsty people to be clever about where they drink.
-- Trinta anos, e nunca me deram um nome. Os Grakh nomeiam as coisas pelo som que elas fazem, e eu tomei muito cuidado para não fazer nenhum.
-  - *EN:* Thirty years, and they had never given me a name. The Grakh name a thing by the sound it makes, and I have been very careful to make none.
+## a04b · minijogo: bancada
+
+- A bancada é uma pedra chata debaixo da Laje, com a brasa ao lado, o pilão e o pote de barro. Os Grakh chegariam aos poços no dia seguinte, e na véspera dos poços todos vêm à minha pedra de troca.
+  - *EN:* The bench is a flat stone under the slab, with the embers beside it, the mortar and the clay pot. The Grakh would reach the wells the next day, and on the eve of the wells everyone comes to my trading stone.
+- Fiz o que dava para fazer com o que eu tinha.
+  - *EN:* I made what could be made with what I had.
+- Descer ao acampamento
+  - *EN:* Go down to the camp
+
+## a05
+
+- Ninguém me imitava desde que eu era alguém.
+  - *EN:* No one had copied me since I was someone.
+- Na Cidade-Espelho, os aprendizes copiavam o meu passo na praça, e eu fingia não ver, e via.
+  - *EN:* In the Mirror City, the apprentices used to copy my walk across the square, and I pretended not to see, and saw.
+- O acampamento estava três vezes maior que uma semana antes, e crescia enquanto eu olhava. Hordas chegavam de todos os cantos da Boca Seca, longas filas pardas levantando uma poeira que se via a um dia de distância. No fim da estação seca os Grakh vão às Goelas beber, todos eles, porque não sobra outro lugar onde beber.
+  - *EN:* The camp was three times the size it had been a week before, and growing while I watched. Hordes were coming in from every quarter of the Dry Mouth, long brown lines of them, raising a dust you could see from a day away. At the end of the dry season the Grakh go to the Gullets to drink, all of them, because there is nowhere else left to drink.
+- Desci sem olhar para os lados.
+  - *EN:* I went down without looking to either side.
+- Desci devagar, contando as hordas pela poeira.
+  - *EN:* I went down slowly, counting the hordes by their dust.
+- Pelas colunas de poeira dava para contar as hordas: onze, talvez doze. Nunca tinham vindo tantas. Um povo com sede é previsível, e o que é previsível acaba sendo caçado.
+  - *EN:* You could count the hordes by their columns of dust: eleven, perhaps twelve. So many had never come before. A thirsty people is predictable, and what is predictable ends up hunted.
+- Redom sabe disso, e vem todo ano aos mesmos poços na mesma semana.
+  - *EN:* Redom knows this, and comes every year to the same wells in the same week.
+- Nunca me deram um nome. Os Grakh nomeiam as coisas pelo som que elas fazem, e eu tomei muito cuidado para não fazer nenhum.
+  - *EN:* They had never given me a name. The Grakh name a thing by the sound it makes, and I have been very careful to make none.
 - No meio da descida, uma criança Grakh entrou atrás de mim e começou a imitar o meu andar, pousando cada pé com um cuidado enorme e teatral, para não fazer barulho. Era bom nisso. Melhor do que eu na idade dele, e eu tive mestres.
   - *EN:* Halfway down, a Grakh child fell in behind me and began to copy my walk, setting each foot down with enormous, theatrical care, so as not to make a sound. He was good at it. He was better at it than I was at his age, and I had been taught by masters.
+- A criança atrás dele:
+  - *EN:* The child behind him:
+- Deixar que ele siga.
+  - *EN:* Let him follow.
+- Deixei. Descemos a encosta juntos, dois silêncios, um deles muito satisfeito consigo mesmo.
+  - *EN:* I let him. We went down the slope together, two silences, one of them very pleased with itself.
+- Estalar a língua para ele.
+  - *EN:* Click my tongue at him.
+- Estalei a língua para ele, uma vez, sem me virar. Foi o primeiro som que fiz perto do acampamento em mais tempo do que consigo lembrar. Ele parou na hora. Depois estalou de volta e desceu a encosta correndo, estalando a língua para tudo o que via pela frente: uma cabra, uma tenda, os próprios pés.
+  - *EN:* I clicked my tongue at him, once, without turning around. It was the first sound I had made near the camp in longer than I could remember. He stopped dead. Then he clicked back, and ran off down the slope clicking at everything he passed: a goat, a tent, his own feet.
+- Parar e olhar para ele até ele ir embora.
+  - *EN:* Stop and look at him until he goes.
+- Parei e olhei para ele. Tenho um olhar para isso, aperfeiçoado ao longo de um século; já mandou embora homens melhores que uma criança Grakh. Ele me encarou com grande interesse, depois ficou entediado e foi embora, o que eu decidi contar como vitória.
+  - *EN:* I stopped and looked at him. I have a look for this, perfected over a century; it has sent away better men than a Grakh child. He stared back with great interest, then got bored and left, which I chose to count as a victory.
 
-**Escolha: A criança atrás dele:**
-- **Deixar que ele siga.** / Let him follow.
-  - Deixei. Descemos a encosta juntos, dois silêncios, um deles muito satisfeito consigo mesmo.
-    - *EN:* I let him. We went down the slope together, two silences, one of them very pleased with itself.
-- **Estalar a língua para ele.** / Click my tongue at him.
-  - Estalei a língua para ele, uma vez, sem me virar. Foi o primeiro som que fiz perto do acampamento em mais tempo do que consigo lembrar. Ele parou na hora. Depois estalou de volta e desceu a encosta correndo, estalando a língua para tudo o que via pela frente: uma cabra, uma tenda, os próprios pés.
-    - *EN:* I clicked my tongue at him, once, without turning around. It was the first sound I had made near the camp in longer than I could remember. He stopped dead. Then he clicked back, and ran off down the slope clicking at everything he passed: a goat, a tent, his own feet.
-- **Parar e olhar para ele até ele ir embora.** / Stop and look at him until he goes.
-  - Parei e olhei para ele. Tenho um olhar para isso, aperfeiçoado ao longo de um século; já mandou embora homens melhores que uma criança Grakh. Ele me encarou com grande interesse, depois ficou entediado e foi embora, o que eu decidi contar como vitória.
-    - *EN:* I stopped and looked at him. I have a look for this, perfected over a century; it has sent away better men than a Grakh child. He stared back with great interest, then got bored and left, which I chose to count as a victory.
+## a06
 
-### a06 · minijogo: troca · pode beber
-- Meu ponto de troca é uma pedra chata na borda do acampamento e um couro que estendo em cima dela. Os Grakh não comerciam; me disseram isso no meu primeiro ano, com uma lança, e eu nunca discuti. O que fazem é pôr uma coisa ao lado de outra, olhar para as duas e decidir. Se isso não é comércio, é pelo menos o irmão mais novo dele, aquele que ainda não aprendeu a mentir.
-  - *EN:* My place of trade is a flat stone at the edge of the camp, and a hide I spread over it. The Grakh do not trade; they told me so in my first year, with a spear, and I have never argued. What they do instead is put one thing down beside another thing, look at both, and decide. If that is not trade, it is at least its younger brother, the one who has not yet learned to lie.
+- Meu ponto de troca é uma pedra chata na borda do acampamento e um couro que estendo em cima dela. Os Grakh não comerciam; me disseram isso no meu primeiro ano, com uma lança encostada no meu peito. Eles põem uma coisa ao lado de outra, olham para as duas e decidem.
+  - *EN:* My place of trade is a flat stone at the edge of the camp, and a hide I spread over it. The Grakh do not trade; they told me so in my first year, with a spear against my chest. They put one thing down beside another, look at both, and decide.
+- Naquele dia o couro ficou vazio. O que os Grakh tinham, guardavam para os poços.
+  - *EN:* That day the hide stayed empty. Whatever the Grakh had, they were keeping for the wells.
 
-*Depois:*
-- Nem toda troca fechou. As que não fecharam foram embora sem uma palavra, o que entre os Grakh é uma palavra.
-  - *EN:* Not every trade closed. The ones that did not went away without a word, which among the Grakh is a word.
-- *[se: !!(st.jogos.troca && st.jogos.troca.ok && st.jogos.troca.ok.tukk)]* O odre estava cheio outra vez.
-  - *EN:* The water skin was full again.
-- *[se: !tukkTrocou(st)]* Eu continuava sem água.
-  - *EN:* I still had no water.
+## a07
 
-### a07
-- Depois, Shaa. Ela atravessou a areia na velocidade de uma mulher que carrega uma segunda pessoa, uma mão embaixo da barriga como para segurá-la, e já vinha rindo antes de chegar, de alguma coisa que eu não via. A maioria dos Grakh fica a uma lança de distância de mim sem pensar nisso, do jeito que se mantém a mão longe do fogo. Shaa sentou tão perto que nossos joelhos quase se tocaram.
-  - *EN:* Then Shaa. She came across the sand at the speed of a woman carrying a second person, one hand under her belly as if to keep it from falling, and she was laughing before she reached me, at nothing I could see. Most of the Grakh keep a spear’s length from me without thinking about it, the way you keep your hand away from a fire. Shaa sat down so close our knees almost touched.
-- — Shaa ter dor. Aqui, e aqui. A cria chutar como querer sair pelas costas.
-  - *EN:* — Shaa have pain. Here, and here. Baby kick like it want out through the back.
+- Só Shaa veio. Atravessou a areia devagar, uma mão embaixo da barriga, e já vinha rindo antes de chegar, as tranças batendo nas costas. Os dentes de baixo eram grandes demais para a boca, e quando ela ria apareciam inteiros. A maioria dos Grakh fica a uma lança de distância de mim. Shaa sentou tão perto que nossos joelhos quase se tocaram.
+  - *EN:* Only Shaa came. She crossed the sand slowly, one hand under her belly, and she was laughing before she reached me, her braids slapping against her back. Her lower teeth were too big for her mouth, and when she laughed they showed whole. Most of the Grakh keep a spear’s length from me. Shaa sat down so close our knees almost touched.
+- Não me afastei.
+  - *EN:* I did not move away.
+- Com ela ali, a minha cabeça ficou quieta.
+  - *EN:* With her there, my head went quiet.
+- Com ela tão perto, a cabeça parou de fazer contas. Os Grakh não ligam para o que eu sou, e isso me descansa mais do que o vinho.
+  - *EN:* With her that close, my head stopped doing sums. The Grakh do not care what I am, and that rests me more than the wine does.
+- — Shaa ter dor. Aqui. E aqui. Cria chutar costas. Chutar, chutar, chutar.
+  - *EN:* — Shaa have pain. Here. And here. Baby kick the back. Kick, kick, kick.
 - Não trazia nada nas mãos. Olhou para elas como se isso a surpreendesse e então tirou do pescoço o cordão: um único dente, maior que o meu dedo.
   - *EN:* She had nothing in her hands. She looked at them as if this surprised her, and then took the cord from around her neck: a single tooth, longer than my finger.
-- — Primeira caçada. Primeira morte da Shaa. Dente bom.
-  - *EN:* — First hunt. Shaa first kill. Good tooth.
+- — Shaa matar sozinha. Primeira caçada. Dente grande.
+  - *EN:* — Shaa kill alone. First hunt. Big tooth.
+- O dente sobre o couro:
+  - *EN:* The tooth on the hide:
+- Aceitar o dente.
+  - *EN:* Accept the tooth.
+- — Bom! Troca feita.
+  - *EN:* — Good! Trade done.
+- Dei a ela a tintura para a dor. Ela virou o frasco na boca de uma vez e fez uma careta que o acampamento inteiro viu.
+  - *EN:* I gave her the tincture for the pain. She tipped the flask into her mouth in one go and made a face the whole camp saw.
+- Alguém viu.
+  - *EN:* Someone saw.
+- Dizer a ela que fique com o dente.
+  - *EN:* Tell her to keep the tooth.
+- — Não! Shaa pagar. Grakh sempre pagar.
+  - *EN:* — No! Shaa pay. Grakh always pay.
+- Mesmo assim, olhou por cima do ombro, pegou o frasco de tintura depressa, fechou a mão em volta dele e pendurou o dente de volta no pescoço. Alguém na borda do acampamento tinha visto.
+  - *EN:* Even so, she looked over her shoulder, took the flask of tincture quickly, closed her hand around it, and hung the tooth back around her neck. Someone at the edge of the camp had seen.
+- Nada em troca de nada.
+  - *EN:* Nothing for nothing.
+- — Justo.
+  - *EN:* — Fair.
+- Levantou e foi embora sem olhar para trás. Ao meio-dia voltou com um punhado de tâmaras secas, sentou perto demais outra vez e estendeu a mão.
+  - *EN:* She got up and left without looking back. At midday she came back with a handful of dried dates, sat too close again, and held out her hand.
+- — Velhos dizer: você ter luz. Debaixo da pele. Shaa querer ver. Mostrar!
+  - *EN:* — Old ones say you have light. Under the skin. Shaa want to see. Show!
+- Ela quer ver a luz.
+  - *EN:* She wants to see the light.
+- Hessa viu a luz.
+  - *EN:* Hessa saw the light.
+- A luz subiu mais um palmo sem que eu pedisse.
+  - *EN:* The light climbed another hand’s breadth without my asking.
+- Puxar o pano do pulso e pensar em alguma coisa.
+  - *EN:* Pull the cloth back from my wrist and think of something.
+- Puxei o pano do pulso e pensei em chuva: no cheiro dela chegando, no frescor da primeira brisa úmida, no som das gotas na areia e, por fim, nos pingos gelados no meu rosto. A luz subiu pelas veias, e Shaa parou de rir. Pegou o meu pulso e o encostou na barriga, sem pedir, e alguma coisa lá dentro chutou o lugar onde estava a luz, com força, duas vezes.
+  - *EN:* I pulled the cloth back from my wrist and thought of rain: the smell of it coming, the cool of the first damp breeze, the sound of drops on the sand and, last, the cold drops on my face. The light came up through the veins, and Shaa stopped laughing. She took my wrist and laid it against her belly, without asking, and something inside kicked the place where the light was, hard, twice.
+- — A cria gostar.
+  - *EN:* — Baby like it.
+- “Ela só aparece quando estou bêbado, e ainda não estou bêbado o bastante para você.”
+  - *EN:* “It only comes out when I’m drunk, and I’m not drunk enough for you yet.”
+- — Shaa esperar.
+  - *EN:* — Shaa wait.
+- Ela acomodou o peso na areia, as duas mãos na barriga, e não levantou.
+  - *EN:* She settled her weight on the sand, both hands on her belly, and did not get up.
+- Ela esperou. Depois deu dois tapinhas no meu joelho e levantou.
+  - *EN:* She waited. Then she patted my knee, twice, and got up.
 
-**Diálogo · O dente sobre o couro:**
-- **Aceitar o dente.** / Accept the tooth.
-  - — Bom. Agora Shaa não dever nada. Agora você não dever nada.
-    - *EN:* — Good. Now Shaa owe nothing. Now you owe nothing.
-  - Dei a ela a tintura para a dor. Ela virou na boca como se fosse doce e fez uma careta que o acampamento inteiro podia ler.
-    - *EN:* I gave her the tincture for the pain. She tipped it into her mouth like a sweet and made a face the whole camp could have read.
-- **Dizer a ela que fique com o dente.** / Tell her to keep the tooth.
-  - — Grakh não aceitar presente. Presente ser dívida sorrindo.
-    - *EN:* — Grakh not take gift. Gift is debt with a smile.
-  - Ela olhou por cima do ombro antes de pegar a tintura assim mesmo, depressa, e pendurou o dente de volta no pescoço. Alguém na borda do acampamento tinha visto.
-    - *EN:* She looked over her shoulder before she took the tincture anyway, quickly, and hung the tooth back around her neck. Someone at the edge of the camp had seen.
-- **Nada em troca de nada.** / Nothing for nothing.
-  - — Justo.
-    - *EN:* — Fair.
-  - Disse do jeito que os Grakh dizem tudo o que é verdade, sem sentimento nenhum, e levantou e foi embora. Ao meio-dia voltou com um odre de água, sentou à mesma distância, perto demais, e estendeu a mão.
-    - *EN:* She said it the way the Grakh say everything that is true, without any feeling about it, and got up and left. At midday she came back with a skin of water, sat down at the same distance, too close, and held out her hand.
+## a08
 
-**Diálogo · Ela quer ver a luz.**
-- — Dizer que você ter luz. Debaixo da pele. Como fogo debaixo da areia. Shaa querer ver.
-  - *EN:* — They say you have light. Under the skin. Like fire under sand. Shaa want to see.
-- **Puxar o pano do pulso e pensar em alguma coisa.** / Pull the cloth back from my wrist and think of something.
-  - Puxei o pano do pulso e pensei em chuva. A luz subiu pelas veias como água subindo num poço seco. Shaa parou de rir. Pegou o meu pulso e o encostou na barriga, sem pedir, e alguma coisa lá dentro chutou o lugar onde estava a luz, com força, duas vezes.
-    - *EN:* I pulled the cloth back from my wrist and thought of rain. The light came up through the veins like water rising in a dry well. Shaa stopped laughing. She took my wrist and laid it against her belly, without asking, and something inside kicked the place where the light was, hard, twice.
-  - — A cria gostar.
-    - *EN:* — Baby like it.
-- **“Ela só aparece quando estou bêbado, e ainda não estou bêbado o bastante para você.”** / “It only comes out when I’m drunk, and I’m not drunk enough for you yet.”
-  - — Shaa esperar.
-    - *EN:* — Shaa wait.
-  - Ela acomodou o peso na areia, as duas mãos na barriga, e não levantou.
-    - *EN:* She settled her weight on the sand, both hands on her belly, and did not get up.
-- **(silêncio)** / 
-  - Ela esperou. Depois deu dois tapinhas no meu joelho, do jeito que se dá num bicho que não entendeu, e levantou.
-    - *EN:* She waited. Then she patted my knee, twice, the way you pat an animal that has not understood, and got up.
-
-### a08
-- Na sombra de uma parede de couro, Ghru mastigava uma raiz com a concentração lenta dos muito velhos. É o Grakh mais velho que conheço. Tem trinta e oito anos. Entre o povo dele, é uma idade que se anuncia, como um título, e ele anuncia sempre.
-  - *EN:* In the shade of a hide wall, Ghru was chewing a root with the slow concentration of the very old. He is the oldest Grakh I know. He is thirty-eight. Among his people that is an age you announce, like a title, and he announces it often.
-- — Amanhã, as Goelas. Todo mundo. E o Tinido vir, como todo ano. Este ano ele trazer mais homem que areia.
-  - *EN:* — Tomorrow, the Gullets. Everybody. And the Tinn come, like every year. This year he bring more men than sand.
-- Tinido é como os Grakh chamam o comandante de Redom: o som que a armadura dele faz quando ele anda. Deram-lhe nome do único jeito que dão nome a qualquer coisa.
-  - *EN:* The Tinn is what the Grakh call the commander of Redom: the sound his armour makes when he walks. They had named him the only way they name anything.
-- — E talvez o dia ser comido.
-  - *EN:* — And maybe the day be eaten.
+- Na sombra de uma parede de couro, Ghru mastigava uma raiz só do lado direito; do esquerdo já não tinha dentes. É o Grakh mais velho que conheço. Tem trinta e oito anos e me diz isso a cada visita, antes de qualquer outra coisa.
+  - *EN:* In the shade of a hide wall, Ghru was chewing a root on the right side only; on the left he had no teeth left. He is the oldest Grakh I know. He is thirty-eight, and he tells me so every visit, before anything else.
+- — Amanhã, as Goelas. Todo mundo. E o Tinido vir, como todo ano. Este ano trazer muito homem. Muito. Durr contar fogueira deles e perder a conta.
+  - *EN:* — Tomorrow, the Gullets. Everybody. And the Tinn come, like every year. This year bring many men. Many. Durr count their fires and lose count.
+- Tinido é como os Grakh chamam o comandante de Redom: o som que a armadura dele faz quando ele anda.
+  - *EN:* The Tinn is what the Grakh call the commander of Redom: the sound his armour makes when he walks.
+- — E lua sumir. Duas noite já. Lua sumir, velhos dizer: talvez dia ser comido.
+  - *EN:* — And moon gone. Two nights now. Moon gone, old ones say: maybe day be eaten.
 - Riu com os ombros.
   - *EN:* He laughed with his shoulders.
-- — Quando o dia ser comido, nascer o maior. A mãe de Ghru dizer isso. A mãe dela dizer isso. Ninguém ver. Todo mundo lembrar.
-  - *EN:* — When the day be eaten, the greatest be born. Ghru mother say that. Her mother say that. Nobody see. Everybody remember.
+- — Dia ser comido, nascer o maior. Mãe de Ghru dizer isso. Mãe da mãe dizer. Toda lua sumida, velhos dizer. Dia nunca ser comido.
+  - *EN:* — Day be eaten, greatest be born. Ghru mother say that. Her mother say that. Every moon gone, old ones say it. Day never eaten.
+- Perguntar a Ghru:
+  - *EN:* Ask Ghru:
+- “O que é que come um dia?”
+  - *EN:* “What eats a day?”
+- — Ghru não saber. Ghru perguntar à mãe uma vez. Mãe bater em Ghru com osso.
+  - *EN:* — Ghru not know. Ghru ask mother once. Mother hit Ghru with bone.
+- “Me fale do Tinido.”
+  - *EN:* “Tell me about the Tinn.”
+- — Ele andar na frente. Sempre na frente. Outros chefes empurrar os homens, o Tinido ir primeiro. Hessa querer muito a cabeça dele.
+  - *EN:* — He walk in front. Always in front. Other chiefs push the men ahead, Tinn go first. Hessa want his head very much.
+- “Quantas vezes o dia já foi comido?”
+  - *EN:* “How many times has the day been eaten?”
+- — Ghru nunca ver. Mãe de Ghru nunca ver. Mãe da mãe ver uma vez. Ficar cega de um olho. Olhar demais.
+  - *EN:* — Ghru never see. Ghru mother never see. Her mother see once. Go blind one eye. Look too much.
+- Contar os dentes dele em vez de ouvir.
+  - *EN:* Count his teeth instead of listening.
+- Onze. No ano anterior eram catorze. Ghru percebeu que eu contava e arreganhou os dentes, para ajudar.
+  - *EN:* Eleven. Last year there had been fourteen. Ghru noticed me counting and bared them, to help.
+- — Onze. Ghru saber. Ano que vem, dez.
+  - *EN:* — Eleven. Ghru know. Next year, ten.
+- E então:
+  - *EN:* And then:
+- “Quem te deu o nome?”
+  - *EN:* “Who gave you your name?”
+- — Mãe. Ghru nascer com areia na garganta. Primeiro som: ghrrru. Então: Ghru.
+  - *EN:* — Mother. Ghru born with sand in throat. First sound: ghrrru. So: Ghru.
+- Fez o som para mim, duas vezes, do fundo da garganta, muito satisfeito.
+  - *EN:* He made the sound for me, twice, from the back of his throat, very pleased with it.
+- “Quem foi o maior, da última vez?”
+  - *EN:* “Who was the greatest, the last time?”
+- — Ninguém saber. Ele vir quando o dia ser comido, ele ir. Não morrer. Só ir. Talvez voltar. Talvez Ghru comer esta raiz e morrer. Quem saber.
+  - *EN:* — Nobody know. He come when the day be eaten, he go. Not die. Just go. Maybe come back. Maybe Ghru eat this root and die. Who know.
+- Deixá-lo com a raiz.
+  - *EN:* Leave him to his root.
+- Ele não levantou os olhos. Quando olhei para trás, ainda falava da raiz, para ninguém.
+  - *EN:* He did not look up. When I looked back, he was still talking about the root, to no one.
+- Quando levantei, Ghru partiu a raiz em duas com os dentes do lado direito e me estendeu a metade molhada. — Raiz boa. Ghru pagar a conversa.
+  - *EN:* When I got up, Ghru bit the root in two with the teeth on his right side and held out the wet half to me. — Good root. Ghru pay for the talk.
+- Eu tinha ouvido a frase do dia comido muitas vezes, sempre numa noite sem lua, sempre de um velho, sempre com aquele riso nos ombros. Na manhã seguinte o sol nascia inteiro.
+  - *EN:* I had heard the line about the eaten day many times, always on a moonless night, always from an old one, always with that laugh in the shoulders. The next morning the sun rose whole.
+- Toda profecia é o jeito de um povo dizer que ainda espera alguma coisa. A dos Grakh, pelo menos, não marcava data.
+  - *EN:* Every prophecy is a people’s way of saying it still expects something. The Grakh one, at least, named no date.
 
-**Diálogo · Perguntar a Ghru:**
-- **“O que é que come um dia?”** / “What eats a day?”
-  - — Ghru não saber. A mãe de Ghru não saber. Ela dizer assim mesmo. Dizer não custar nada.
-    - *EN:* — Ghru not know. Ghru mother not know. She say it anyway. Saying cost nothing.
-- **“Me fale do Tinido.”** / “Tell me about the Tinn.”
-  - — Ele andar na frente. Sempre na frente. Outros chefes empurrar os homens, o Tinido ir primeiro. Hessa querer muito a cabeça dele.
-    - *EN:* — He walk in front. Always in front. Other chiefs push the men ahead, Tinn go first. Hessa want his head very much.
-- **Contar os dentes dele em vez de ouvir.** / Count his teeth instead of listening.
-  - Onze. No ano anterior eram catorze. Ghru percebeu que eu contava e arreganhou os dentes, para ajudar.
-    - *EN:* Eleven. Last year there had been fourteen. Ghru noticed me counting and bared them, to help.
-  - — Você não ouvir. Bom. Ninguém ouvir Ghru. Ghru falar assim mesmo.
-    - *EN:* — You not listen. Good. Nobody listen to Ghru. Ghru talk anyway.
+## a09
 
-**Diálogo · E então:**
-- **“Quem te deu o nome?”** / “Who gave you your name?”
-  - — Mãe. Ghru nascer com areia na garganta. Primeiro som: ghrrru. Então: Ghru.
-    - *EN:* — Mother. Ghru born with sand in throat. First sound: ghrrru. So: Ghru.
-  - Fez o som para mim, um pequeno desmoronamento no fundo da garganta, muito satisfeito, como se o tivesse inventado naquela manhã.
-    - *EN:* He made the sound for me, a small rockslide at the back of his throat, very pleased with it, as if he had invented it that morning.
-- **“Quem foi o maior, da última vez?”** / “Who was the greatest, the last time?”
-  - — Ninguém saber. Ele vir quando o dia ser comido, ele ir. Não morrer. Só ir. Talvez voltar. Talvez Ghru comer esta raiz e morrer. Quem saber.
-    - *EN:* — Nobody know. He come when the day be eaten, he go. Not die. Just go. Maybe come back. Maybe Ghru eat this root and die. Who know.
-- **Deixá-lo com a raiz.** / Leave him to his root.
-  - Ele nem levantou os olhos. Entre os Grakh, uma conversa termina quando alguém para de estar nela.
-    - *EN:* He did not look up. Among the Grakh, a conversation is over when someone stops being in it.
-
-*Depois:*
-- Eu tinha ouvido a frase do dia comido umas cem vezes em trinta anos, sempre da boca dos velhos, sempre com aquele riso nos ombros. Entre os Grakh, profecia é como o tempo entre outros povos: assunto para reclamar, sem pressa nenhuma.
-  - *EN:* I had heard the line about the day being eaten perhaps a hundred times in thirty years, always from the old, always with that laugh in the shoulders. Among the Grakh, prophecy is like weather among other peoples: something to complain about, in no particular hurry.
-
-### a09 · pode beber
-- Hessa estivera olhando o tempo todo. Sempre olha, sempre da mesma distância, uma lança e um pouco mais, com uma das mãos pousada no cabo da maça às costas. O nome dela é o som que a água faz numa pedra quente. Combina com ela mais do que qualquer nome que já ouvi.
-  - *EN:* Hessa had been watching the whole time. She always does, from the same distance, a spear’s length and a little more, one hand resting on the haft of the mace across her back. Her name is the sound water makes on a hot stone. It suits her better than any name I have ever heard.
+- Hessa estivera olhando o tempo todo, da distância de sempre, uma lança e um pouco mais, com uma das mãos pousada no cabo da maça às costas. O nome dela é o som que a água faz numa pedra quente.
+  - *EN:* Hessa had been watching the whole time, from the usual distance, a spear’s length and a little more, one hand resting on the haft of the mace across her back. Her name is the sound water makes on a hot stone.
 - Mandou Tukk embora com duas palavras, do jeito Grakh, sem dobra nenhuma nos verbos. Então se virou para mim e mudou.
   - *EN:* She sent Tukk off with two words, in the Grakh way, with no bend in the verbs at all. Then she turned to me, and changed.
-- Comigo Hessa fala a língua dos homens, inteira, cada verbo no lugar, com as vogais compridas e abertas dos Queimados. No ombro esquerdo ela tem uma velha marca ritual deles, das que eles queimam nos cativos, e por cima dela alguém depois cortou três linhas a faca, fundas e deliberadas, como quem risca uma palavra. Nunca perguntei. Ela nunca contou. É a conversa mais longa que já tivemos.
-  - *EN:* With me Hessa speaks the language of men, all of it, every verb in its place, with the long open vowels of the Burned. On her left shoulder there is an old ritual brand of theirs, the kind they burn into captives, and across it someone later cut three lines with a knife, deep and deliberate, as if crossing out a word. I have never asked. She has never told me. It is the longest conversation we have had.
-- *[se: tukkTrocou(st)]* Estendi o odre de água. Ela pegou, arrancou a tampa com os dentes e despejou na areia entre nós, devagar, até o fim, olhando para mim o tempo todo.
-  - *EN:* I held out the water skin. She took it, pulled the stopper with her teeth, and poured it out on the sand between us, slowly, all of it, looking at me the whole time.
-- *[se: !temAgua(st)]* Estendi o odre de vinho. Ela pegou, arrancou a tampa com os dentes, cheirou e despejou um gole comprido na areia entre nós, devagar, olhando para mim o tempo todo. Depois me devolveu o odre.
+- Comigo Hessa fala a língua dos homens, inteira, cada verbo no lugar, com as vogais compridas e abertas dos Queimados. No ombro esquerdo ela tem uma velha marca deles, das que eles queimam nos cativos, e por cima dela alguém depois cortou três linhas a faca, fundas, como quem risca uma palavra.
+  - *EN:* With me Hessa speaks the language of men, all of it, every verb in its place, with the long open vowels of the Burned. On her left shoulder there is an old brand of theirs, the kind they burn into captives, and across it someone later cut three lines with a knife, deep, as if crossing out a word.
+- Estendi o odre de vinho. Ela pegou, arrancou a tampa com os dentes, cheirou e despejou um gole comprido na areia entre nós, devagar, olhando para mim o tempo todo. Depois me devolveu o odre.
   - *EN:* I held out the skin of wine. She took it, pulled the stopper with her teeth, smelled it, and poured a long swallow of it out on the sand between us, slowly, looking at me the whole time. Then she handed the skin back.
-
-**Diálogo · Responder a Hessa:**
 - — Você fica porque os potes mantêm o meu povo de pé. Homens que deviam cair não caem. É o único motivo de você ainda estar naquela pedra. Não confunda com outro.
   - *EN:* — You stay because the pots keep my people standing. Men who should fall, don’t. That is the only reason you are still on that stone. Do not mistake it for another.
-- **“Então somos úteis um ao outro.”** / “Then we are useful to each other.”
-  - — Útil é palavra de ferramenta.
-    - *EN:* — Useful is a word for tools.
-- **“São só ervas.”** / “It is only herbs.”
-  - — Os Queimados também diziam que era só sangue.
-    - *EN:* — The Burned also said it was only blood.
-- **Fazer o sinal de troca que os Grakh do gelo me ensinaram.** / Make the sign of exchange the Grakh of the ice taught me. *(se: (c1(st).aug || 0) >= 1)*
-  - Os olhos dela foram para a minha mão e ficaram ali um instante a mais do que precisavam. A mão na maça desceu para junto do corpo.
-    - *EN:* Her eyes went to my hand and stayed there a moment longer than they needed to. The hand on the mace came down to her side.
-- **Baixar os olhos e ir embora.** / Lower my eyes and go.
-  - Ela me deixou ir. Vindo de Hessa, é uma cortesia.
-    - *EN:* She let me go. From Hessa, that is a courtesy.
-
-**Diálogo · Hessa:** *(se: st.escolhas.hessa1 !== 'baixar')*
+- Responder a Hessa:
+  - *EN:* Answer Hessa:
+- “Então somos úteis um ao outro.”
+  - *EN:* “Then we are useful to each other.”
+- Ela não respondeu. Olhou os meus potes, depois para mim, e cuspiu na areia.
+  - *EN:* She did not answer. She looked at my pots, then at me, and spat on the sand.
+- As mãos estão acesas demais para mentir.
+  - *EN:* My hands are too lit to lie.
+- Hessa vai lembrar disso.
+  - *EN:* Hessa will remember that.
+- “São só ervas.”
+  - *EN:* “It is only herbs.”
+- — Os Queimados passavam unguento nas minhas costas depois do chicote. Também diziam que era só erva.
+  - *EN:* — The Burned rubbed ointment into my back after the whip. They also said it was only herbs.
+- Hessa vai lembrar disso.
+  - *EN:* Hessa will remember that.
+- Fazer o sinal de troca que os Aug me ensinaram.
+  - *EN:* Make the sign of exchange the Aug taught me.
+- Os olhos dela foram para a minha mão e ficaram ali um instante a mais do que precisavam. A mão na maça desceu para junto do corpo.
+  - *EN:* Her eyes went to my hand and stayed there a moment longer than they needed to. The hand on the mace came down to her side.
+- “Quem te ensinou a língua inteira também te ensinou a desconfiar dela.”
+  - *EN:* “Whoever taught you the whole language also taught you to distrust it.”
+- Ela passou o polegar pelas três linhas do ombro e não respondeu.
+  - *EN:* She ran her thumb along the three lines on her shoulder and did not answer.
+- Baixar os olhos e ir embora.
+  - *EN:* Lower my eyes and go.
+- Ela me deixou ir sem dizer mais nada.
+  - *EN:* She let me go without another word.
 - — O Tinido está a dois dias dos poços. Talvez um. Esteja longe.
   - *EN:* — The Tinn is two days from the wells. Maybe one. Be far away.
-- **“Preciso de água. A água está nos poços.”** / “I need water. The water is at the wells.”
-  - — Então beba depressa.
-    - *EN:* — Then drink fast.
-- **“Estou sempre longe. Mesmo parado aqui.”** / “I am always far away. Even standing here.”
-  - Alguma coisa se mexeu no canto da boca dela e foi guardada no mesmo instante.
-    - *EN:* Something moved at the corner of her mouth and was put away at once.
-- **(silêncio)** / 
-  - Ela me deu as costas. Hessa não dá as costas a homens armados. Nunca soube ao certo sobre qual de nós dois isso diz mais.
-    - *EN:* She turned her back on me. Hessa does not turn her back on armed men. I have never been sure which of us that says more about.
+- Hessa:
+  - *EN:* Hessa:
+- “Preciso de água. A água está nos poços.”
+  - *EN:* “I need water. The water is at the wells.”
+- — Então beba depressa.
+  - *EN:* — Then drink fast.
+- “Estou sempre longe. Mesmo parado aqui.”
+  - *EN:* “I am always far away. Even standing here.”
+- Alguma coisa se mexeu no canto da boca dela e foi guardada no mesmo instante.
+  - *EN:* Something moved at the corner of her mouth and was put away at once.
+- Ela me deu as costas e foi embora. Era a primeira vez que fazia isso comigo armado.
+  - *EN:* She turned her back on me and walked away. It was the first time she had done that with me armed.
 
-### a10 · pode beber
-- Naquela noite sentei na beira da Laje com o odre de vinho de cacto e fiquei olhando as hordas chegarem. As fogueiras foram acendendo uma a uma pelo escuro, até a planície lá embaixo parecer um céu que tinha caído e era teimoso demais para apagar.
-  - *EN:* That night I sat at the edge of the slab with the skin of cactus wine and watched the hordes come in. Their fires went on one by one across the dark, until the plain below looked like a sky that had fallen and was too stubborn to go out.
+## a10
+
+- Naquela noite sentei na beira da Laje com o odre de vinho de cacto e fiquei olhando as hordas chegarem. As fogueiras foram acendendo uma a uma pelo escuro, até a planície lá embaixo ficar mais acesa que o céu.
+  - *EN:* That night I sat at the edge of the slab with the skin of cactus wine and watched the hordes come in. Their fires went on one by one across the dark, until the plain below was brighter than the sky.
 - Sem lua. Na noite anterior também não houvera. O meu povo costumava esperar por noites assim, por motivos que eu tinha bebido para fora da cabeça havia muito tempo.
   - *EN:* No moon. There had been none the night before, either. My people used to watch for nights like these, for reasons I had drunk out of my head a long time ago.
-- *[variável]* Por baixo dos tambores, através da pedra e para dentro da sola dos meus pés, veio outra coisa: muitos pés, longe, a leste, batendo no chão ao mesmo tempo. Os Grakh não marcham em passo. Nada vivo marcha em passo a não ser que alguém esteja gritando com ele.
-  - *EN:* Under the drums, through the rock and into the soles of my feet, came something else: many feet, far to the east, striking the ground at the same time. The Grakh do not walk in step. Nothing alive walks in step unless someone is shouting at it.
-- *[variável]* Contei, por hábito, esperando o três. Não era três. Eram mil homens fingindo ser um.
-  - *EN:* I counted, out of habit, waiting for the three. It was not three. It was a thousand men pretending to be one.
+- Duas noites sem lua.
+  - *EN:* Two nights without a moon.
+- Na Cidade-Espelho, numa noite sem lua, os telhados enchiam de gente olhando para cima com tabelas no colo. Eu era um deles.
+  - *EN:* In the Mirror City, on a moonless night, the rooftops filled with people looking up with tables in their laps. I was one of them.
+- Bebi antes que a pergunta terminasse de se formar.
+  - *EN:* I drank before the question could finish taking shape.
+- O odre:
+  - *EN:* The skin:
+- o odre está vazio
+  - *EN:* the skin is empty
+- Beber até a planície parar de brilhar.
+  - *EN:* Drink until the plain stops shining.
+- Bebi até as fogueiras virarem uma mancha só.
+  - *EN:* I drank until the fires ran together into one smear.
+- Ficar sóbrio e olhar.
+  - *EN:* Stay sober and watch.
+- Deixei o odre fechado no colo.
+  - *EN:* I left the skin stoppered in my lap.
+- Contar as fogueiras.
+  - *EN:* Count the fires.
+- Contei as fogueiras de cem em cem. Passei de três mil e parei. Cada fogueira era uma família.
+  - *EN:* I counted the fires, a hundred at a time. I passed three thousand and stopped. Every fire was a family.
 
-## PARTE II · As Goelas / The Gullets
-> A Pira não tem lugar. Tem fogo. / The Pyre has no place. It has a fire. — dito Grakh
+## a11 · minijogo: bancada
 
-### b01 · pode beber
-- Eu nunca tinha visto tantos deles num lugar só, e já vi exércitos. Estavam em volta das Goelas em anéis, do jeito que bichos ficam em volta de um fogo, cem de fundura, os velhos mais perto da água e as crianças mais perto de coisa nenhuma. Naquele dia, a Pira Errante era ali. Toda horda que ainda tinha pernas viera beber.
-  - *EN:* I had never seen so many of them in one place, and I have seen armies. They stood around the Gullets in rings, the way animals stand around a fire, a hundred deep, the old ones nearest the water and the children nearest nothing at all. That day the Wandering Pyre was there. Every horde that still had legs had come to drink.
+- No caminho de volta eu tinha enchido a cabaça pequena de seiva e cortado um galho de creosoto. Acendi a brasa debaixo da Laje.
+  - *EN:* On the way back I had filled the small gourd with sap and cut a branch of creosote. I lit the embers under the slab.
+- A metade da raiz de Ghru ainda estava molhada.
+  - *EN:* Ghru’s half of the root was still wet.
+- Fazer remédio bêbado é má ideia. Eu sabia disso e sentei mesmo assim.
+  - *EN:* Making medicine drunk is a bad idea. I knew it and sat down anyway.
+- Dormir
+  - *EN:* Sleep
+- Dormi debaixo da Laje com o pote ainda morno ao lado.
+  - *EN:* I slept under the slab with the pot still warm beside me.
+- Dormi debaixo da Laje com o cheiro da resina nas mãos.
+  - *EN:* I slept under the slab with the smell of resin on my hands.
+
+## PARTE II
+
+- As Goelas
+  - *EN:* The Gullets
+- A Pira não tem lugar. Tem fogo.
+  - *EN:* The Pyre has no place. It has a fire.
+- dito Grakh
+  - *EN:* Grakh saying
+
+## b01
+
+- Eu nunca tinha visto tantos deles num lugar só, e já vi exércitos. Estavam em volta das Goelas em anéis, cem de fundura, os velhos mais perto da água e as crianças mais longe. Naquele dia, a Pira Errante era ali. Toda horda que ainda tinha pernas viera beber.
+  - *EN:* I had never seen so many of them in one place, and I have seen armies. They stood around the Gullets in rings, a hundred deep, the old ones nearest the water and the children farthest from it. That day the Wandering Pyre was there. Every horde that still had legs had come to drink.
 - As Goelas são três gargantas na rocha que descem mais fundo do que uma corda consegue acompanhar. No fim da estação seca a água fica tão baixa que os Grakh descem meninos amarrados em cordas para encher os odres e os puxam de volta, pingando e orgulhosos.
   - *EN:* The Gullets are three throats in the rock that go down farther than a rope can follow. At the end of the dry season the water sits so low that the Grakh lower boys on ropes to fill the skins, and haul them up again, dripping and proud.
-- *[se: st.shaa >= 1]* Shaa me viu do outro lado do poço mais próximo e acenou com o braço inteiro, como se de outro jeito eu pudesse não vê-la. Não era possível não vê-la.
-  - *EN:* Shaa saw me from across the nearest well and waved with her whole arm, as if I might otherwise miss her. It was not possible to miss her.
-- *[se: st.shaa < 1]* Shaa estava junto do poço mais próximo, bebendo nas mãos. Não levantou os olhos.
+- Shaa me viu do outro lado do poço mais próximo e acenou com o braço inteiro.
+  - *EN:* Shaa saw me from across the nearest well and waved with her whole arm.
+- Shaa estava junto do poço mais próximo, bebendo nas mãos. Não levantou os olhos.
   - *EN:* Shaa was by the nearest well, drinking from her hands. She did not look up.
 
-### b02 · pode beber
+## b01t · minijogo: troca
+
+- Estendi o couro numa pedra chata acima do poço mais próximo. O que os Grakh tinham guardado na véspera, traziam agora. Na manhã de uma luta, um Grakh quer três coisas: uma picada que não incha, uma ferida que não abre e um cheiro que o outro lado não consegue seguir.
+  - *EN:* I spread my hide on a flat stone above the nearest well. Whatever the Grakh had been keeping back the day before, they brought now. On the morning of a fight a Grakh wants three things: a bite that will not swell, a wound that will not open, and a smell the other side cannot follow.
+- Eu tinha as três, em potes.
+  - *EN:* I had all three, in pots.
+- Eu tinha o que a bancada tinha deixado fazer.
+  - *EN:* I had what the bench had let me make.
+- Três trocas, três exatas. Ninguém agradeceu. Os Grakh não agradecem troca justa.
+  - *EN:* Three trades, three exact. Nobody thanked me. The Grakh do not thank anyone for a fair trade.
+- Nem toda troca fechou. Quem não aceitou levantou e foi embora sem dizer nada.
+  - *EN:* Not every trade closed. Those who did not accept got up and left without a word.
+- Dei mais do que era justo, e o que sobrava voltou para mim pelo couro.
+  - *EN:* I gave more than was fair, and the extra came back to me across the hide.
+- O odre de água estava cheio.
+  - *EN:* The water skin was full.
+- Eu continuava sem água.
+  - *EN:* I still had no water.
+
+## b02
+
 - Vieram do leste na hora em que as sombras são mais curtas, numa coluna tão reta que parecia riscada a régua na areia. Escudos, lanças, pano vermelho. Atrás deles, as armações de madeira das máquinas de cerco, puxadas por bois, balançando como pássaros lentos.
   - *EN:* They came out of the east at the hour when shadows are shortest, in a column so straight it looked ruled onto the sand. Shields, spears, red cloth. Behind them the timber frames of siege engines, dragged by oxen, nodding like slow birds.
 - Na frente, debaixo de uma bandeira vermelha, vinha o Tinido.
   - *EN:* At the front, under a red banner, rode the Tinn.
 - Dois Grakh, feridos em alguma escaramuça anterior, estavam caídos no descampado entre as linhas. O Tinido levantou a mão, e a coluna inteira parou e esperou, em pleno sol, enquanto outros Grakh corriam e arrastavam os dois para longe. Depois ele baixou a mão.
   - *EN:* Two Grakh, wounded in some earlier skirmish, lay in the open between the lines. The Tinn raised his hand, and the whole column stopped and waited, in the full sun, while other Grakh ran out and dragged the two of them away. Then he lowered his hand.
+- A coluna parou. Esperei que voltasse a andar.
+  - *EN:* The column stopped. I waited for it to move again.
+- Um comandante que para um exército inteiro por dois feridos do inimigo. Guardei isso.
+  - *EN:* A commander who halts a whole army for two of the enemy’s wounded. I kept that.
+- Um comandante que para um exército inteiro, em pleno sol, para o inimigo recolher os próprios feridos. Ou é um tolo, ou é o único homem ali que sabe exatamente o que está fazendo. Os dois tipos costumam morrer cedo.
+  - *EN:* A commander who halts a whole army, in the full sun, so the enemy can gather its own wounded. Either he is a fool, or he is the only man there who knows exactly what he is doing. Both kinds tend to die young.
+- Aheryn olha para:
+  - *EN:* Aheryn looks at:
+- A bandeira.
+  - *EN:* The banner.
+- Uma espada branca sobre vermelho e, como guarda, uma balança.
+  - *EN:* A white sword on red, and for a guard, a pair of scales.
+- O homem da frente.
+  - *EN:* The man in front.
+- Nem moço, nem velho. Sem elmo; levava-o debaixo do braço, e os homens dele podiam ver o seu rosto de qualquer ponto da coluna. Montava sem olhar para o chão.
+  - *EN:* Not young, not old. No helmet; he carried it under his arm, and his men could see his face from anywhere in the column. He rode without looking at the ground.
+- As máquinas de cerco.
+  - *EN:* The siege engines.
+- Trouxeram máquinas de cerco a um lugar sem muralhas. Não vinham sitiar ninguém. Vinham para ficar.
+  - *EN:* They had brought siege engines to a place with no walls. They had not come to besiege anyone. They had come to stay.
+- Contá-los.
+  - *EN:* Count them.
+- Contei os estandartes e multipliquei pelo que costuma ficar debaixo de um estandarte. Mais homens do que Ghru tinha dito. Ghru tinha dito mais homens que areia.
+  - *EN:* I counted the standards and multiplied by what usually stands under a standard. More men than Ghru had said. Ghru had said more men than sand.
 
-**Escolha: Aheryn olha para:**
-- **A bandeira.** / The banner.
-  - Uma espada branca sobre vermelho e, como guarda, uma balança. Conheci homens capazes de falar uma hora sobre o que aquilo significa. Conheci uns poucos que viviam aquilo. Esses nunca explicavam nada.
-    - *EN:* A white sword on red, and for a guard, a pair of scales. I have known men who could talk for an hour about what that means. I have known a few who lived it. Those never explained anything.
-- **O homem da frente.** / The man in front.
-  - Nem moço, nem velho. Sem elmo; levava-o debaixo do braço, e os homens dele podiam ver o seu rosto de qualquer ponto da coluna. Montava como quem nunca precisou olhar para baixo para saber onde estão os pés.
-    - *EN:* Not young, not old. No helmet; he carried it under his arm, and his men could see his face from anywhere in the column. He sat the horse like a man who has never once had to look down to know where his feet are.
-- **Contá-los.** / Count them.
-  - Contei os estandartes e multipliquei pelo que costuma ficar debaixo de um estandarte. Mais homens do que Ghru tinha dito. Ghru tinha dito mais homens que areia.
-    - *EN:* I counted the standards and multiplied by what usually stands under a standard. More men than Ghru had said. Ghru had said more men than sand.
+## b03
 
-### b03 · pode beber
-- Então as linhas se encontraram, e por um tempo não houve nada para ver além do que sempre há: homens e Grakh tentando ocupar o mesmo pedaço de chão, e o chão se recusando a tomar partido.
-  - *EN:* Then the lines met, and for a while there was nothing to see but what there always is: men and Grakh trying to occupy the same piece of ground, and the ground refusing to take sides.
+- Então as linhas se encontraram, e por um tempo não houve nada para ver além de homens e Grakh tentando ocupar o mesmo pedaço de chão.
+  - *EN:* Then the lines met, and for a while there was nothing to see but men and Grakh trying to occupy the same piece of ground.
 - Tukk estava na frente. Uma semana antes, não conseguia ficar de pé. Agora levava uma lança no ombro, quebrava a haste e seguia.
   - *EN:* Tukk was at the front. A week before, he could not stand. Now he was taking a spear in the shoulder, snapping off the shaft, and going on.
-- *[se: (st.turvo || 0) <= 2]* O vento mudou e me trouxe, através da poeira, do sangue e do suor de mil corpos, um cheiro que eu conhecia melhor que qualquer um deles: resina, raiz amarga, a argila cinza em que eu moo as duas. O meu unguento. Estava em metade dos Grakh daquela linha.
+- O vento trouxe alguma coisa. Poeira, sangue. Eu não estava em condições de separar uma da outra.
+  - *EN:* The wind brought something. Dust, blood. I was in no state to tell one from the other.
+- Esse cheiro eu conheço.
+  - *EN:* I know that smell.
+- O vento mudou e me trouxe, através da poeira, do sangue e do suor de mil corpos, um cheiro que eu conhecia melhor que qualquer um deles: resina, raiz amarga, a argila cinza em que eu moo as duas. O meu unguento. Estava em metade dos Grakh daquela linha.
   - *EN:* The wind changed, and brought me, through dust and blood and the sweat of a thousand bodies, a smell I knew better than any of them: resin, bitter root, the grey clay I grind them in. My ointment. It was on half the Grakh in that line.
-- *[se: !sobrio(st)]* O vento trouxe alguma coisa. Poeira, sangue. Eu não estava em condições de ser exigente.
-  - *EN:* The wind brought something. Dust, blood. I was in no state to be particular.
+- Deixei o cheiro ir embora com o vento. Há coisas que é melhor não reconhecer em público.
+  - *EN:* I let the smell go with the wind. Some things are better not recognized in public.
+- Bebi antes que o cheiro virasse nome.
+  - *EN:* I drank before the smell could become a name.
 
-### b04
+## b04
+
+- As tabelas.
+  - *EN:* The tables.
+- Eu as tinha visto uma vez, gravadas em bronze, numa sala onde ninguém falava alto. Linhas de números que terminavam numa data. Esta, talvez, se eu ainda soubesse ler o fim da linha.
+  - *EN:* I had seen them once, cut into bronze, in a room where nobody spoke above a murmur. Lines of numbers that ran down to a date. This one, perhaps, if I could still read the end of the line.
 - A luz mudou primeiro. Ficou rala e estranha, da cor de luz atravessando um vidro sujo, e as sombras das lanças ganharam bordas nítidas, nítidas demais, como recortadas a faca. O calor saiu do ar de uma vez. Depois os pássaros pararam.
   - *EN:* The light changed first. It went thin and strange, the colour of light through dirty glass, and the shadows of the spears grew edges, too sharp, as if cut with a knife. The heat went out of the air all at once. Then the birds stopped.
 - Olhei para cima, porque todos olhavam para cima. Tinham arrancado uma mordida preta do sol. Eu sabia o que era. Sabia desde antes de qualquer pessoa naquele campo ter nascido: a lua passando na frente, como passa uma vez na vida de alguém, em algum lugar do mundo. O meu povo tinha tabelas para isso. As tabelas queimaram junto com o meu povo. Sobrou um fato velho, que eu disse para mim mesmo, baixinho: não dura. Minutos. Um punhado.
@@ -283,133 +506,199 @@ Gerado do roteiro do jogo. Linhas marcadas com *[se: ...]* só aparecem em certo
   - *EN:* And in the middle of it, one voice I could hear across the whole field, because he was the only man there shouting something useful:
 - — Firmes! É só o escuro! Segurem a linha!
   - *EN:* — Hold! It is only the dark! Hold the line!
-- O Tinido. Não olhou para cima nem uma vez. A essa altura eu também tinha parado de olhar, e acho que éramos os dois únicos naquele campo: o que entendia o céu e o que ia morrer debaixo dele. Só um de nós estava a descoberto.
-  - *EN:* The Tinn. He never once looked up. By then I had stopped looking too, and I think we were the only two on that field who had: the one who understood the sky, and the one who would die under it. Only one of us was standing in the open.
-- *[se: !!c1(st).pedra]* No bolso, a pedra tinha ficado violeta, a cor que ela não tem em nenhuma outra luz, e fechei a mão em volta dela como se ela pudesse me denunciar.
-  - *EN:* In my pocket the stone had gone violet, a colour it has in no other light, and I closed my hand over it as if it might give me away.
+- O Tinido. Não olhou para cima nem uma vez. A essa altura eu também tinha parado de olhar. Éramos os dois únicos naquele campo que sabiam que o escuro ia passar, e só ele estava a descoberto.
+  - *EN:* The Tinn. He never once looked up. By then I had stopped looking too. We were the only two on that field who knew the dark would pass, and only he was standing in the open.
+- No bolso, a pedra tinha ficado violeta, a cor que ela não tem em nenhuma outra luz, e fechei a mão em volta dela.
+  - *EN:* In my pocket the stone had gone violet, a colour it has in no other light, and I closed my hand over it.
 
-## PARTE III · O Dia Comido / The Eaten Day
-> O que se apaga no céu se apaga nos homens. / What goes out in the sky goes out in men. — nota Lúmae à margem, sem assinatura
+## PARTE III
 
-### c01 · minijogo: minutos · pode beber
-- Eu tinha, pela aritmética mais velha que conheço, cinco minutos. Talvez seis. Todos os outros naquele campo tinham a eternidade, e estavam se comportando de acordo.
-  - *EN:* I had, by the oldest arithmetic I know, five minutes. Perhaps six. Everyone else on that field had forever, and was behaving accordingly.
+- O Dia Comido
+  - *EN:* The Eaten Day
+- O que se apaga no céu se apaga nos homens.
+  - *EN:* What goes out in the sky goes out in men.
+- nota Lúmae à margem, sem assinatura
+  - *EN:* Lúmae note in a margin, unsigned
 
-*Depois:*
+## c01 · minijogo: minutos
+
+- Eu tinha, pelas contas mais velhas que conheço, cinco minutos. Talvez seis.
+  - *EN:* I had, by the oldest arithmetic I know, five minutes. Perhaps six.
+- Hessa vai lembrar disso.
+  - *EN:* Hessa will remember that.
 - Eu tinha gastado os meus minutos. O escuro tinha talvez mais um.
   - *EN:* I had spent my minutes. The dark had perhaps one left.
 
-### c02
-- *[se: !!st.f.abriu_guarda]* Sem os cavalos, o Tinido foi a pé até onde a linha dele se partia, sozinho, para segurá-la com o próprio corpo. Hessa saiu do escuro pelo vão que os cavalos tinham deixado, direto para ele, e nada se pôs no caminho dela, porque eu tinha cuidado disso.
+## c02
+
+- Sem os cavalos, o Tinido foi a pé até onde a linha dele se partia, sozinho, para segurá-la com o próprio corpo. Hessa saiu do escuro pelo vão que os cavalos tinham deixado, direto para ele, e nada se pôs no caminho dela, porque eu tinha cuidado disso.
   - *EN:* With his horses gone, the Tinn went on foot to where his line was breaking, alone, to hold it with his own body. Hessa came out of the dark through the gap the horses had left, straight at him, and nothing stood in her way, because I had seen to that.
-- *[se: !st.f.abriu_guarda]* O Tinido desceu do cavalo e foi a pé até onde a linha dele se partia, sozinho, para segurá-la com o próprio corpo. Hessa saiu do escuro direto para ele, atravessando três homens que estavam no caminho, e chegou ao outro lado deles sangrando no braço e sem diminuir o passo.
+- O Tinido desceu do cavalo e foi a pé até onde a linha dele se partia, sozinho, para segurá-la com o próprio corpo. Hessa saiu do escuro direto para ele, atravessando três homens que estavam no caminho, e chegou ao outro lado deles sangrando no braço e sem diminuir o passo.
   - *EN:* The Tinn got down from his horse and went on foot to where his line was breaking, alone, to hold it with his own body. Hessa came out of the dark straight at him, through three men who were in her way, and came out the other side of them bleeding from the arm and no slower.
 - Ele a viu chegando. Firmou os pés.
   - *EN:* He saw her coming. He set his feet.
 - Um besteiro atrás dele ergueu a arma na direção dela. Sem virar a cabeça, o Tinido estendeu a mão esquerda e empurrou a besta para baixo.
   - *EN:* A crossbowman behind him raised his weapon toward her. Without turning his head, the Tinn put out his left hand and pushed the bow down.
+- Eu já tinha estado do outro lado de uma besta, uma vez. Respondi com a espada. Ele respondeu com a mão.
+  - *EN:* I had been on the other end of a crossbow once. I answered it with a sword. He answered it with his hand.
 - Então ela chegou.
   - *EN:* Then she was on him.
 - Três golpes. Ele desviou o primeiro. Desviou o segundo, e isso lhe custou a espada. O terceiro desceu onde o pescoço encontra o ombro, e ele caiu de joelhos, e depois de frente na areia, e o caminho inteiro até o chão não tirou os olhos dela.
   - *EN:* Three blows. He turned the first. He turned the second, and it cost him the sword. The third came down where the neck meets the shoulder, and he went to his knees, and then forward onto the sand, and the whole way down he did not take his eyes off her.
 - Hessa ficou de pé sobre ele no escuro. Não ergueu a maça de novo.
   - *EN:* Hessa stood over him in the dark. She did not raise the mace again.
-- *[se: !!st.f.ouviu_oficial]* Agora eu sabia por que ele tinha vindo de tão longe, em pessoa. Isso não tornou mais fácil assistir. Saber as coisas raramente torna; eu teria gostado de ouvir o contrário, só uma vez.
-  - *EN:* I knew now why he had come all this way himself. It did not make watching easier. Knowing things rarely does; I would have liked, just once, to be told otherwise.
-- *[se: !!st.f.escondeu]* Assisti a tudo das pedras, o que quer dizer que assisti do jeito que assisti à maior parte das coisas na vida: de onde elas não me alcançavam.
-  - *EN:* I watched it all from the rocks, which is to say I watched it the way I have watched most things in my life: from where they could not reach me.
+- Ele não tirou os olhos dela até o chão. Eu não tirei os meus dele.
+  - *EN:* He did not take his eyes off her all the way down. I did not take mine off him.
+- Morreu olhando para quem o matava. Os Lúmae tinham uma palavra para isso, para a última cortesia entre dois soldados. Esqueci qual.
+  - *EN:* He died looking at the one who killed him. The Lúmae had a word for that, for the last courtesy between two soldiers. I have forgotten which.
+- Agora eu sabia por que ele tinha vindo de tão longe, em pessoa. Isso não tornou mais fácil assistir.
+  - *EN:* I knew now why he had come all this way himself. It did not make watching easier.
+- Assisti a tudo das pedras, de onde não me alcançava.
+  - *EN:* I watched it all from the rocks, where it could not reach me.
 
-### c03
-- Então o sol voltou. Primeiro uma única conta branca na beira do escuro, depois uma lâmina, e todas as sombras do campo giraram de uma vez, e homens que gritavam um instante antes ficaram piscando uns para os outros como estranhos acordando na mesma cama.
-  - *EN:* Then the sun came back. First a single white bead on the rim of the dark, then a blade of it, and every shadow on the field swung around at once, and men who had been shouting a moment before stood blinking at each other like strangers waking in the same bed.
+## c03
+
+- No quinto, a luz saiu de mim inteira, até o rosto, e eu não fiz nada para segurá-la. Não havia mais nada para esconder de ninguém.
+  - *EN:* At the fifth, the light came out of me all at once, up to my face, and I did nothing to hold it. There was nothing left to hide from anyone.
+- Então o sol voltou. Primeiro uma única conta branca na beira do escuro, depois uma lâmina, e todas as sombras do campo giraram de uma vez, e homens que gritavam um instante antes ficaram piscando uns para os outros.
+  - *EN:* Then the sun came back. First a single white bead on the rim of the dark, then a blade of it, and every shadow on the field swung around at once, and men who had been shouting a moment before stood blinking at each other.
 - Redom recuou. E recuou bem, isso eu admito: em ordem, os escudos travados, levando o Tinido entre quatro homens, em cima da própria capa. Os besteiros vinham de costas na retaguarda, como são treinados a fazer, e na última elevação se viraram e soltaram uma salva contra a multidão nos poços, como também são treinados a fazer.
   - *EN:* Redom pulled back. It did it well, I will grant them that: in order, shields locked, carrying the Tinn between four men on his own cloak. The crossbowmen walked backward at the rear, as they are trained to, and at the last rise they turned and loosed one volley into the crowd at the wells, as they are also trained to.
+- Vi o dedo do primeiro besteiro sair do lado do gatilho e ir para cima dele. Já tinha visto aquilo uma vez, na neve. Daquela vez, eu estava na frente.
+  - *EN:* I saw the first crossbowman’s finger leave the side of the trigger and settle onto it. I had seen that once before, in the snow. That time, I was the one in front of it.
 - Não havia mais mão nenhuma para empurrar as bestas para baixo.
   - *EN:* There was no hand left to push the bows down.
-- *[se: !!st.f.junto_shaa]* Eu segurava o braço de Shaa quando a acertaram. Senti cada um chegar, pelo corpo dela, até a minha mão. Cinco. Contei do jeito que conto tudo, e depois continuei contando, porque a cria debaixo da minha outra mão ainda se mexia, e eu não queria parar de saber disso.
-  - *EN:* I was holding Shaa’s arm when they hit her. I felt each one arrive through her body into my hand. Five. I counted them the way I count everything, and then I went on counting, because the child under my other hand was still moving, and I did not want to stop knowing that.
-- *[se: !st.f.junto_shaa]* Quando cheguei ao poço, Shaa estava caída de lado na borda. Cinco virotes. Contei do jeito que conto tudo. Depois pus a mão na barriga dela, porque precisava saber, e a cria chutou.
-  - *EN:* When I reached the well, Shaa was lying on her side on the rim. Five bolts. I counted them the way I count everything. Then I put my hand on her belly, because I had to know, and the child kicked it.
+- Eu segurava o braço de Shaa quando a acertaram. Senti cada um chegar, pelo corpo dela, até a minha mão. Cinco. Depois pus a outra mão na barriga dela, e a cria ainda se mexia.
+  - *EN:* I was holding Shaa’s arm when they hit her. I felt each one arrive through her body into my hand. Five. Then I put my other hand on her belly, and the child was still moving.
+- Quando cheguei ao poço, Shaa estava caída de lado na borda. Cinco virotes. Pus a mão na barriga dela, e a cria chutou.
+  - *EN:* When I reached the well, Shaa was lying on her side on the rim. Five bolts. I put my hand on her belly, and the child kicked.
 
-## PARTE IV · O Nome / The Name
-> O primeiro som é o primeiro nome. / The first sound is the first name. — costume Grakh
+## PARTE IV
 
-### d01
+- O Nome
+  - *EN:* The Name
+- O primeiro som é o primeiro nome.
+  - *EN:* The first sound is the first name.
+- costume Grakh
+  - *EN:* Grakh custom
+
+## d01
+
 - Vieram sem que ninguém chamasse. Os sobreviventes dos poços, os feridos e os inteiros, atravessaram a areia de um em um, de dois em dois, e ficaram em volta de nós, de Shaa e de mim, até virarem uma parede, cem de fundura, e nenhuma luz passava por ela além da que vinha de cima.
   - *EN:* They came without being called. The survivors of the wells, the wounded and the whole, came across the sand in ones and twos and stood around us, around Shaa and me, until there was a wall of them, a hundred deep, and no light came through it but what came from above.
-- Ninguém falou. Os Grakh não são um povo quieto, e eu nunca tinha ouvido cem deles sem fazer som nenhum. Era o tipo de silêncio que está esperando alguma coisa.
-  - *EN:* Nobody spoke. The Grakh are not a quiet people, and I had never heard a hundred of them make no sound at all. It was the kind of silence that is waiting for something.
+- Ninguém falou. Eu nunca tinha ouvido cem Grakh juntos sem fazer som nenhum.
+  - *EN:* Nobody spoke. I had never heard a hundred Grakh together make no sound at all.
 - O dia tinha sido comido. Todos tinham ouvido isso cem vezes, da boca dos velhos, com uma risada. Agora estavam em roda em volta de uma mulher morrendo cuja barriga ainda se mexia, e ninguém ria.
   - *EN:* The day had been eaten. They had all heard it said a hundred times, by the old, with a laugh. Now they stood in a ring around a dying woman whose belly was still moving, and nobody was laughing.
-- *[se: !!st.f.mostrou_luz]* Shaa achou o meu pulso na areia e o puxou, fraca, para o mesmo lugar onde o tinha puxado na véspera.
+- Shaa achou o meu pulso na areia e o puxou, fraca, para o mesmo lugar onde o tinha puxado na véspera.
   - *EN:* Shaa found my wrist on the sand and pulled it, weakly, to the same place she had pulled it the day before.
 
-### d02
+## d02
+
 - A parede se abriu, e Hessa passou por ela.
   - *EN:* The wall opened, and Hessa came through it.
 - Ela parou a uma lança de distância de mim, a distância de sempre. Então deu o último passo, o que nunca tinha dado, e deixou a maça escorregar das costas para a areia, aos meus pés.
   - *EN:* She stopped a spear’s length from me, the old distance. Then she took the last step, the one she had never taken, and let the mace slide off her back onto the sand at my feet.
-- *[se: !st.f.abriu_guarda]* O braço ainda sangrava onde os três homens o tinham achado. Ela não tinha amarrado.
+- O último que me acompanhou além da distância de sempre era do tamanho de uma pedra, e também não disse nada.
+  - *EN:* The last one who walked with me past the usual distance was the size of a boulder, and he did not say anything either.
+- O braço ainda sangrava onde os três homens o tinham achado. Ela não tinha amarrado.
   - *EN:* Her arm was still bleeding where the three men had found it. She had not tied it.
 - Era a mão que sempre estivera pousada naquele cabo. Agora, vazia, não sabia o que fazer. Fechou, e abriu.
   - *EN:* It was the hand that had always rested on that haft. Now, empty, it did not know what to do. It closed, and opened.
-- *[variável]* — Seja lá o que você for. Seja. Agora.
+- — O que você guarda debaixo do pano. Use. Estou pedindo.
+  - *EN:* — What you keep under the cloth. Use it. I am asking.
+- — Eu sei o que você é. Não me importa. Salve a cria.
+  - *EN:* — I know what you are. I do not care. Save the child.
+- — Seja lá o que você for. Seja. Agora.
   - *EN:* — Whatever it is you are. Be it. Now.
-- Ela não terminou o que vinha depois disso. A boca ficou aberta em volta das palavras por um instante, e fechou.
-  - *EN:* She did not finish whatever came after that. Her mouth stayed open around the words for a moment, and closed.
-- Entre os Grakh, o que ela tinha acabado de fazer não tem palavra. Pedir é dívida, e dívida é uma coisa que os Grakh preferem morrer a carregar. Já os vi fazer isso.
-  - *EN:* Among the Grakh, what she had just done has no word. Asking is a debt, and a debt is a thing the Grakh would rather die than carry. I have seen them do it.
+- Ela não terminou o que vinha depois disso. A boca ficou aberta um instante, e fechou.
+  - *EN:* She did not finish whatever came after that. Her mouth stayed open a moment, and closed.
+- Os Grakh não pedem. Pegam, trocam ou morrem sem. Eu já tinha visto Grakh morrerem sem.
+  - *EN:* The Grakh do not ask. They take, they trade, or they die without. I had seen Grakh die without.
+- Responder a Hessa:
+  - *EN:* Answer Hessa:
+- “Você já pôs a sua parte no couro.”
+  - *EN:* “You have already put your part on the hide.”
+- — Você já pôs a sua parte no couro.
+  - *EN:* — You have already put your part on the hide.
+- Ela olhou a maça na areia como se a visse pela primeira vez. Depois ajoelhou do outro lado de Shaa.
+  - *EN:* She looked at the mace on the sand as if she were seeing it for the first time. Then she knelt on the other side of Shaa.
+- Abrir o pote de graxa cinza e passar no braço dela.
+  - *EN:* Open the pot of grey grease and put it on her arm.
+- Passei a graxa no corte com dois dedos. Ela deixou. Olhou para o braço, depois para mim, e ajoelhou do outro lado de Shaa.
+  - *EN:* I worked the grease into the cut with two fingers. She let me. She looked at the arm, then at me, and knelt on the other side of Shaa.
+- Assentir.
+  - *EN:* Nod.
+- Assenti uma vez. Ela soltou o ar que estava segurando desde o poço.
+  - *EN:* I nodded once. She let out the breath she had been holding since the well.
+- Ajoelhei sem dizer nada.
+  - *EN:* I knelt without a word.
 
-### d03
-- Para fazer o que ela pedia eu teria de pensar. Não os pensamentos pequenos que deixo passar em dia de chuva, mas tudo, de uma vez, do jeito que eu pensava antes, do jeito que fez o meu povo ser visto. E para pensar eu teria de parar de beber.
-  - *EN:* To do what she was asking I would have to think. Not the small thoughts I let through on rainy days, but all of it, all at once, the way I used to think, the way that got my people seen. And to think, I would have to stop drinking.
-- *[variável]* O odre de vinho de cacto pendia do meu quadril, onde pende há trinta anos. Ainda havia um pouco. Sempre há um pouco.
-  - *EN:* The skin of cactus wine hung at my hip, where it has hung for thirty years. There was some left. There is always some left.
+## d03
 
-**Escolha: O odre:**
-- **Derramar na areia.** / Pour it out on the sand.
-  - Tirei a tampa, virei o odre e deixei escorrer na areia, como Hessa tinha feito com o que eu lhe oferecera. A areia bebeu mais depressa do que eu jamais bebi.
-    - *EN:* I pulled the stopper, turned the skin over and let it run out onto the sand, as Hessa had done with what I offered her. The sand drank it faster than I ever have.
-- **Entregar a Hessa.** / Give it to Hessa.
-  - Estendi para ela. Ela pegou sem olhar e ficou segurando, do jeito que se segura uma coisa que alguém nos entrega num enterro.
-    - *EN:* I held it out to her. She took it without looking at it and stood holding it, the way you hold a thing someone has handed you at a funeral.
-- **Um último gole.** / One last swallow. *(se: st.cantil > 0)*
-  - Mais um. Pela firmeza da mão, disse a mim mesmo, e a minha mão, que me conhece há muito tempo, também não acreditou.
-    - *EN:* One more. For the steadiness of the hand, I told myself, and my hand, which has known me a long time, did not believe it either.
+- Para fazer o que ela pedia eu teria de pensar. Não os pensamentos pequenos que deixo passar em dia de chuva: tudo, de uma vez, como eu pensava antes, como fez o meu povo ser visto. E para pensar eu teria de parar de beber.
+  - *EN:* To do what she was asking I would have to think. Not the small thoughts I let through on rainy days: all of it, all at once, the way I used to think, the way that got my people seen. And to think, I would have to stop drinking.
+- O odre de vinho de cacto pendia do meu quadril, como sempre. Ainda havia um pouco.
+  - *EN:* The skin of cactus wine hung at my hip, as always. There was some left.
+- O odre de vinho de cacto pendia do meu quadril, vazio. Eu tinha cuidado disso mais cedo, um gole de cada vez.
+  - *EN:* The skin of cactus wine hung at my hip, empty. I had seen to that earlier, one swallow at a time.
+- O odre:
+  - *EN:* The skin:
+- Derramar na areia.
+  - *EN:* Pour it out on the sand.
+- Tirei a tampa, virei o odre e deixei escorrer na areia, como Hessa tinha feito com o que eu lhe oferecera. A areia bebeu mais depressa do que eu jamais bebi.
+  - *EN:* I pulled the stopper, turned the skin over and let it run out onto the sand, as Hessa had done with what I offered her. The sand drank it faster than I ever have.
+- Não havia nada para derramar. Virei o odre e sacudi, e caíram umas gotas.
+  - *EN:* There was nothing to pour. I turned the skin over and shook it, and a few drops fell.
+- Entregar a Hessa.
+  - *EN:* Give it to Hessa.
+- Estendi para ela. Ela pegou sem olhar e ficou segurando, sem saber onde pôr.
+  - *EN:* I held it out to her. She took it without looking and stood holding it, not knowing where to put it.
+- o odre está vazio
+  - *EN:* the skin is empty
+- Um último gole.
+  - *EN:* One last swallow.
+- Mais um. Pela firmeza da mão, disse a mim mesmo, e a minha mão, que me conhece há muito tempo, também não acreditou.
+  - *EN:* One more. For the steadiness of the hand, I told myself, and my hand, which has known me a long time, did not believe it either.
 
-### d04
+## d04
+
 - Conheço dois tipos de magia. Um é uma cortesia que se pede ao mundo, como pedir ao vizinho que tire a carroça do caminho; o gelo me fez esse favor por cinquenta anos. O outro não pede. É enfiar a mão no pano de que o mundo é tecido e puxar um fio, e cada fio puxado acende você como uma lamparina numa janela, para qualquer coisa que saiba olhar.
   - *EN:* I know two kinds of magic. One is a courtesy you ask of the world, like asking a neighbour to move his cart; the ice did me that favour for fifty years. The other does not ask. It is reaching into the cloth the world is woven from and pulling a thread, and every thread you pull lights you up like a lamp in a window, for anything that knows how to look.
-- *[se: (c1(st).gelunah || 0) >= 1]* Pedi ao frio primeiro. Por hábito, por afeto, não sei. Não havia frio a quem pedir. Havia areia por cem léguas em todas as direções, e a areia nunca me fez cortesia nenhuma.
+- Pedi ao frio primeiro. Por hábito, por afeto, não sei. Não havia frio a quem pedir. Havia areia por cem léguas em todas as direções, e a areia nunca me fez cortesia nenhuma.
   - *EN:* I asked the cold first. From habit, from affection, I do not know. There was no cold to ask. There was sand for a hundred leagues in every direction, and the sand has never once done me a courtesy.
-- *[se: ((st.jogos.ressaca && st.jogos.ressaca.subiram) || []).includes('menina')]* Pensei na menina da febre, e na cura dobrada bem pequena na minha cabeça, onde guardo tudo o que não me é permitido usar.
+- Pensei na menina da febre, e na cura dobrada bem pequena na minha cabeça, onde guardo tudo o que não me é permitido usar.
   - *EN:* I thought of the girl with the fever, and of the cure folded small in my head, where I keep everything I am not allowed to use.
-- *[se: !!(c1(st).escolhas && c1(st).escolhas.proibido === 'tocar')]* A mão subiu, a mesma mão, à mesma altura. Desta vez seguiu.
+- Na Borda do Mundo, eu tinha bebido aquela porta até ela fechar. Não tinha tranca. Só estava esperando.
+  - *EN:* At the Edge of the World, I had drunk that door shut. It had no lock. It had only been waiting.
+- A mão subiu, a mesma mão, à mesma altura. Desta vez seguiu.
   - *EN:* The hand rose, the same hand, to the same height. This time it kept going.
+- O que Aheryn vai buscar?
+  - *EN:* What does Aheryn reach for?
+- Os dois: a mãe e a cria.
+  - *EN:* Both of them: the mother and the child.
+- Dois corações. Um lento e falhando, um rápido e furioso. Eu ia segurar os dois, ou tentar. Fui o melhor do meu povo exatamente nesse tipo de arrogância.
+  - *EN:* Two hearts. One slow and failing, one fast and furious. I would hold both, or try. I was the best of my people at exactly this kind of arrogance.
+- Só a cria.
+  - *EN:* Only the child.
+- Um coração. O pequeno, o rápido. O de Shaa deixei onde estava, aquietando sozinho, e espero nunca me perguntarem se aquilo foi sabedoria ou aritmética.
+  - *EN:* One heart. The small, fast one. Shaa’s I left where it was, going quiet on its own, and I hope never to be asked whether that was wisdom or arithmetic.
 
-**Escolha: O que Aheryn vai buscar?**
-- **Os dois: a mãe e a cria.** / Both of them: the mother and the child.
-  - Dois corações. Um lento e falhando, um rápido e furioso. Eu ia segurar os dois, ou tentar. Fui o melhor do meu povo exatamente nesse tipo de arrogância.
-    - *EN:* Two hearts. One slow and failing, one fast and furious. I would hold both, or try. I was the best of my people at exactly this kind of arrogance.
-- **Só a cria.** / Only the child.
-  - Um coração. O pequeno, o rápido. O de Shaa deixei onde estava, aquietando sozinho, e espero nunca me perguntarem se aquilo foi sabedoria ou aritmética.
-    - *EN:* One heart. The small, fast one. Shaa’s I left where it was, going quiet on its own, and I hope never to be asked whether that was wisdom or arithmetic.
+## d05 · minijogo: parto
 
-### d05 · minijogo: parto
 - Ajoelhei na areia com as mãos sobre ela e parei de segurar os pensamentos para baixo.
   - *EN:* I knelt in the sand with my hands on her and stopped holding my thoughts down.
-
-*Depois:*
 - A luz subiu por mim como água subindo num poço, toda ela, cada linha ao mesmo tempo, a testa, a garganta, o peito, os braços, até as caras da roda ficarem iluminadas de ouro por baixo e eu poder ver cada uma delas, e cada uma delas poder me ver.
   - *EN:* The light came up through me like water up a well, all of it, every line at once, the forehead, the throat, the chest, the arms, until the faces in the ring were lit gold from below and I could see every one of them, and every one of them could see me.
-- *[se: !!c1(st).marcado]* Pelo antebraço onde o bronze tinha fechado, nada passou. A luz deu a volta.
+- Pelo antebraço onde o bronze tinha fechado, nada passou. A luz deu a volta.
   - *EN:* Through the forearm where the bronze had closed, nothing came. The light went around it.
 - — Aqui. A lâmina, aqui. Não mais fundo que o seu polegar.
   - *EN:* — Here. The blade, here. No deeper than your thumb.
 - Hessa ajoelhou do outro lado de Shaa com uma faca curta e curva e fez exatamente o que eu disse: a mulher que não bebia da minha mão, recebendo ordens da luz que vigiava havia quinze anos a uma lança de distância.
   - *EN:* Hessa knelt on the other side of Shaa with a short curved knife and did exactly what I told her: the woman who would not drink from my hand, taking orders from the light she had watched for fifteen years from a spear’s length away.
 
-### d06
+## d06
+
 - Vou contar uma vez, do jeito que foi.
   - *EN:* I will tell it once, as it was.
 - Houve um som. Primeiro um estalo, seco e curto, como madeira verde, como cartilagem cedendo. Depois um baque, grave e molhado, de alguma coisa pesada se soltando para dentro de mãos que estavam prontas para ela.
@@ -418,24 +707,31 @@ Gerado do roteiro do jogo. Linhas marcadas com *[se: ...]* só aparecem em certo
   - *EN:* Then nothing. The ring did not breathe. The child in Hessa’s hands did not breathe either, for as long as it takes a heart to decide.
 - Depois respirou.
   - *EN:* Then it did.
-- Chorou do jeito que os Grakh choram, ou seja, urrou, pequena e furiosa, para o céu, para o sol que tinha voltado, para todos nós.
-  - *EN:* It cried the way the Grakh cry, which is to say it roared, small and furious, at the sky, at the sun that had come back, at all of us.
-- *[se: armadilha(st) === 'salvar']* Os olhos estavam abertos, virados para mim, do jeito que aquele da cova me olhou lá na Borda do Mundo. Parece que nunca consegui resistir a isso. É uma fraqueza que vou levar para o túmulo, o que quer dizer que não tão cedo.
-  - *EN:* Its eyes were open, and turned on me, the way the one in the pit had looked up at me at the Edge of the World. It seems I have never been able to resist that. It is a weakness I will take to my grave, which is to say nowhere soon.
+- Urrou, pequena e furiosa, para o céu, para o sol que tinha voltado, para todos nós. Os Grakh choram assim.
+  - *EN:* It roared, small and furious, at the sky, at the sun that had come back, at all of us. That is how the Grakh cry.
+- Os olhos estavam abertos, virados para mim, como os daquele da cova, na Borda do Mundo. Nunca consegui resistir a isso.
+  - *EN:* Its eyes were open, and turned on me, like the one in the pit at the Edge of the World. I have never been able to resist that.
 
-### d07
-- *[variável]* Shaa quase não estava mais ali. Os olhos dela acharam o som antes de achar a cria.
+## d07
+
+- Maior.
+  - *EN:* Greatest.
+- Uma vez me deram uma palavra assim, e uma canção para carregá-la. Que sirva melhor nele.
+  - *EN:* Once they gave me a word like that, and a song to carry it. May it fit him better.
+- Shaa ainda estava ali. Eu a tinha segurado até ali. Ela estendeu a mão, e Hessa deitou a cria na dobra do braço dela, e Shaa olhou para ela inteira, devagar, de cima a baixo.
+  - *EN:* Shaa was still there. I had held her that long. She put out a hand, and Hessa laid the child in the crook of her arm, and Shaa looked at the whole of it, slowly, from top to bottom.
+- Shaa quase não estava mais ali. Os olhos dela acharam o som antes de achar a cria.
   - *EN:* Shaa was almost gone. Her eyes found the sound before they found the child.
 - — Kronk…
   - *EN:* — Kronk…
 - Era o som. Era o primeiro som, o que ele fez ao chegar ao mundo, e ela o tinha ouvido, e o devolvia a ele como nome, que é a lei mais antiga que os Grakh têm.
   - *EN:* That was the sound. That was the first sound, the one he made coming into the world, and she had heard it, and she gave it back to him as a name, which is the oldest law the Grakh have.
-- Então ela parou de respirar, quieta, sem alarde, do jeito que os Grakh fazem tudo o que não tem remédio.
-  - *EN:* Then she stopped breathing, quietly, without any fuss, the way the Grakh do everything that cannot be helped.
-- *[se: armadilha(st) === 'frio']* Contei a respiração dela até não haver mais nenhuma, como uma vez contei na beira de uma cova na neve. É a única reza que sei.
+- Então ela parou de respirar, quieta, sem alarde.
+  - *EN:* Then she stopped breathing, quietly, without any fuss.
+- Contei a respiração dela até não haver mais nenhuma, como uma vez contei na beira de uma cova na neve. É a única reza que sei.
   - *EN:* I counted her breaths until there were none, as I once counted at the edge of a pit in the snow. It is the only prayer I know.
-- A roda disse o nome. Um por um, baixo, de dentro para fora, do jeito que a água se espalha na areia. Kronk. Kronk. Kronk.
-  - *EN:* The ring said the name. One by one, low, from the inside out, the way water spreads in sand. Kronk. Kronk. Kronk.
+- A roda disse o nome. Um por um, baixo, de dentro para fora. Kronk. Kronk. Kronk.
+  - *EN:* The ring said the name. One by one, low, from the inside out. Kronk. Kronk. Kronk.
 - E Ghru, junto do meu ombro, sem riso nenhum:
   - *EN:* And Ghru, at my shoulder, with no laugh anywhere in him:
 - — Dia ser comido. Maior nascer.
@@ -443,123 +739,692 @@ Gerado do roteiro do jogo. Linhas marcadas com *[se: ...]* só aparecem em certo
 - Eu sabia o que tinha comido o dia. Uma pedra no céu passando na frente de um fogo no céu, como faz desde antes de existirem Grakh para dar nome a isso. Eu sabia tudo isso. O que eu não sabia era o que aquilo significava, e eu era o único naquela roda que achava que essas eram duas perguntas diferentes.
   - *EN:* I knew what had eaten the day. A stone in the sky crossing in front of a fire in the sky, as it has done since before there were Grakh to name it. I knew all of that. What I did not know was what it meant, and I was the only one in that circle who thought those were two different questions.
 
-### d08
-- Depois a roda se desfez devagar, do jeito que uma multidão deixa um fogo de que não precisa mais. Voltaram para os seus mortos. Hessa foi com a cria.
-  - *EN:* Afterwards the ring came apart slowly, the way a crowd leaves a fire it no longer needs. They went back to their dead. Hessa went with the child.
-- *[variável]* Sentei na areia e comecei a apagar a luz, uma linha de cada vez, como faço todo dia há oitenta anos. A testa apagou. A garganta apagou. O peito apagou, devagar. Os braços não quiseram.
-  - *EN:* I sat in the sand and began to put the light out, one line at a time, as I have done every day for eighty years. The forehead went. The throat went. The chest went, slowly. The arms would not.
-- Então, através da areia e para dentro das minhas mãos, de muito longe, veio um ritmo que eu não sentia havia trinta anos. Metal e pedra em chão duro. Um, dois, três. Um, dois, três.
-  - *EN:* Then, through the sand and into my hands, from very far away, came a rhythm I had not felt in thirty years. Metal and stone on hard ground. One, two, three. One, two, three.
+## d08
+
+- Depois a roda se desfez devagar. Voltaram para os seus mortos. Hessa foi com a cria.
+  - *EN:* Afterwards the ring came apart slowly. They went back to their dead. Hessa went with the child.
+- Sentei na areia e comecei a apagar a luz, uma linha de cada vez, como faço todo dia há mais de um século. A testa apagou. A garganta apagou. O peito não quis, nem os braços. Eu tinha puxado dois fios, e o pano ainda tremia onde eu tinha mexido.
+  - *EN:* I sat in the sand and began to put the light out, one line at a time, as I have done every day for more than a century. The forehead went. The throat went. The chest would not, nor the arms. I had pulled two threads, and the cloth was still trembling where I had touched it.
+- Sentei na areia e comecei a apagar a luz, uma linha de cada vez, como faço todo dia há mais de um século. A testa apagou. A garganta apagou. O peito apagou, devagar. Os braços não quiseram.
+  - *EN:* I sat in the sand and began to put the light out, one line at a time, as I have done every day for more than a century. The forehead went. The throat went. The chest went, slowly. The arms would not.
+- Então, através da areia e para dentro das minhas mãos, de muito longe, veio um ritmo que eu não sentia desde a Borda do Mundo. Metal e pedra em chão duro. Um, dois, três. Um, dois, três.
+  - *EN:* Then, through the sand and into my hands, from very far away, came a rhythm I had not felt since the Edge of the World. Metal and stone on hard ground. One, two, three. One, two, three.
 - Claro. Claro que estavam escutando, todo esse tempo, à espera exatamente disto.
   - *EN:* Of course. Of course they had been listening, all this time, for exactly this.
 
-## PARTE V · O Rastro / The Trail
-> Aeth-vorunda, sæl’aeth mor’ilenne. / Aeth-vorunda, sæl’aeth mor’ilenne. — louvor Lúmae, terceiro verso
+## PARTE V
 
-### e01
+- O Rastro
+  - *EN:* The Trail
+- louvor Lúmae, terceiro verso
+  - *EN:* Lúmae praise, third verse
+
+## e01
+
 - No norte, quando vieram atrás de mim, eu fugi. É o que eu faço. Sou o melhor fugitivo que o meu povo já produziu, e o único que ainda foge.
   - *EN:* In the north, when they came for me, I ran. It is what I do. I am the finest fugitive my people ever produced, and the only one still running.
 - Os Tacets seguem a luz. Não importa no acampamento de quem ela esteja. Se eu ficasse, eles entrariam na Pira no compasso de três, e a Pira os receberia com lanças, e bronze não se incomoda muito com lanças.
   - *EN:* The Tacets follow the light. Whose camp it is standing in makes no difference. If I stayed, they would walk into the Pyre in their count of three, and the Pyre would meet them with spears, and bronze does not much mind spears.
 - Então eu iria. Desta vez não para longe deles. À frente deles. Aceso.
   - *EN:* So I would go. Not away from them, this time. Ahead of them. Lit.
-- *[se: (st.tacetsCedo || 0) >= 1]* Com o tanto que eu tinha arrancado de mim por Shaa e pela cria, eles viriam depressa, e eu teria de levá-los longe.
+- Com o tanto que eu tinha arrancado de mim por Shaa e pela cria, eles viriam depressa, e eu teria de levá-los longe.
   - *EN:* With as much as I had pulled out of myself for Shaa and the child, they would be coming fast, and I would have to take them far.
 
-### e02
+## e02
+
 - Hessa me achou antes que eu terminasse de amarrar os panos. Trazia a cria no ombro, enrolada numa pele, e a mão livre já estava de volta no cabo da maça, onde sempre esteve.
   - *EN:* Hessa found me before I had finished tying the wraps. She carried the child on her shoulder, wrapped in a hide, and her free hand was already back on the haft of the mace, where it has always been.
 - — Você vai embora.
   - *EN:* — You are leaving.
 - Não era pergunta.
   - *EN:* It was not a question.
-
-**Diálogo · Dizer a Hessa:**
-- **“Cuide dele.”** / “Look after him.”
-  - Ela olhou para a cria, e para mim, e não disse nada, o que entre os Grakh é uma promessa, porque uma palavra poderia ser quebrada.
-    - *EN:* She looked at the child, and at me, and said nothing, which among the Grakh is a promise, because a word could be broken.
-- **“Meu nome é Aheryn.”** / “My name is Aheryn.”
-  - — Aheryn.
-    - *EN:* — Aheryn.
-  - Ela disse com cuidado, do jeito que se testa uma tábua antes de pôr o peso nela. Foi a primeira vez em trinta anos que alguém disse esse nome em voz alta, contando comigo.
-    - *EN:* She said it carefully, the way you test a plank before you put your weight on it. It was the first time in thirty years anyone had said it aloud, myself included.
-- **“O que comeu o dia foi a lua. O sol sempre volta.”** / “What ate the day was the moon. The sun always comes back.”
-  - — Então os velhos acertaram e erraram.
-    - *EN:* — Then the old ones were right, and wrong.
-  - Ela pesou aquilo e guardou em algum lugar, e eu nunca vou saber onde.
-    - *EN:* She weighed it and put it away somewhere, and I will never know where.
-- **(silêncio)** / 
-  - Ela esperou o tempo de um fôlego. Depois virou e voltou para o acampamento, sem olhar para trás, e isso também estava certo.
-    - *EN:* She waited the length of a breath. Then she turned and went back toward the camp, without looking back, and that was right too.
-
-**Diálogo · Sobre o Tinido:** *(se: st.escolhas.adeus !== 'cala')*
+- Dizer a Hessa:
+  - *EN:* Say to Hessa:
+- “Cuide dele.”
+  - *EN:* “Look after him.”
+- Ela olhou para a cria, depois para mim, e ajeitou a pele em volta dele.
+  - *EN:* She looked at the child, then at me, and tucked the hide closer around him.
+- “Meu nome é Aheryn.”
+  - *EN:* “My name is Aheryn.”
+- — Aheryn.
+  - *EN:* — Aheryn.
+- Ela disse devagar, as duas sílabas separadas. Ninguém dizia esse nome em voz alta desde a Borda do Mundo, nem eu.
+  - *EN:* She said it slowly, the two syllables apart. No one had said that name aloud since the Edge of the World, not even me.
+- “O que comeu o dia foi a lua. O sol sempre volta.”
+  - *EN:* “What ate the day was the moon. The sun always comes back.”
+- — A lua. Vou contar ao Ghru. Ele não vai acreditar.
+  - *EN:* — The moon. I will tell Ghru. He will not believe it.
+- Ela não sorriu, mas quase.
+  - *EN:* She did not smile, but nearly.
+- Ela esperou o tempo de um fôlego. Depois virou e voltou para o acampamento, sem olhar para trás.
+  - *EN:* She waited the length of a breath. Then she turned and went back toward the camp, without looking back.
 - — Os cavalos foram você.
   - *EN:* — The horses were you.
 - Também não era pergunta, então não respondi.
   - *EN:* That was not a question either, so I did not answer it.
-- **“Ele empurrou para baixo a besta que mirava você.”** / “He pushed down the bow that was aimed at you.”
-  - — Eu vi.
-    - *EN:* — I saw.
-  - Ela olhou para o leste, para onde o tinham levado, e por um bom tempo não olhou para mais nada.
-    - *EN:* She looked east, where they had carried him, and for a long while she did not look at anything else.
-- **“Foi uma boa morte.”** / “It was a good death.”
-  - — Não existe morte boa. Existe morte terminada.
-    - *EN:* — There are no good deaths. There are deaths that are finished.
-- **(silêncio)** / 
-  - Ela assentiu uma vez, para ninguém.
-    - *EN:* She nodded once, to no one.
+- — O Tinido. Você viu.
+  - *EN:* — The Tinn. You saw.
+- Sobre o Tinido:
+  - *EN:* About the Tinn:
+- “Ele empurrou para baixo a besta que mirava você.”
+  - *EN:* “He pushed down the bow that was aimed at you.”
+- — Eu vi.
+  - *EN:* — I saw.
+- Ela olhou para o leste, para onde o tinham levado, e por um bom tempo não olhou para mais nada.
+  - *EN:* She looked east, where they had carried him, and for a long while she did not look at anything else.
+- “Foi uma boa morte.”
+  - *EN:* “It was a good death.”
+- — Foi rápida. Fui eu.
+  - *EN:* — It was quick. It was me.
+- Ela assentiu uma vez, para ninguém.
+  - *EN:* She nodded once, to no one.
 
-### e03 *(só se: st.escolhas.adeus !== 'cala')*
-- A cria dormia no ombro dela, se essa é a palavra para uma coisa tão furiosa em repouso. O punho estava fechado numa dobra da pele, muito apertado, como se alguém fosse tentar tirá-la dele.
-  - *EN:* The child was asleep on her shoulder, if that is the word for something that furious at rest. His fist was closed on a fold of the hide, very tight, as if somebody might try to take it from him.
+## e03
 
-**Escolha: Antes de partir:**
-- **Tocar o punho dele.** / Touch his fist.
-  - Pus um dedo no punho. Ele abriu, fechou em volta do meu dedo e segurou com uma força que envergonharia um homem adulto de Redom. Tirei o dedo de volta. Deu algum trabalho.
-    - *EN:* I put one finger on the fist. It opened, closed around my finger, and held on with a strength that would have embarrassed a grown man of Redom. I took my finger back. It took some doing.
-- **Não tocar.** / Do not touch him.
-  - Não o toquei. As coisas que eu toco têm o costume de ser encontradas.
-    - *EN:* I did not touch him. Things I touch have a way of being found.
-- **Deixar a pedra na dobra da pele.** / Leave the stone in the fold of the hide. *(se: !!c1(st).pedra)*
-  - Tirei a pedra do bolso e a pus na dobra da pele, junto do punho fechado. Naquela luz ela estava cinza. Que seja o mistério de outra pessoa por um tempo.
-    - *EN:* I took the stone out of my pocket and put it into the fold of the hide, against the closed fist. In that light it was grey. Let it be someone else’s mystery for a while.
+- A cria dormia no ombro dela, de punho fechado numa dobra da pele, muito apertado.
+  - *EN:* The child was asleep on her shoulder, his fist closed tight on a fold of the hide.
+- Antes de partir:
+  - *EN:* Before leaving:
+- Tocar o punho dele.
+  - *EN:* Touch his fist.
+- Pus um dedo no punho. Ele abriu, fechou em volta do meu dedo e não soltou. Tirei o dedo de volta. Deu algum trabalho.
+  - *EN:* I put one finger on the fist. It opened, closed around my finger, and would not let go. I took my finger back. It took some doing.
+- Não tocar.
+  - *EN:* Do not touch him.
+- Não o toquei. As coisas que eu toco têm o costume de ser encontradas.
+  - *EN:* I did not touch him. Things I touch have a way of being found.
+- Deixar a pedra na dobra da pele.
+  - *EN:* Leave the stone in the fold of the hide.
+- Tirei a pedra do bolso e a pus na dobra da pele, junto do punho fechado. Naquela luz ela estava cinza. Que seja o mistério de outra pessoa por um tempo.
+  - *EN:* I took the stone out of my pocket and put it into the fold of the hide, against the closed fist. In that light it was grey. Let it be someone else’s mystery for a while.
 
-### e04 *(só se: !!c1(st).diario)*
-- O diário estava no fundo do embrulho, onde o tinha posto trinta anos antes, na Borda do Mundo. A décima segunda página estava em branco.
-  - *EN:* The diary was at the bottom of the bundle, where I had put it thirty years before, at the Edge of the World. The twelfth page was blank.
+## e04
 
-**Escolha: O diário:**
-- **Escrever o dia.** / Write the day down.
-  - Escrevi de pé, com a luz ainda nas mãos, o que fazia a tinta parecer ouro:
-    - *EN:* I wrote it standing up, with the light still in my hands, which made the ink look like gold:
-  - “Décima segunda página. O dia foi comido ao meio-dia e devolvido poucos minutos depois, como os dias costumam ser. Uma criança nasceu no escuro dele e recebeu o nome do seu primeiro som. Vão dizer que o maior chegou. Eu só sei que um coração pequeno batia rápido debaixo das minhas mãos e que deixei que ele fizesse barulho. Parto esta noite. Pela primeira vez, parto antes.”
-    - *EN:* “Twelfth page. The day was eaten at noon and given back a few minutes later, as days usually are. A child was born in the dark of it and named for his first sound. They will say the greatest has come. I only know that a small heart beat fast under my hands, and that I let it be loud. I leave tonight. For once, I leave first.”
-- **Deixar a página em branco.** / Leave the page blank.
-  - Deixei a página em branco. Há dias que não precisam de ajuda para serem lembrados.
-    - *EN:* I left the page blank. Some days need no help being remembered.
+- O diário estava no fundo do embrulho, onde o tinha posto na Borda do Mundo. A décima segunda página estava em branco.
+  - *EN:* The diary was at the bottom of the bundle, where I had put it at the Edge of the World. The twelfth page was blank.
+- O diário:
+  - *EN:* The diary:
+- Escrever o dia.
+  - *EN:* Write the day down.
+- Escrevi de pé, com a luz ainda nas mãos, o que fazia a tinta parecer ouro:
+  - *EN:* I wrote it standing up, with the light still in my hands, which made the ink look like gold:
+- “Décima segunda página. O dia foi comido e devolvido poucos minutos depois, como os dias costumam ser. Uma criança nasceu no escuro dele e recebeu o nome do seu primeiro som. Vão dizer que o maior chegou. Eu só sei que um coração pequeno batia rápido debaixo das minhas mãos e que deixei que ele fizesse barulho. Parto esta noite. Pela primeira vez, parto antes.”
+  - *EN:* “Twelfth page. The day was eaten and given back a few minutes later, as days usually are. A child was born in the dark of it and named for his first sound. They will say the greatest has come. I only know that a small heart beat fast under my hands, and that I let it be loud. I leave tonight. For once, I leave first.”
+- Deixar a página em branco.
+  - *EN:* Leave the page blank.
+- Deixei a página em branco. Há dias que não precisam de ajuda para serem lembrados.
+  - *EN:* I left the page blank. Some days need no help being remembered.
 
-### e05 · minijogo: rastro
-- A noite caiu sobre a Pira de uma vez, do jeito que cai no deserto, sem discutir com ninguém. Atrás de mim acendiam as fogueiras para os mortos. Ao norte, três pontos de bronze pegavam a luz das estrelas e a perdiam de novo, e vinham, no compasso de três.
-  - *EN:* Night came down on the Pyre all at once, the way it does in the desert, without discussing it with anyone. Behind me the fires were being lit for the dead. To the north, three points of bronze caught the starlight and lost it again, and came on, in their count of three.
+## e05 · minijogo: rastro
 
-*Depois:*
-- Acendi o caminho em silêncio, um ponto de cada vez, como quem deixa migalhas para trás numa floresta que não tem árvores.
-  - *EN:* I lit the way in silence, one point at a time, like a man leaving crumbs behind him in a forest with no trees.
+- Eles vão contar isso por gerações.
+  - *EN:* They will tell this for generations.
+- Um velho que acendeu na roda e foi embora antes do sol. Em três gerações eu teria asas. Em cinco, seria uma lua.
+  - *EN:* An old man who lit up in the ring and left before sunrise. In three generations I would have wings. In five, I would be a moon.
+- A noite caiu sobre a Pira de uma vez. Atrás de mim acendiam as fogueiras para os mortos. Ao norte, três pontos de bronze pegavam a luz das estrelas e a perdiam de novo, e vinham, no compasso de três.
+  - *EN:* Night came down on the Pyre all at once. Behind me the fires were being lit for the dead. To the north, three points of bronze caught the starlight and lost it again, and came on, in their count of three.
+- Na Borda do Mundo eu o tinha cantado de boca fechada. Desta vez abri.
+  - *EN:* At the Edge of the World I had sung it with my mouth shut. This time I opened it.
+- Da última vez, a luz tinha saído pelas frestas de uma cabana. Aqui não havia frestas. Havia o deserto inteiro.
+  - *EN:* The last time, the light had come out through the cracks of a cabin. Here there were no cracks. There was the whole desert.
+- Cantei enquanto acendia. A canção inteira, na língua que ninguém mais vivo fala, cada verso que me chama de grande. Pela primeira vez, ela serviu para alguma coisa.
+  - *EN:* I sang while I lit the way. The whole song, in the language nobody else alive speaks, every verse that calls me great. For once, it was good for something.
+- Acendi o caminho em silêncio, um ponto de cada vez.
+  - *EN:* I lit the way in silence, one point at a time.
 
-### e06
+## e06
+
 - Caminhei para oeste, areia aberta adentro, aceso da testa à ponta dos dedos, que é a coisa mais tola que uma criatura caçada pode fazer, e raras vezes tive tanta certeza de alguma coisa.
   - *EN:* I walked west into the open sand, lit from forehead to fingertips, which is the most foolish thing a hunted creature can do, and I have rarely been so sure of anything.
 - Atrás de mim, o compasso quebrou de três para quatro. Tinham me achado. Era a ideia.
   - *EN:* Behind me, the count broke from three to four. They had found me. That was the idea.
 - Passei trinta anos sem fazer um som. Naquela noite, sem ninguém para ouvir além da areia e das coisas que me seguiam, fiz um.
   - *EN:* I had spent thirty years making no sound. That night, with no one to hear it but the sand and the things that were following me, I made one.
-- *[se: !!(st.jogos.rastro && st.jogos.rastro.cantou)]* Lá atrás, os tambores dos mortos pararam pelo tempo de um verso, e recomeçaram.
+- Lá atrás, os tambores dos mortos pararam pelo tempo de um verso, e recomeçaram.
   - *EN:* Far behind me, the drums for the dead stopped for the length of a verse, and started again.
-- *[se: !!st.f.estalou]* Em algum lugar atrás de mim, no acampamento, crianças estalavam a língua umas para as outras no escuro. Levei quase uma duna inteira para entender que estavam dizendo o meu nome.
+- Em algum lugar atrás de mim, no acampamento, crianças estalavam a língua umas para as outras no escuro. Levei quase uma duna inteira para entender que estavam dizendo o meu nome.
   - *EN:* Somewhere behind me, in the camp, children were clicking their tongues at each other in the dark. It took me most of a dune to understand that they were saying my name.
-- *[se: !!st.f.disse_nome]* E em algum lugar atrás de mim, pela primeira vez em trinta anos, alguém sabia o meu nome.
-  - *EN:* And somewhere behind me, for the first time in thirty years, someone knew my name.
-- *[se: !!st.f.derramou]* Eu não tinha nada para beber. Então pensei. A noite inteira, pensei em voz alta, debaixo da pele, e deixei brilhar.
+- E em algum lugar atrás de mim, alguém sabia o meu nome.
+  - *EN:* And somewhere behind me, someone knew my name.
+- Eu não tinha nada para beber. Então pensei. A noite inteira, pensei em voz alta, debaixo da pele, e deixei brilhar.
   - *EN:* I had nothing to drink. So I thought. All night long I thought out loud, under the skin, and let it shine.
-- *[se: !!c1(st).marcado]* Só o antebraço onde o bronze tinha fechado ficou escuro, uma faixa de noite num homem aceso, como uma sombra que eu carregasse para alguém.
-  - *EN:* Only the forearm the bronze had closed on stayed dark, a strip of night on a lit man, like a shadow I was carrying for someone.
+- Só o antebraço onde o bronze tinha fechado ficou escuro.
+  - *EN:* Only the forearm the bronze had closed on stayed dark.
+
+## Textos dos jogos e do diário
+
+- Uma pedra, atirada por uma criança.
+  - *EN:* A stone, thrown by a child.
+- Hessa era criança na primeira vez que atirou uma pedra em mim. Acertou o joelho. Hoje acertaria a cabeça, e ela sabe disso.
+  - *EN:* Hessa was a child the first time she threw a stone at me. It hit my knee. Today it would hit my head, and she knows it.
+- O primeiro vinho de cacto.
+  - *EN:* The first cactus wine.
+- Meu primeiro vinho de cacto tinha gosto de vinagre onde um lagarto morreu. Bebi tudo, e no dia seguinte fiz mais.
+  - *EN:* My first cactus wine tasted like vinegar a lizard had died in. I drank all of it, and the next day I made more.
+- O cheiro de uma tempestade.
+  - *EN:* The smell of a storm.
+- Uma vez senti o cheiro de uma tempestade de areia um dia inteiro antes de ela chegar, e não contei a ninguém. Se soubessem que eu sinto o tempo chegar, viriam me perguntar dele toda semana.
+  - *EN:* Once I smelled a sandstorm a full day before it came, and told no one. If they knew I can smell weather coming, they would be at my stone every week asking about it.
+- Chuva, uma vez.
+  - *EN:* Rain, once.
+- Choveu uma vez, no décimo primeiro ano. Fiquei debaixo dela feito um tolo, e a luz subiu por baixo da pele, e eu deixei, porque não havia ninguém para ver além da chuva.
+  - *EN:* It rained once, in the eleventh year. I stood in it like a fool, and the light came up under my skin, and I let it, because there was no one to see but the rain.
+- Uma menina com febre.
+  - *EN:* A girl with a fever.
+- Uma menina Grakh, com uma febre que eu podia ter quebrado com um único pensamento. Dei à mãe a tintura. A tintura não bastou. A mãe nunca mais trocou comigo.
+  - *EN:* A Grakh girl, with a fever I could have broken with a single thought. I gave her mother the tincture instead. The tincture was not enough. Her mother never traded with me again.
+- Um frio com olhos.
+  - *EN:* A cold with eyes.
+- Há um frio de que não consigo lembrar a origem. Ele tem olhos. Toda manhã ainda olho para o norte antes de olhar para qualquer outro lugar, e não sei por quê.
+  - *EN:* There is a cold I cannot place. It has eyes. Every morning I still look north before I look anywhere else, and I do not know why.
+- Um olho violeta, sobre uma montanha.
+  - *EN:* A violet eye, over a mountain.
+- Toda manhã ainda olho primeiro para o norte, antes de olhar para qualquer outro lugar. Lá não há nada além de mais deserto.
+  - *EN:* Every morning I still look north first, before I look anywhere else. There is nothing there but more desert.
+- O frio.
+  - *EN:* The cold.
+- Sinto falta do frio. Lá o ar ficava parado. Aqui até a noite se mexe.
+  - *EN:* I miss the cold. Up there the air stood still. Here even the night moves.
+- Um garoto de Frígia, com pinguins no peito.
+  - *EN:* A boy from Frígia, penguins against his chest.
+- Uma vez dei cinco pinguins a um garoto com fome, e ele não agradeceu. Foi a troca mais justa da minha vida, e nunca soube se ele comeu.
+  - *EN:* Once I gave five penguins to a hungry boy, and he did not thank me. It was the fairest trade of my life, and I never learned whether he ate.
+- Na Borda do Mundo houve um pensamento que me recusei a afogar. Carreguei-o pela encosta inteira do mundo. Pesa o mesmo.
+  - *EN:* At the Edge of the World there was one thought I refused to drown. I carried it down the whole slope of the world. It weighs the same.
+- Esse não afunda.
+  - *EN:* This one does not sink.
+- O homem da besta.
+  - *EN:* The man with the crossbow.
+- Ele ainda cai de costas na neve quando fecho os olhos, me olhando como quem não entendia a conta.
+  - *EN:* He still falls backwards into the snow when I close my eyes, looking at me like a man who did not understand the sum.
+- O Título.
+  - *EN:* The Title.
+- O Título. Não vou dizê-lo. Ele não precisa de mim para isso.
+  - *EN:* The Title. I will not say it. It does not need me to.
+- Enterrado.
+  - *EN:* Buried.
+- O Título sobe sozinho.
+  - *EN:* The Title rises on its own.
+- O que subiu
+  - *EN:* What rose
+- enterrou tudo
+  - *EN:* buried everything
+- Resina
+  - *EN:* Resin
+- Raiz amarga
+  - *EN:* Bitter root
+- Flor de cacto
+  - *EN:* Cactus flower
+- Seiva de cacto
+  - *EN:* Cactus sap
+- Creosoto
+  - *EN:* Creosote
+- Ferrão de escorpião
+  - *EN:* Scorpion sting
+- Argila cinza
+  - *EN:* Grey clay
+- Cinza
+  - *EN:* Ash
+- Unguento
+  - *EN:* Ointment
+- a graxa cinza
+  - *EN:* the grey grease
+- Resina no pote.
+  - *EN:* Resin in the pot.
+- Fogo até o segundo risco. A resina tem de derreter, não ferver.
+  - *EN:* Fire to the second mark. The resin has to melt, not boil.
+- Raiz e argila no pilão. Moer até não sobrar fibra.
+  - *EN:* Root and clay in the mortar. Grind until no fibre is left.
+- O pilão no pote. Mexer.
+  - *EN:* The mortar into the pot. Stir.
+- Guardar.
+  - *EN:* Store it.
+- Tintura
+  - *EN:* Tincture
+- para febre e dor
+  - *EN:* for fever and pain
+- Seiva no pote. Fogo até o terceiro risco.
+  - *EN:* Sap in the pot. Fire to the third mark.
+- A flor no pilão. Moer.
+  - *EN:* The flower in the mortar. Grind.
+- O pilão no pote. Mais um risco de fogo.
+  - *EN:* The mortar into the pot. One more mark of fire.
+- Guardar no frasco.
+  - *EN:* Into the flask.
+- Antídoto
+  - *EN:* Antidote
+- para bicho de ferrão
+  - *EN:* for things that sting
+- Ferrão e raiz no pilão. Moer.
+  - *EN:* Sting and root in the mortar. Grind.
+- Seiva no pote. Sem fogo.
+  - *EN:* Sap in the pot. No fire.
+- O pilão no pote. Mexer.
+  - *EN:* The mortar into the pot. Stir.
+- Guardar no frasco.
+  - *EN:* Into the flask.
+- Pó de esconder cheiro
+  - *EN:* Scent-masking powder
+- para caçador
+  - *EN:* for hunters
+- Creosoto no pilão. Moer.
+  - *EN:* Creosote in the mortar. Grind.
+- Cinza por cima. Moer de novo.
+  - *EN:* Ash on top. Grind again.
+- Direto para a bolsa. O pote não entra.
+  - *EN:* Straight into the pouch. The pot stays out of it.
+- bem feito
+  - *EN:* well made
+- médio
+  - *EN:* fair
+- mal feito
+  - *EN:* poorly made
+- perdido
+  - *EN:* ruined
+- Cheirei. Cheirava como deve cheirar.
+  - *EN:* I smelled it. It smelled the way it should.
+- Serve. Já fiz melhor com menos.
+  - *EN:* It will do. I have made better with less.
+- Saiu grosso e com cheiro de queimado. Alguém vai aceitar, e vai pedir mais alguma coisa junto.
+  - *EN:* It came out thick and smelling burnt. Someone will take it, and ask for something more on top.
+- Aquilo não tinha nome. Joguei atrás da Laje.
+  - *EN:* That had no name. I threw it out behind the slab.
+- O couro das receitas
+  - *EN:* The recipe hide
+- riscado à faca, uma receita de cada vez, ao longo dos anos
+  - *EN:* scratched with the knife, one recipe at a time, over the years
+- Ler o couro
+  - *EN:* Read the hide
+- Fechar o couro e fazer
+  - *EN:* Close the hide and make it
+- Outra receita
+  - *EN:* Another recipe
+- Preparar
+  - *EN:* Make this
+- falta
+  - *EN:* missing
+- sempre há
+  - *EN:* always some
+- No alforje
+  - *EN:* In the pack
+- Na mão
+  - *EN:* In hand
+- Pilão
+  - *EN:* Mortar
+- Pote
+  - *EN:* Pot
+- Brasa
+  - *EN:* Embers
+- Guardar
+  - *EN:* Store it
+- Jogar fora
+  - *EN:* Throw it out
+- Leia o couro e escolha uma receita.
+  - *EN:* Read the hide and choose a recipe.
+- Toque no pilão ou no pote para pôr.
+  - *EN:* Touch the mortar or the pot to put it in.
+- Toque no pote para despejar o pilão.
+  - *EN:* Touch the pot to empty the mortar into it.
+- Toque num ingrediente · segure o pilão para moer · segure o pote para mexer · toque na brasa para pôr e tirar do fogo
+  - *EN:* Touch an ingredient · hold the mortar to grind · hold the pot to stir · touch the embers to put on and take off the fire
+- Não há nada aí.
+  - *EN:* There is nothing in it.
+- Guarde ou jogue fora o que está na bancada antes de sair.
+  - *EN:* Store or throw out what is on the bench before you leave.
+- O vinho embaralha o couro. Segure sobre ele para lembrar.
+  - *EN:* The wine scrambles the hide. Hold on it to remember.
+- no fogo
+  - *EN:* on the fire
+- A bancada
+  - *EN:* The bench
+- De manhã
+  - *EN:* Morning
+- À noite
+  - *EN:* Night
+- Segure o pilão para moer.
+  - *EN:* Hold the mortar to grind.
+- Segure o pote para mexer.
+  - *EN:* Hold the pot to stir.
+- A mão
+  - *EN:* The hand
+- O corpo
+  - *EN:* The body
+- O que ele trouxe
+  - *EN:* What he brought
+- Olhar
+  - *EN:* Look
+- duas tiras de carne seca
+  - *EN:* two strips of dried meat
+- Ghru sentou do outro lado do couro sem dizer nada, como sempre.
+  - *EN:* Ghru sat down across the hide without a word, as he always does.
+- Mantinha a mão esquerda afastada do corpo, com a palma para baixo. As costas da mão estavam inchadas e roxas em volta de dois furinhos.
+  - *EN:* He held his left hand away from his body, palm down. The back of it was swollen and purple around two small holes.
+- Mantinha o braço duro, longe do corpo, e não o apoiava em nada.
+  - *EN:* He kept the arm stiff, away from his body, and rested it on nothing.
+- Duas tiras de carne seca, uma ao lado da outra, postas com cuidado. Ghru costuma oferecer uma.
+  - *EN:* Two strips of dried meat, side by side, laid down with care. Ghru usually offers one.
+- As narinas dele abriram.
+  - *EN:* His nostrils opened.
+- Ghru cheirou o frasco e ficou olhando para o resto das minhas coisas.
+  - *EN:* Ghru sniffed the flask and kept looking at the rest of my things.
+- Ghru cheirou o frasco, cuspiu de lado e ficou olhando para o resto das minhas coisas, uma por uma.
+  - *EN:* Ghru sniffed the flask, spat to one side, and kept looking at the rest of my things, one by one.
+- Ghru pegou o antídoto, cheirou e virou tudo na boca de uma vez. A carne ficou no couro.
+  - *EN:* Ghru took the antidote, sniffed it, and tipped it into his mouth in one go. The meat stayed on the hide.
+- um odre cheio de água
+  - *EN:* a full skin of water
+- Depois veio Tukk. Uma semana antes ele tinha vindo com uma ferida no flanco que fedia a podre, e eu lhe dera o unguento.
+  - *EN:* Tukk came next. A week before, he had come with a wound in his side that stank of rot, and I had given him the ointment.
+- Pôs a mão espalmada sobre o flanco, onde a pele tinha fechado limpa, e deixou a mão ali, olhando para os meus potes.
+  - *EN:* He laid his hand flat over his side, where the skin had closed clean, and kept it there, looking at my pots.
+- Já vinha pintado para a luta, argila branca até os ombros, sobre a pele cinza.
+  - *EN:* He was painted for the fight already, white clay to the shoulders, over the grey skin.
+- Um odre cheio de água. No fim da estação seca, com meninos descendo em cordas para buscá-la, não é um preço pequeno.
+  - *EN:* A full skin of water. At the end of the dry season, with boys going down on ropes to fetch it, that is no small price.
+- A mão dele saiu do flanco.
+  - *EN:* His hand came away from his side.
+- Tukk cheirou o pote e deixou a mão em cima do odre.
+  - *EN:* Tukk smelled the pot and kept his hand on the skin.
+- Tukk cheirou o pote e puxou o odre um palmo para trás.
+  - *EN:* Tukk smelled the pot and pulled the skin back a hand’s width.
+- Tukk pegou o pote e deixou o odre. Estava cheio, e pesava.
+  - *EN:* Tukk took the pot and left the skin. It was full, and heavy.
+- uma pele de gato-do-deserto
+  - *EN:* a sand-cat hide
+- Durr, um caçador, veio por último, baixo e quieto, e pôs uma pele na pedra.
+  - *EN:* Durr, a hunter, came last, low and quiet, and laid a hide on the stone.
+- Levou o pulso ao nariz, cheirou a parte de dentro e fez uma careta.
+  - *EN:* He lifted his wrist to his nose, sniffed the inside of it, and made a face.
+- Ficou agachado em vez de sentar, o peso na ponta dos pés, e cheirou o pulso outra vez.
+  - *EN:* He crouched instead of sitting, his weight on his toes, and sniffed his wrist again.
+- Uma pele de gato-do-deserto. Só se pega esse bicho chegando contra o vento.
+  - *EN:* A sand-cat hide. You only catch that animal by coming at it downwind.
+- Ele se inclinou para a frente.
+  - *EN:* He leaned in.
+- Durr esfregou um pouco do pó no pulso, cheirou e ficou esperando, agachado.
+  - *EN:* Durr rubbed a little of the powder into his wrist, sniffed, and waited, crouching.
+- Durr esfregou o pó no pulso, cheirou e balançou a cabeça devagar.
+  - *EN:* Durr rubbed the powder into his wrist, sniffed, and slowly shook his head.
+- Durr pegou a bolsinha de pó, enfiou no cinto e foi embora agachado.
+  - *EN:* Durr took the pouch of powder, tucked it into his belt, and left crouching.
+- {n} olhou para aquilo, depois para mim, e não se mexeu.
+  - *EN:* {n} looked at it, then at me, and did not move.
+- A mão dele parou acima do couro.
+  - *EN:* His hand stopped above the hide.
+- Ele empurrou de volta o que sobrava, com um dedo só, e pegou apenas o que tinha vindo buscar.
+  - *EN:* He pushed the extra back across the hide with one finger and took only what he had come for.
+- Ele não se mexeu. O couro ficou entre nós.
+  - *EN:* He did not move. The hide stayed between us.
+- {n} levantou e foi embora, levando o que tinha trazido.
+  - *EN:* {n} got up and left, taking what he had brought.
+- Empurrar o couro
+  - *EN:* Push the hide across
+- Oferece
+  - *EN:* Offers
+- O alforje
+  - *EN:* The pack
+- No couro
+  - *EN:* On the hide
+- Hessa viu.
+  - *EN:* Hessa saw.
+- Pegou também o que eu tinha posto ao lado.
+  - *EN:* He took what I had put beside it as well.
+- Deixar que ele vá
+  - *EN:* Let him go
+- Ingredientes
+  - *EN:* Ingredients
+- Subir a duna e ouvir
+  - *EN:* Climb the dune and listen
+- ouvido turvo de vinho
+  - *EN:* ears dulled by wine
+- Do alto da duna deixei os ouvidos descerem pelo barulho, passando pelos urros, pelos cavalos, até achar dois homens de Redom agachados atrás de um escudo, falando alto demais.
+  - *EN:* From the top of the dune I let my ears go down into the noise, past the roaring, past the horses, until I found two men of Redom crouched behind a shield, talking too loud.
+- — Eles não ficam no chão, capitão. A gente corta no primeiro dia e no terceiro estão de volta na linha, fedendo àquela graxa cinza.
+  - *EN:* — They don’t stay down, Captain. We cut them on the first day and they’re back in the line by the third, stinking of that grey grease.
+- — Por isso ele veio em pessoa. Este ano, não. Ele diz que, se deixarmos um de pé nos poços, nossos filhos vão voltar aqui de barba.
+  - *EN:* — That’s why he came himself. Not this year. He says if we leave one standing at the wells, our sons will be back here with beards.
+- Graxa cinza. Resina, raiz amarga e a argila em que eu moo as duas. Eu a tinha trocado por água e por ser deixado em paz. Tinham me deixado em paz. E ali estava a conta, vinda lá do leste, numa coluna tão reta que parecia riscada a régua na areia.
+  - *EN:* Grey grease. Resin, bitter root, and the clay I grind them in. I had traded it for water and for being left alone. I had been left alone. And here was the bill, come all the way from the east, in a column so straight it looked ruled onto the sand.
+- Jogar o pó no vento dos cavalos
+  - *EN:* Throw the powder into the horses’ wind
+- não sobrou pó
+  - *EN:* no powder left
+- Desci pelas pedras até onde o vento corria dos poços na direção dos cavalos de Redom, abri a bolsa e soltei o pó. Ele é feito para esconder o cheiro de um homem daquilo que ele caça. O que faz com um cavalo que já não enxerga é outra coisa. A fileira de cavalos em volta do Tinido empinou toda de uma vez, derrubou dois cavaleiros e disparou, e pelo espaço de um fôlego não houve nada entre o Tinido e o escuro além de ar.
+  - *EN:* I came down along the rocks to where the wind ran from the wells toward the Redom horses, opened the pouch, and let the powder go. It is made to hide a man’s smell from whatever he hunts. What it does to a horse that can no longer see is something else. The line of horses around the Tinn went up on their hind legs all at once, threw two riders, and bolted, and for the space of a breath there was nothing between the Tinn and the dark but air.
+- Arrastar Tukk para fora da linha
+  - *EN:* Drag Tukk out of the line
+- Tukk estava no chão, com uma segunda lança no corpo e a primeira ainda no ombro, tentando se levantar num braço que já não obedecia. Peguei-o por baixo dos ombros e puxei. Ele pesava o que pesa um cavalo. Não usei a luz para isso, e as minhas costas vão se lembrar por mais tempo do que eu.
+  - *EN:* Tukk was down, with a second spear in him and the first still in his shoulder, trying to get up on an arm that no longer answered. I took him under both shoulders and pulled. He weighed what a horse weighs. I did not use the light to do it, and my back will remember it longer than I will.
+- O ombro direito, o da seta de Frígia, gritou o caminho inteiro.
+  - *EN:* My right shoulder, the one the Frígia bolt had found, screamed the whole way.
+- Ir até Shaa, no poço
+  - *EN:* Go to Shaa, at the well
+- Shaa estava na borda do poço, de joelhos, os dois braços em volta da barriga. Ajoelhei ao lado dela, peguei-a pelo braço e comecei a puxá-la para as pedras, e ela veio, devagar.
+  - *EN:* Shaa was on the rim of the well, on her knees, both arms around her belly. I knelt beside her, took her by the arm and began to pull her toward the rocks, and she came, slowly.
+- Beber
+  - *EN:* Drink
+- o odre está vazio
+  - *EN:* the skin is empty
+- Bebi, ali, no escuro, com o mundo acabando em volta, porque é o que minhas mãos sabem fazer quando não sabem o que fazer.
+  - *EN:* I drank, there, in the dark, with the world ending around me, because it is what my hands do when they do not know what to do.
+- Esconder-se nas pedras e esperar
+  - *EN:* Hide among the rocks and wait
+- Encostei as costas nas pedras e esperei a luz voltar. Sei fazer isso muito bem.
+  - *EN:* I pressed my back into the rocks and waited for the light to come back. I am very good at that.
+- o sol voltando
+  - *EN:* the sun returning
+- A borda do sol aparece.
+  - *EN:* The rim of the sun appears.
+- A chuva do décimo primeiro ano.
+  - *EN:* The rain in the eleventh year.
+- A praça que nunca estava suja.
+  - *EN:* The square that was never dirty.
+- O frio, e um olho violeta nele.
+  - *EN:* The cold, and a violet eye in it.
+- A noite em que acendemos todos juntos, e a noite virou dia.
+  - *EN:* The night we all lit together, and night became day.
+- A menina da febre.
+  - *EN:* The girl with the fever.
+- A borda de tudo, e o que vi depois dela.
+  - *EN:* The edge of everything, and what I saw beyond it.
+- A canção.
+  - *EN:* The song.
+- Um coração pequeno, rápido como o de um pássaro.
+  - *EN:* A small heart, quick as a bird’s.
+- segure para pensar
+  - *EN:* hold to think
+- a vida, segura
+  - *EN:* the life, held
+- Cantar
+  - *EN:* Sing
+- luz que caminha, sob o peso do silêncio
+  - *EN:* light that walks beneath the weight of silence
+- nós fomos o nome, agora somos a névoa
+  - *EN:* we were the name, now we are the mist
+- ele viu mais longe, ele voltou inteiro
+  - *EN:* he saw farther, he came back whole
+- silêncio, silêncio, sob o peso da luz
+  - *EN:* silence, silence, beneath the weight of light
+- nós fomos o nome, chorai, chorai
+  - *EN:* we were the name, weep, weep
+- a névoa é luz, o inteiro é distância
+  - *EN:* the mist is light, the whole is distance
+- Seguir em frente
+  - *EN:* Walk on
+- Distância da Pira
+  - *EN:* Distance from the Pyre
+- mínimo
+  - *EN:* minimum
+- Longe o bastante. Pode seguir.
+  - *EN:* Far enough. You can walk on.
+- Ainda perto demais da Pira.
+  - *EN:* Still too close to the Pyre.
+- Longe demais para um passo. Acenda mais perto.
+  - *EN:* Too far for one stride. Light closer.
+- O compasso quebrou de três para quatro.
+  - *EN:* The count broke from three to four.
+- Lembranças do Velho Mundo
+  - *EN:* Memories of the Old World
+- Do primeiro ano seco
+  - *EN:* The first dry year
+- Areia em tudo. No pão, na tinta, nas dobras desta página. Decidi parar de brigar com ela e chamá-la de tempero.
+  - *EN:* Sand in everything. In the bread, in the ink, in the creases of this page. I have decided to stop fighting it and call it seasoning.
+- Sobre os Grakh
+  - *EN:* On the Grakh
+- Dão nome a uma coisa pelo primeiro som que ela faz. Uma criança, pelo primeiro choro; um bicho, pelo último. Em onze anos não me deram nome. Considero o maior elogio que o deserto sabe fazer.
+  - *EN:* They name a thing by the first sound it makes. A child by its first cry; a beast by its last. In eleven years they have not named me. I take it as the highest compliment the desert knows how to pay.
+- Sobre a menina
+  - *EN:* On the girl
+- A febre levou a menina na quarta noite. Eu tive a cura na cabeça o tempo todo, dobrada bem pequena, onde guardo tudo o que não me é permitido usar. A mãe parou de vir ao ponto de troca.
+  - *EN:* The fever took the girl on the fourth night. I had the cure in my head the whole time, folded small, where I keep everything I am not allowed to use. Her mother has stopped coming to the trading stone.
+- Ontem à noite
+  - *EN:* Last night
+- Duas noites sem lua. O meu povo saberia o que isso quer dizer. Eu só sei que eles saberiam.
+  - *EN:* Two nights without a moon. My people would have known what that means. I only know that they would have known.
+- Outras páginas
+  - *EN:* Other pages
+- Há outras. Podem esperar. Tudo neste deserto pode esperar, menos a água.
+  - *EN:* There are others. They can wait. Everything in this desert can wait, except water.
+- Abrir
+  - *EN:* Open
+- Fechar
+  - *EN:* Close
+- ← Voltar
+  - *EN:* ← Back
+
+## Tela final
+
+- Aheryn entrou na noite brilhando. Qualquer coisa no deserto que saiba olhar vai saber onde ele está. Era essa a ideia.
+  - *EN:* Aheryn walked into the night shining. Anything in the desert that knows how to look will know where he is. That was the point.
+- Aheryn deu aos Tacets só a luz necessária para segui-lo, e nem um grão a mais. Trinta anos de prática.
+  - *EN:* Aheryn gave the Tacets just enough light to follow, and not a grain more. Thirty years of practice.
+- Aheryn acendeu o caminho e guardou um pouco para si. Velhos hábitos.
+  - *EN:* Aheryn lit the way and kept a little back for himself. Old habits.
+- O homem que os Grakh chamavam de Tinido
+  - *EN:* The man the Grakh called the Tinn
+- General-Rei de Redom
+  - *EN:* General-King of Redom
+- Seus homens o levaram para casa sobre a própria capa. Um ano depois, no Torneio Real convocado para substituí-lo, um cavaleiro de elmo fechado se inscreveu com o nome de Laus.
+  - *EN:* His men carried him home on his own cloak. A year later, at the Royal Tournament called to replace him, a rider in a closed helm entered under the name Laus.
+- Capítulo IV · Laus, o Azarão
+  - *EN:* Chapter IV · Laus, the Underdog
+- Hessa: viu os cavalos empinarem. Vai lembrar de quem abriu o caminho.
+  - *EN:* Hessa: she saw the horses go up. She will remember who opened the way.
+- Hessa: entre vocês, agora, há menos do que uma lança de distância.
+  - *EN:* Hessa: there is less than a spear’s length between you now.
+- Hessa: vai lembrar das ervas, e da luz.
+  - *EN:* Hessa: she will remember the herbs, and the light.
+- Hessa: a distância de sempre, uma lança e um pouco mais.
+  - *EN:* Hessa: the old distance, a spear and a little more.
+- Shaa: viveu o bastante para segurar o filho.
+  - *EN:* Shaa: she lived long enough to hold her son.
+- Shaa: deu o nome ao filho com o último fôlego.
+  - *EN:* Shaa: she named her son with her last breath.
+- A cria sentiu a sua luz antes de nascer.
+  - *EN:* The child felt your light before he was born.
+- A graxa cinza: agora você sabe por que o exército veio. Os Grakh nunca vão saber.
+  - *EN:* The grey grease: you know now why the army came. The Grakh will never know.
+- A graxa cinza: você sentiu o cheiro dela na linha de frente, e não perguntou por quê.
+  - *EN:* The grey grease: you smelled it on the front line, and did not ask why.
+- A graxa cinza: você nunca soube por que Redom veio com tanta força este ano.
+  - *EN:* The grey grease: you never learned why Redom came in such force this year.
+- Tukk: vivo, com duas pontas de lança para mostrar.
+  - *EN:* Tukk: alive, with two spearheads to show for it.
+- Tukk: não voltou da linha.
+  - *EN:* Tukk: he did not come back from the line.
+- Os Tacets: levados para longe da Pira, até onde a luz alcançou.
+  - *EN:* The Tacets: led away from the Pyre, as far as the light would reach.
+- O seu nome: Hessa sabe.
+  - *EN:* Your name: Hessa knows it.
+- As crianças da Pira deram um nome a você: um estalo de língua.
+  - *EN:* The children of the Pyre gave you a name: a click of the tongue.
+- A pedra: na dobra da pele da cria.
+  - *EN:* The stone: in a fold of the child’s hide.
+- Hessa: deixou você passar a graxa cinza no braço dela.
+  - *EN:* Hessa: she let you put the grey grease on her arm.
+- No alforje, para a estrada: 
+  - *EN:* In the pack, for the road: 
+- No alforje, para a estrada: nada que a bancada tenha feito.
+  - *EN:* In the pack, for the road: nothing the bench made.
+- Irônico até o fim: recebeu o dia comido com uma piada pronta, e a guardou para si.
+  - *EN:* Wry to the end: he met the eaten day with a joke ready, and kept it to himself.
+- Mais perto do que pretendia: deixou gente chegar ao alcance do braço, e uma delas era muito pequena.
+  - *EN:* Closer than he meant to be: he let people within arm’s reach, and one of them was very small.
+- Contido: deu ao mundo o que era justo e nem um grão a mais. No fim, bastou.
+  - *EN:* Contained: he gave the world what was fair and not a grain more. In the end, it was enough.
+- Ainda perguntando: com mais de cem anos, ainda queria saber como as coisas se chamam, e por quê.
+  - *EN:* Still asking: past a hundred years old, and he still wanted to know what things are called, and why.
+- Derramou na areia
+  - *EN:* Poured it into the sand
+- Entregou a Hessa
+  - *EN:* Gave it to Hessa
+- Um último gole
+  - *EN:* One last swallow
+- A mãe e a cria
+  - *EN:* The mother and the child
+- Só a cria
+  - *EN:* Only the child
+- “Cuide dele.”
+  - *EN:* “Look after him.”
+- “Meu nome é Aheryn.”
+  - *EN:* “My name is Aheryn.”
+- “O que comeu o dia foi a lua.”
+  - *EN:* “What ate the day was the moon.”
+- Silêncio
+  - *EN:* Silence
+- Deixou que ele seguisse
+  - *EN:* Let him follow
+- Estalou a língua
+  - *EN:* Clicked your tongue
+- Encarou até ele ir
+  - *EN:* Stared until he left
+- Mostrou a luz a Shaa
+  - *EN:* Showed Shaa the light
+- Fez uma piada
+  - *EN:* Made a joke
+- Ficou calado
+  - *EN:* Said nothing
+- “Então somos úteis um ao outro.”
+  - *EN:* “Then we are useful to each other.”
+- “São só ervas.”
+  - *EN:* “It is only herbs.”
+- O sinal de troca do gelo
+  - *EN:* The exchange sign of the ice
+- Baixou os olhos e foi embora
+  - *EN:* Lowered your eyes and went
+- A bandeira
+  - *EN:* The banner
+- O homem da frente
+  - *EN:* The man in front
+- Contou os estandartes
+  - *EN:* Counted the standards
+- Tocou o punho dele
+  - *EN:* Touched his fist
+- Não tocou
+  - *EN:* Did not touch him
+- Deixou a pedra na pele
+  - *EN:* Left the stone in the hide
+- Na roda, o que Aheryn foi buscar
+  - *EN:* In the ring, what Aheryn reached for
+- O odre de vinho
+  - *EN:* The skin of wine
+- As últimas palavras a Hessa
+  - *EN:* The last words to Hessa
+- A criança que imitava o seu andar
+  - *EN:* The child who copied your walk
+- Shaa pediu para ver a luz
+  - *EN:* Shaa asked to see the light
+- Quando Hessa falou dos potes
+  - *EN:* When Hessa spoke of the pots
+- Diante da coluna de Redom
+  - *EN:* Facing the Redom column
+- Antes de partir, a cria
+  - *EN:* Before leaving, the child
+- Goles do odre
+  - *EN:* Swallows from the skin
+- Nenhum
+  - *EN:* None
+- 1 gole
+  - *EN:* 1 swallow
+- A pedra
+  - *EN:* The stone

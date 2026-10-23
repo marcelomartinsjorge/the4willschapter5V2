@@ -3,7 +3,7 @@
 ## Situação atual
 **Instalados:** 8 ambientes em loop e 30 efeitos, todos nivelados (volume parecido entre eles) e com a emenda dos loops suavizada para não estalar. Os loops têm cerca de 14 s (a emenda ficou 0,8 s mais curta).
 - **`roda-nome`:** você mandou 4 variações (`roda-nome1` a `roda-nome4`). O livro toca as quatro escalonadas, uma a cada ~1,1 s, para soar como a roda inteira repetindo o nome.
-- **Ainda sem arquivo:** `grakh-bufa.mp3` (o Grakh se interessa, na troca). Toca a reserva sintetizada. Se quiser, gere e salve em `assets/audio/sfx/`.
+- **`grakh-bufa.mp3`:** não veio no pacote. Montei um provisório com o seu `po-vento` e o começo do `grakh-grunhe` (dois sopros de narina e um peito grave). Se quiser trocar, gere com o prompt da tabela e salve por cima, em `assets/audio/sfx/`.
 - **Falta só a dublagem** (`assets/audio/voz/`, ver `ROTEIRO_DUBLAGEM_CAP5.md`).
 
 Abaixo, a lista original com os prompts.

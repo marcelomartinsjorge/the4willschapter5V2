@@ -93,7 +93,12 @@ const A = {
     return true;
   },
   stopNarr() { if (this.narr) { const s = this.narr; this.narr = null; try { s.stop(); } catch (e) {} this.duck(false); } },
-  duck(on) { if (!this.ctx) return; const t = this.ctx.currentTime; this.bed.gain.cancelScheduledValues(t); this.bed.gain.setTargetAtTime(on ? .25 : 1, t, .25); },
+  sobe() { this.tone(330, 1.4, 'sine', .035, 0, 1.6); this.tone(495, 1.6, 'sine', .02, .15, 1.5); },
+  trai() { this.tone(110, 2.2, 'sawtooth', .04, 0, 2); this.hiss(2, 1500, .5, .1, 0); this.sfx('luz', .7); },
+  acende() { this.tone(392, .9, 'sine', .04, 0, 1.5); this.tone(588, 1.1, 'sine', .025, .1, 1.4); },
+  // abafa(true): a cama sonora quase some (o parto fica só com os corações); abafa(false) devolve
+  abafa(on) { if (!this.ctx) return; const t = this.ctx.currentTime; this.bed.gain.cancelScheduledValues(t); this.bed.gain.setTargetAtTime(on ? .06 : 1, t, on ? .8 : 1.2); this.abafado = on; },
+  duck(on) { if (!this.ctx || this.abafado) return; const t = this.ctx.currentTime; this.bed.gain.cancelScheduledValues(t); this.bed.gain.setTargetAtTime(on ? .25 : 1, t, .25); },
   setOn(on) { this.on = on; if (this.master) this.master.gain.setTargetAtTime(on ? 1 : 0, this.ctx.currentTime, .1); },
   tone(f, d, type = 'sine', v = .08, when = 0, bend = 0) {
     if (!this.ctx) return; const t = this.ctx.currentTime + when, o = this.ctx.createOscillator(), g = this.ctx.createGain();
@@ -217,19 +222,48 @@ $('#cxClose').onclick = () => $('#codex').classList.remove('show');
 function toast(t) { const el = document.createElement('div'); el.className = 'toast'; el.textContent = t; $('#toasts').appendChild(el); A.aviso(); setTimeout(() => el.classList.add('out'), 3800); setTimeout(() => el.remove(), 4600); }
 
 // ---------------------------------------------------------------- a Luz (Cap. I): o quanto Aheryn está aceso
+// ---------------------------------------------------------------- a Luz, idêntica à do Cap. I
+// O topo mostra a região do corpo (nada, dedos, pulsos, pescoço, peito, rosto), não o número.
+// Os três Aheryns: quieto (até 30, o cânone), medido (31 a 59), aceso (60 ou mais).
+window.quieto = (s) => s.luz <= 30;
+window.medido = (s) => s.luz > 30 && s.luz < 60;
+window.aceso = (s) => s.luz >= 60;
 let luzShown = st.luz;
+function regiao(l) { return l < 8 ? 0 : l < 30 ? 1 : l < 50 ? 2 : l < 68 ? 3 : l < 85 ? 4 : 5; }
 function mudaLuz(d) {
-  if (!d) return; st.luz = clamp(st.luz + d, 0, 100);
-  const f = document.createElement('span'); f.className = 'luzdelta ' + (d > 0 ? 'up' : 'down'); f.textContent = (d > 0 ? '+' : '') + d;
-  $('#luz').appendChild(f); setTimeout(() => f.remove(), 1600);
+  if (!d) return; const antes = st.luz; st.luz = clamp(st.luz + d, 0, 100);
   d > 0 ? A.luzSobe() : A.luzDesce();
+  const cl = document.body.classList, k = d > 0 ? 'luz-sobe' : 'luz-desce';
+  cl.remove('luz-sobe', 'luz-desce'); void document.body.offsetWidth; cl.add(k);
+  clearTimeout(mudaLuz.t); mudaLuz.t = setTimeout(() => cl.remove(k), 1700);
+  const r0 = regiao(antes), r1 = regiao(st.luz);
+  if (r0 !== r1) { const c = document.createElement('div'); c.className = 'luzcentro ' + (d > 0 ? 'up' : 'down'); c.innerHTML = `<span>${esc(U('regioes')[r1])}</span>`; document.body.appendChild(c); setTimeout(() => c.remove(), 2200); }
 }
+// veias douradas nas bordas: crescem com a Luz (o mesmo desenho do Cap. I)
+(function veias() {
+  let seed = 7; const rnd = () => ((seed = (seed * 9301 + 49297) % 233280) / 233280);
+  const W = 1000, H = 1000; let d = '', g = 0;
+  const ramo = (x, y, ang, len, prof) => {
+    let path = `M${x.toFixed(1)} ${y.toFixed(1)}`; const passos = 8 + Math.floor(rnd() * 4), seg = len / passos;
+    for (let i = 0; i < passos; i++) {
+      ang += (rnd() - .5) * .45; x += Math.cos(ang) * seg; y += Math.sin(ang) * seg; path += ` L${x.toFixed(1)} ${y.toFixed(1)}`;
+      if (prof < 2 && i > 1 && rnd() < .3) ramo(x, y, ang + (rnd() < .5 ? -1 : 1) * (.45 + rnd() * .5), len * .42, prof + 1);
+    }
+    d += `<path pathLength="1" class="v${prof}" data-g="${g}" d="${path}"/>`;
+  };
+  for (let i = 0; i < 4; i++) { g = i; ramo(0, 120 + i * 230 + rnd() * 80, (rnd() - .5) * .7, 170 + rnd() * 90, 0); }
+  for (let i = 0; i < 4; i++) { g = 4 + i; ramo(W, 100 + i * 230 + rnd() * 80, Math.PI + (rnd() - .5) * .7, 170 + rnd() * 90, 0); }
+  g = 8; ramo(70, H, -Math.PI / 2 + .35, 200, 0); g = 9; ramo(W - 70, H, -Math.PI / 2 - .35, 200, 0);
+  $('#veias').innerHTML = `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">${d}</svg>`;
+  [0, 1, 2, 3, 8].forEach((k) => $('#veias').querySelectorAll(`path[data-g="${k}"]`).forEach((pp) => pp.classList.add('esq')));
+})();
 function drawLuz() {
   luzShown += (st.luz - luzShown) * .08;
   document.documentElement.style.setProperty('--luz', (luzShown / 100).toFixed(3));
-  $('#luzV').textContent = Math.round(luzShown);
+  { const r = regiao(luzShown); if (r !== drawLuz.r) { drawLuz.r = r; $('#luzV').textContent = U('regioes')[r]; } }
   const cl = document.body.classList;
-  cl.toggle('luz-alta', luzShown >= 60); cl.toggle('luz-baixa', luzShown <= 20);
+  cl.toggle('luz-alta', luzShown >= 60); cl.toggle('luz-baixa', luzShown <= 25);
+  cl.toggle('marcado', !!(st.c1 && st.c1.marcado));
   document.documentElement.style.setProperty('--turvo', Math.min(1, (st.turvo || 0) / 5).toFixed(2));
   requestAnimationFrame(drawLuz);
 }
@@ -238,13 +272,15 @@ function drawLuz() {
 // Em páginas marcadas com bebe:true, tocar no odre dá um gole: a Luz cai, o mundo turva (st.turvo).
 // Sóbrio, Aheryn ouve e cheira mais longe; bêbado, essas opções aparecem riscadas. No parto, cada gole vira névoa.
 const LINHAS_GOLE = L.linhasGole || [];
+const naAbertura = (p) => !!(p && p.abertura && (st.ab || 0) < p.abertura.anos.length);
 function desenhaCantil() {
   const b = $('#cantil'); if (!b) return;
   b.querySelector('.nivel').style.setProperty('--n', (st.cantil / (L.cantil || 6)).toFixed(3));
   b.querySelector('.qt').textContent = st.cantil;
-  const p = P[st.i], pode = !!(p && p.bebe && st.cantil > 0 && !document.body.classList.contains('mg-on'));
+  const p = P[st.i], pode = !!(p && ((p.bebe && st.cantil > 0) || naAbertura(p)) && !document.body.classList.contains('mg-on') && $('#cover').classList.contains('hide'));
   b.disabled = !pode; b.classList.toggle('pode', pode);
   b.title = st.cantil <= 0 ? U('cantilVazio') : pode ? U('cantilBeber') : U('cantilAqui');
+  b.classList.toggle('afoga', !!(pode && pensaViva));
 }
 function beber(origem) {
   if (st.cantil <= 0) return false;
@@ -256,12 +292,173 @@ function beber(origem) {
   return true;
 }
 $('#cantil') && ($('#cantil').onclick = () => {
-  const p = P[st.i]; if (!p || !p.bebe || st.cantil <= 0) return;
+  const p = P[st.i]; if (naAbertura(p)) return aberturaGole(p);
+  if (!p || !p.bebe || st.cantil <= 0) return;
+  escondeCoach();
+  if (pensaViva) { if (!beber('pensa')) return; return pensaViva.afoga(); }
   if (!beber()) return;
   const k = Math.min(st.bebidos, LINHAS_GOLE.length) - 1;
   if (LINHAS_GOLE[k]) { txt.insertAdjacentHTML('beforeend', pHTML(tr(LINHAS_GOLE[k]), 'novo gole')); panel.scrollTop = panel.scrollHeight; }
 });
 const sobrio = () => (st.turvo || 0) <= (L.limiteSobrio != null ? L.limiteSobrio : 2);
+
+// ---------------------------------------------------------------- ícones de gesto (instrução como ícone, não como frase)
+const GESTO = {
+  segurar: '<svg viewBox="0 0 64 64"><circle class="anel" cx="26" cy="14" r="11"/><g transform="translate(13 20) scale(1.6)"><path d="M10 9.5V4a2 2 0 0 0-4 0v10"/><path d="M10 9a2 2 0 0 1 4 0v1"/><path d="M14 10a2 2 0 0 1 4 0v1"/><path d="M18 11a2 2 0 1 1 4 0v3a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-6-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.83L6 14"/></g></svg>',
+  tocar: '<svg viewBox="0 0 64 64"><circle class="onda" cx="26" cy="14" r="7"/><g transform="translate(13 20) scale(1.6)"><path d="M10 9.5V4a2 2 0 0 0-4 0v10"/><path d="M10 9a2 2 0 0 1 4 0v1"/><path d="M14 10a2 2 0 0 1 4 0v1"/><path d="M18 11a2 2 0 1 1 4 0v3a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-6-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.83L6 14"/></g></svg>',
+  odre: '<svg viewBox="0 0 64 64"><path d="M24 8h16M26 8v8c-8 4-13 12-13 22 0 11 8 17 19 17s19-6 19-17c0-10-5-18-13-22V8"/><path class="gota" d="M32 30c3 4 5 7 5 9a5 5 0 0 1-10 0c0-2 2-5 5-9z"/></svg>',
+  sol: '<svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="20" class="anel"/><circle cx="32" cy="32" r="14" class="lua"/></svg>',
+};
+// o cartão do gesto aparece no centro na primeira vez e some no primeiro toque
+function gesto(root, icone, titulo, sub, ms) {
+  const g = document.createElement('div'); g.className = 'gesto ' + icone;
+  g.innerHTML = `${GESTO[icone] || ''}<p>${esc(titulo)}</p>${sub ? `<small>${esc(sub)}</small>` : ''}`;
+  root.appendChild(g); requestAnimationFrame(() => g.classList.add('on'));
+  const some = () => { g.classList.remove('on'); setTimeout(() => g.remove(), 500); root.removeEventListener('pointerdown', some, true); removeEventListener('keydown', some, true); };
+  setTimeout(() => { root.addEventListener('pointerdown', some, true); addEventListener('keydown', some, true); }, 350);
+  if (ms) setTimeout(some, ms);
+  return some;
+}
+// o "coach" do odre: uma seta e um ícone colados ao HUD
+function mostraCoach(titulo, sub, ms) {
+  escondeCoach();
+  const c = document.createElement('div'); c.id = 'coach';
+  c.innerHTML = `${GESTO.tocar}<div><p>${esc(titulo)}</p><small>${esc(sub)}</small></div>`;
+  document.body.appendChild(c);
+  // a seta do cartão aponta para o odre, onde quer que ele esteja no topo
+  const r = $('#cantil').getBoundingClientRect();
+  c.style.top = (r.bottom + 14) + 'px'; c.style.right = Math.max(8, innerWidth - (r.left + r.width / 2) - 28) + 'px';
+  requestAnimationFrame(() => c.classList.add('on'));
+  if (ms) later(escondeCoach, ms);
+}
+function escondeCoach() { const c = $('#coach'); if (!c) return; c.classList.remove('on'); setTimeout(() => c.remove(), 400); }
+
+// ---------------------------------------------------------------- a língua de sensação (a mesma do Cap. I)
+// Um pensamento sobe sobre a imagem. Segurar é segui-lo (acende); se o leitor não faz nada, ele afunda
+// sozinho (Aheryn contém). Só no Cap. V: tocar no odre enquanto ele flutua é beber por cima dele.
+const camada = document.createElement('div'); camada.id = 'pensa'; document.body.appendChild(camada);
+let pensaViva = null;
+function estadoDe(i) { let k = i; while (k > 0 && !P[k].estado) k--; return (P[k] && P[k].estado) || 'seco'; }
+function posPensa(seed) {
+  const r = (n) => { const x = Math.sin(seed * 9301 + n * 49297) * 10000; return x - Math.floor(x); };
+  if (matchMedia('(max-width: 820px), (orientation: portrait)').matches) return { x: 45 + r(1) * 10, y: 14 + r(2) * 18 };
+  const dir = document.body.classList.contains('lado-dir');
+  return { x: (dir ? 8 : 54) + r(1) * 26, y: 18 + r(2) * 46 };
+}
+const listaDe = (x) => [].concat(x || []);
+function desfechoPensa(th, como, novo) {
+  const t = como === 'seguiu' ? th.mais : como === 'bebeu' ? th.beber : th.conter;
+  listaDe(t).forEach((x) => { txt.insertAdjacentHTML('beforeend', pHTML(sub(tr(x)), (novo ? 'novo ' : '') + (como === 'seguiu' ? 'pensado' : como === 'bebeu' ? 'gole' : ''))); });
+  if (novo) panel.scrollTop = panel.scrollHeight;
+}
+function sensacao(p, dir) {
+  camada.innerHTML = ''; pensaViva = null;
+  document.body.dataset.estado = estadoDe(st.i);
+  const cl = document.body.classList;
+  if (!p.acender) { cl.remove('veias-cheias', 'acendendo'); document.querySelectorAll('#veias path.off').forEach((x) => x.classList.remove('off')); }
+  listaDe(p.pensa).forEach((th, k) => {
+    const feito = st.feitos['pe:' + th.id];
+    if (feito) { later(() => desfechoPensa(th, feito, false), 60); return; }
+    if ((th.se && !th.se(st)) || (th.luzMin && st.luz < th.luzMin) || (th.luzMax && st.luz > th.luzMax)) return;
+    later(() => { if (P[st.i] === p) sobePensa(p, th, k); }, (th.atraso || 3000) * (window.__LEITURA_K || 1));
+  });
+  if (p.trai) {
+    const t = p.trai;
+    if (st.feitos['tr:' + p.id]) { if (t.texto) later(() => appendParas(t.texto, 'trai'), 80); }
+    else if (dir > 0 && (!t.se || t.se(st))) later(() => { if (P[st.i] === p) { st.feitos['tr:' + p.id] = 1; salvar(); traicao(t); } }, (t.atraso || 2000) * (window.__LEITURA_K || 1));
+  }
+}
+function sobePensa(p, th, k) {
+  const el = document.createElement('button'); el.className = 'pensa'; el.type = 'button';
+  el.innerHTML = `<span>${esc(sub(tr(th.t)))}</span>`;
+  const pos = posPensa(k + th.id.length * 7); el.style.left = pos.x + '%'; el.style.top = pos.y + '%';
+  camada.appendChild(el); A.ctx && A.sobe();
+  if (th.voz) fala(th.voz, 300);
+  let raf = 0, t0 = 0, fim = false;
+  const acaba = (como) => {
+    if (fim || P[st.i] !== p) return;
+    fim = true; clearTimeout(morre); cancelAnimationFrame(raf); pensaViva = null; desenhaCantil();
+    st.feitos['pe:' + th.id] = como; registrar('pensa_' + th.id, como); salvar();
+    if (como === 'seguiu') { mudaLuz(th.luz || 4); if (th.flag) listaDe(th.flag).forEach((f) => { st.f[f] = true; }); if (th.tomSeguir) st.tom[th.tomSeguir] = (st.tom[th.tomSeguir] || 0) + 1; el.classList.add('seguido'); }
+    else { el.classList.add('contido'); const tm = como === 'bebeu' ? 'frieza' : th.tomConter; if (tm) st.tom[tm] = (st.tom[tm] || 0) + 1; }
+    later(() => { if (P[st.i] === p) desfechoPensa(th, como, true); }, como === 'seguiu' ? 700 : 500);
+    setTimeout(() => el.remove(), 1600);
+  };
+  const vida = (th.vida || 7500) * (window.__LEITURA_K ? 0.3 : 1);
+  const morre = setTimeout(() => { if (!fim) acaba('conteve'); }, vida); timers.push(morre);
+  // beber por cima: o odre afoga o pensamento (só onde se pode beber)
+  pensaViva = { afoga: () => { if (!fim) acaba('bebeu'); } };
+  desenhaCantil();
+  const anda = () => { const q = Math.min(1, (performance.now() - t0) / 1100); el.style.setProperty('--k', q.toFixed(3)); if (q >= 1) return acaba('seguiu'); raf = requestAnimationFrame(anda); };
+  el.addEventListener('pointerdown', (ev) => { if (fim) return; ev.preventDefault(); t0 = performance.now(); el.classList.add('segura'); raf = requestAnimationFrame(anda); });
+  const solta = () => { if (fim) return; cancelAnimationFrame(raf); el.classList.remove('segura'); el.style.setProperty('--k', '0'); };
+  ['pointerup', 'pointerleave', 'pointercancel'].forEach((ev) => el.addEventListener(ev, solta));
+  el.addEventListener('contextmenu', (ev) => ev.preventDefault());
+  el.addEventListener('keydown', (ev) => { if ((ev.key === 'Enter' || ev.key === ' ') && !fim) { ev.preventDefault(); acaba('seguiu'); } });
+  if (window.__PENSA_BOT) setTimeout(() => { if (!fim) acaba(window.__PENSA_BOT); }, 200);
+}
+// o corpo trai: as veias sobem sem o leitor fazer nada
+function traicao(t) {
+  const cl = document.body.classList; cl.remove('trai'); void document.body.offsetWidth; cl.add('trai');
+  A.ctx && A.trai(); if (t.luz) mudaLuz(t.luz);
+  if (t.voz) fala(t.voz, 700);
+  if (t.texto) later(() => appendParas(t.texto, 'trai'), 900);
+  setTimeout(() => cl.remove('trai'), 2600);
+}
+// o gesto final do Cap. V: o avesso do apagar do Cap. I. O leitor acende as veias, linha por linha.
+function renderAcender(p) {
+  const ps = [...txt.children]; const cl = document.body.classList;
+  const esq = new Set([0, 1, 2, 3, 8]), marca = !!(st.c1 && st.c1.marcado);
+  const grupos = [8, 9, 0, 4, 1, 5, 2, 6, 3, 7].filter((x) => !(marca && esq.has(x)));
+  const acendeGrupo = (x) => document.querySelectorAll(`#veias path[data-g="${x}"]`).forEach((pp) => pp.classList.remove('off'));
+  cl.add('veias-cheias');
+  document.querySelectorAll('#veias path').forEach((pp) => pp.classList.add('off'));
+  if (st.feitos['ac:' + p.id]) { grupos.forEach(acendeGrupo); return true; }
+  ps.slice(1).forEach((el) => { el.style.display = 'none'; });
+  let vis = 1; const total = ps.length;
+  box.innerHTML = `<button class="apagar-btn acender-btn" aria-label="${esc(U('acenderA'))}"><svg viewBox="0 0 60 60" aria-hidden="true"><path d="M30 4v52M30 18l-12-10M30 18l12-10M30 32l-16 8M30 32l16 8M30 44l-8 10M30 44l8 10"/></svg></button><p class="dica acender-dica">${esc(U('acenderA'))}</p>`;
+  const btn = box.querySelector('.apagar-btn');
+  btn.onclick = () => {
+    A.ctx && A.acende(); mudaLuz(2);
+    const passos = Math.max(1, total - 1), porVez = Math.ceil(grupos.length / passos);
+    grupos.splice(0, porVez).forEach(acendeGrupo);
+    if (vis < total) { const el = ps[vis++]; el.style.display = ''; el.classList.add('novo'); panel.scrollTop = panel.scrollHeight; }
+    if (vis >= total) {
+      grupos.splice(0).forEach(acendeGrupo);
+      box.innerHTML = ''; st.feitos['ac:' + p.id] = 1; salvar();
+      setTimeout(() => setNext(true), 900);
+    }
+  };
+  return false;
+}
+
+// ---------------------------------------------------------------- a abertura: os trinta anos, gole a gole, até a Luz chegar a 10
+function renderAbertura(p) {
+  const ab = p.abertura, k = st.ab || 0;
+  document.body.classList.add('na-abertura');
+  const cap = $('#hudCap');
+  if (cap) { cap.textContent = st.c1 && st.c1.veio ? U('abLuzC1') : U('abLuz'); cap.hidden = false; }
+  ab.anos.slice(0, k).forEach((a) => appendParas([a.t], 'ano'));
+  if (k >= ab.anos.length) { appendParas([ab.fecho]); return true; }
+  later(() => { if (P[st.i] === p && naAbertura(p)) mostraCoach(U('abBeber'), U('abBeberSub')); }, 1800 + paras(p.texto).length * 700);
+  return false;
+}
+let abOcupado = 0;
+function aberturaGole(p) {
+  const ab = p.abertura, k = st.ab || 0; if (k >= ab.anos.length || performance.now() < abOcupado) return;
+  escondeCoach();
+  abOcupado = performance.now() + (ab.anos[k].chuva ? 1700 : 650);
+  const a = ab.anos[k], ultimo = k === ab.anos.length - 1, alvo = 10;
+  const passo = ultimo ? st.luz - alvo : Math.max(1, Math.round((st.luz - alvo) / (ab.anos.length - k)));
+  A.gole(); document.body.classList.remove('bebe'); void document.body.offsetWidth; document.body.classList.add('bebe');
+  if (a.chuva) { mudaLuz(a.chuva); later(() => mudaLuz(-(passo + a.chuva)), 1500); } else mudaLuz(-passo);
+  st.ab = k + 1;
+  txt.insertAdjacentHTML('beforeend', pHTML(tr(a.t), 'novo ano')); panel.scrollTop = panel.scrollHeight;
+  if (st.ab >= ab.anos.length) {
+    later(() => { st.luz = alvo; appendParas([ab.fecho]); setNext(true); panel.scrollTop = panel.scrollHeight; salvar(); desenhaCantil(); }, a.chuva ? 2200 : 1400);
+  }
+  salvar(); desenhaCantil();
+}
 
 // ---------------------------------------------------------------- estatísticas (Supabase)
 function registrar(escolha, opcao) {
@@ -310,7 +507,8 @@ function render(dir = 1) {
   setFundo(resolveFundo(p));
   if (A.ctx) { A.setZone(p.zona); if (p.som && dir > 0) A.once(p.som, .55); }
   document.body.dataset.zona = p.zona;
-  { let k = st.i; while (k > 0 && !P[k].parte) k--; $('#parte').textContent = U('parte') + ' ' + (P[k].parte || 'I'); }
+  { let k = st.i; while (k > 0 && !P[k].parte) k--; $('#parte').textContent = P[k].parte ? U('parte') + ' ' + P[k].parte : (U('prologo') || U('parte') + ' I'); }
+  document.body.classList.remove('na-abertura'); escondeCoach(); { const hc = $('#hudCap'); if (hc) hc.hidden = true; }
   const vis = P.filter(visivel), n = vis.indexOf(p) + 1; $('#pnum').textContent = `${n}`;
   $('#prog').style.setProperty('--p', (n / vis.length).toFixed(3));
   panel.classList.remove('in'); void panel.offsetWidth; panel.classList.add('in');
@@ -335,7 +533,12 @@ function render(dir = 1) {
   if (p.escolha) livre = renderEscolha(p);
   if (p.dialogo) livre = renderDialogo(p);
   if (p.minijogo) livre = renderMinijogo(p);
+  if (p.abertura) livre = renderAbertura(p);
+  sensacao(p, dir);
+  if (p.acender) livre = renderAcender(p);
   setNext(livre);
+  // a primeira página do capítulo em que dá para beber: o odre se apresenta (uma vez)
+  if (p.bebe && st.cantil > 0 && !st.f._tutOdre) { st.f._tutOdre = true; later(() => { if (P[st.i] === p) mostraCoach(U('odreTut'), U('odreTutSub'), 7000); }, 2200); }
   btnPrev.disabled = idxVis(st.i, -1) < 0; btnPrev.textContent = U('voltar');
   btnNext.textContent = p.fim ? U('fim') : U('prox');
   st.feitos[p.id] = st.feitos[p.id] || 1; salvar();
@@ -361,7 +564,11 @@ const rotulo = (o) => (o.silencio ? U('silencioR') : tr(typeof o.txt === 'functi
 // opção que não está disponível agora (bêbado demais, odre vazio...): aparece riscada, com o motivo
 const riscada = (o) => !!(o.riscavel && o.se && !o.se(st));
 const motivo = (o) => (o.motivo ? `<small class="motivo">${esc(tr(typeof o.motivo === 'function' ? o.motivo(st) : o.motivo))}</small>` : '');
-const optHTML = (o, k) => `<button class="opt ${o.silencio ? 'sil' : ''} ${riscada(o) ? 'riscada' : ''}" data-id="${o.id}" ${riscada(o) ? 'disabled aria-disabled="true"' : ''}><span class="k">${riscada(o) ? '–' : k + 1}</span><span class="tx">${o.silencio ? `<em>${U('silencio')}</em>` : esc(rotulo(o))}${riscada(o) ? motivo(o) : ''}</span></button>`;
+const travaDe = (o) => (o.luzMin && st.luz < o.luzMin ? U('travaQuieta') : o.luzMax && st.luz > o.luzMax ? (o.travaAcesaTxt ? tr(o.travaAcesaTxt) : U('travaAcesa')) : null);
+const optHTMLbase = (o, k) => `<button class="opt ${o.silencio ? 'sil' : ''} ${riscada(o) ? 'riscada' : ''}" data-id="${o.id}" ${riscada(o) ? 'disabled aria-disabled="true"' : ''}><span class="k">${riscada(o) ? '–' : k + 1}</span><span class="tx">${o.silencio ? `<em>${U('silencio')}</em>` : esc(rotulo(o))}${riscada(o) ? motivo(o) : ''}</span></button>`;
+const optHTML = (o, k) => { const tv = travaDe(o);
+  if (tv) return `<button class="opt travada" disabled data-id="${o.id}"><span class="k">✕</span><span class="tx"><s>${o.silencio ? `<em>${U('silencio')}</em>` : esc(rotulo(o))}</s><small>${esc(tv)}</small></span></button>`;
+  return optHTMLbase(o, k).replace('class="opt ', `class="opt ${o.luzMin ? 'acesa ' : ''}`); };
 const opcoesVis = (lista) => lista.filter((o) => !o.se || o.se(st) || riscada(o));
 const resultadoDe = (o) => (typeof o.resultado === 'function' ? o.resultado(st) : o.resultado);
 
@@ -376,7 +583,14 @@ function abreEscolha(p) {
   const e = p.escolha, ops = opcoesVis(e.opcoes);
   const livres = ops.filter((o) => !riscada(o)), presas = ops.filter(riscada);
   box.innerHTML = `<p class="eyebrow">${e.pergunta ? esc(tr(e.pergunta)) : U('oque')}</p>` + livres.map(optHTML).join('') + presas.map((o) => optHTML(o, 0)).join('');
-  box.querySelectorAll('.opt:not(.riscada)').forEach((b) => b.onclick = () => escolher(p, b.dataset.id));
+  box.querySelectorAll('.opt:not(.riscada):not(.travada)').forEach((b) => b.onclick = () => escolher(p, b.dataset.id));
+  // escolha com tempo (como o proibido do Cap. I): se ninguém decide, vale o padrão
+  if (e.janela) {
+    box.classList.add('urgente', 'sobPressao');
+    box.insertAdjacentHTML('beforeend', `<div class="tenso" style="--j:${e.janela}s"></div>`);
+    A.tone(220, .6, 'triangle', .04); A.tone(165, .9, 'sine', .04, .2);
+    later(() => { if (!st.escolhas[e.id]) escolher(p, e.padrao); }, e.janela * 1000 * (window.__LEITURA_K ? .05 : 1));
+  }
 }
 function aplicar(o) {
   if (!o) return;
@@ -385,6 +599,7 @@ function aplicar(o) {
   if (o.luz) mudaLuz(o.luz);
   ['hessa', 'shaa', 'pira'].forEach((k) => { if (o[k]) st[k] = (st[k] || 0) + o[k]; });
   if (o.gole) beber('escolha');
+  if (o.trai) later(() => traicao(o.trai), o.trai.atraso || 1500);
   if (o.flag) [].concat(o.flag).forEach((f) => { st.f[f] = true; });
   const av = typeof o.aviso === 'function' ? o.aviso(st) : o.aviso;
   if (av) later(() => toast(tr(av)), 500);
@@ -394,6 +609,7 @@ function escolher(p, id) {
   const o = e.opcoes.find((x) => x.id === id); st.escolhas[e.id] = id;
   if (o.fundo) { (st.fundoPag = st.fundoPag || {})[p.id] = o.fundo; setFundo(o.fundo); }
   box.querySelectorAll('.opt').forEach((b) => { b.disabled = true; b.classList.toggle('sel', b.dataset.id === id); });
+  box.classList.remove('sobPressao'); const tz = box.querySelector('.tenso'); tz && tz.remove();
   if (o.som) A.sfx(o.som, .7);
   aplicar(o); A.escolha(); registrar(e.id, id); salvar();
   later(() => { appendParas(resultadoDe(o)); setNext(true); desenhaCantil(); }, 450);
@@ -427,7 +643,7 @@ function renderDialogo(p) {
     if (r.antes && !r._dito) { r._dito = true; emite(lista(r.antes), true); later(next, 1400); return; }
     const ops = opcoesVis(r.opcoes);
     box.innerHTML = `<p class="eyebrow">${r.pergunta ? esc(tr(r.pergunta)) : U('resp') + ' ' + esc(tr(d.interlocutor))}</p>` + ops.filter((o) => !riscada(o)).map(optHTML).join('') + ops.filter(riscada).map((o) => optHTML(o, 0)).join('');
-    box.querySelectorAll('.opt:not(.riscada)').forEach((b) => b.onclick = () => {
+    box.querySelectorAll('.opt:not(.riscada):not(.travada)').forEach((b) => b.onclick = () => {
       const o = r.opcoes.find((x) => x.id === b.dataset.id);
       (st.dialogo[p.id] = st.dialogo[p.id] || []).push([r.id, o.id]); st.escolhas[r.id] = o.id;
       aplicar(o); registrar(r.id, o.id); salvar(); A.escolha(); box.innerHTML = '';
@@ -454,12 +670,15 @@ function renovaOverlay() { const n = overlay.cloneNode(false); n.className = '';
 function abreOverlay(cls) { renovaOverlay(); overlay.className = 'show ' + cls; document.body.classList.add('mg-on'); desenhaCantil(); return overlay; }
 function fechaOverlay() { renovaOverlay(); document.body.classList.remove('mg-on'); desenhaCantil(); }
 // o que os jogos recebem: idioma, áudio, estado, tradução e as ferramentas do livro
-const ctxJogo = (p) => ({ lang: LANG, A, st, tr, U, p, paras, mudaLuz, beber, sobrio, toast: (t) => toast(tr(t)), registrar, salvar, esc, linkify, vsrc, L, narrate: (n) => { if (A.ctx && A.on) A.narrate(vozUrl(n)); } });
+const ctxJogo = (p) => ({ lang: LANG, A, st, tr, U, p, paras, mudaLuz, beber, sobrio, toast: (t) => toast(tr(t)), registrar, salvar, esc, linkify, vsrc, L, narrate: (n) => { if (A.ctx && A.on) A.narrate(vozUrl(n)); },
+  // a instrução do jogo, como ícone no centro (some no primeiro toque)
+  gesto: (root, icone, ms) => { const tipo = p.minijogo; return gesto(root, icone, (U('gesto') || {})[tipo] || '', ((U('gestoSub') || {})[tipo] || '') + (icone === 'segurar' && !matchMedia('(pointer: coarse)').matches ? ' · ' + U('teclaSeg') : ''), ms); } });
 function renderMinijogo(p) {
   const tipo = p.minijogo, done = st.feitos['mg:' + p.id];
   if (done) { appendParas(p.depois); return true; }
   const dica = typeof U('dica')[tipo] === 'function' ? U('dica')[tipo](st) : U('dica')[tipo];
-  box.innerHTML = `<p class="eyebrow">${U('momento')}</p><button class="opt jogar" id="mgGo"><span class="k">▶</span>${U('mg')[tipo]}</button><p class="dica">${dica}</p>`;
+  const vb = (U('verboDe') || {})[tipo];
+  box.innerHTML = `<p class="eyebrow">${U('momento')}</p><button class="opt jogar" id="mgGo"><span class="k">▶</span><span class="tx">${vb ? `<span class="verbo v-${vb}">${esc(U('verbo')[vb])}</span>` : ''}${U('mg')[tipo]}</span></button><p class="dica">${dica}</p>`;
   $('#mgGo').onclick = () => {
     box.innerHTML = '';
     const o = abreOverlay('j5 ' + tipo);
@@ -577,9 +796,14 @@ async function resumo() {
   const R = L.resumo(st, LANG);
   $('#rsLuz').textContent = Math.round(st.luz);
   $('#rsFrase').textContent = R.frase;
-  $('#rsRevela').innerHTML = R.revela ? `<p>${esc(R.revela)}</p>` : '';
+  const rv = R.revela;
+  $('#rsRevela').innerHTML = !rv ? '' : typeof rv === 'string' ? `<p>${esc(rv)}</p>`
+    : `<div class="kcard"><div class="kimg" style="background-image:url('${rv.img}')"></div><div class="ktx"><p class="eyebrow">${esc(rv.olho)}</p><h3>${esc(rv.nome)}</h3><p class="ksub">${esc(rv.titulo)}</p><p class="ktexto">${esc(rv.texto)}</p>${L.proximo.url && rv.link ? `<a class="klink" href="${L.proximo.url}">${esc(rv.link)} →</a>` : ''}</div></div>`;
+  $('#rsRevela').classList.toggle('card', !!rv && typeof rv !== 'string');
+  registrar('goles_total', String(Math.min(6, st.bebidos || 0)));
   $('#rsPerfil').innerHTML = R.perfil ? `<p class="eyebrow">${U('perfilT')}</p><p class="rs-perfil">${esc(R.perfil)}</p>` : '';
-  $('#rsRel').innerHTML = R.notas.map((r) => `<li>${esc(r)}</li>`).join('');
+  const luzF = Math.round(st.luz), pers = luzF <= 30 ? 'quieto' : luzF < 60 ? 'medido' : 'aceso';
+  $('#rsRel').innerHTML = [U('persona')[pers]].concat(R.notas).map((r, k) => `<li${k ? '' : ' class="persona"'}>${esc(r)}</li>`).join('');
   const desenha = (stats) => {
     $('#rsEsc').innerHTML = R.linhas.map((l) => {
       const tot = stats.filter((x) => x.escolha === l.id).reduce((a, b) => a + Number(b.total), 0);
