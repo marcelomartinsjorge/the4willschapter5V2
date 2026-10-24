@@ -1,5 +1,7 @@
 # Cap. V · Tudo o que falta de mídia (do seu lado)
 
+*Atualizado em 24/10/2026, depois da revisão pelo prompt mestre v5. Conferido contra o código: tudo o que o livro procura e ainda não existe na pasta está aqui, e nada além disso. Hoje a pasta `assets/audio/voz/` está vazia.*
+
 Um arquivo só: **dublagem**, **efeitos sonoros** e **imagens**. Loops, os 37 SFX que você mandou, as imagens e os vídeos que já estão no repositório **não** aparecem aqui: só o que falta.
 
 Regra geral: pôr o arquivo com **o nome exato** na pasta indicada e subir. O livro já procura cada um; enquanto não existe, toca um som sintetizado (SFX), fica sem voz (dublagem) ou usa a imagem provisória (bancada).
@@ -54,7 +56,7 @@ Curtos, secos, perto do microfone, sem música. MP3, normalizados no mesmo níve
 
 ## 3. Dublagem (21 arquivos)
 
-A bancada não tem fala nova: a dublagem continua a mesma. Mudou só uma palavra (no diário, o eclipse deixou de ser “ao meio-dia”). O texto abaixo é o que está no jogo agora.
+O texto abaixo é o que está no jogo agora. **A revisão v5 mudou 5 trechos dublados** (já atualizados aqui): `a03-boato` (“None of them asked anything…”), `a03-extintos` (“no eye lingered on one more old man…”), `d01-roda` (“the wounded and the unhurt”), `c03-trai` (“the light came out of me, up to my face”) e `e06-fim` (“with no ears around but the sand…”). Se você ainda não gravou, é só seguir este roteiro.
 
 **Voz:** a mesma do Cap. I. Homem mais velho, culto e cansado, voz baixa e seca, um fio de humor escuro. Frases curtas quando age (rápidas, contidas); longas quando observa (lentas, ritmadas, quase lendo para si). Nunca teatral; a emoção está na contenção.
 
@@ -96,7 +98,7 @@ _80 palavras_
 
 **Direção:** Lembrança da estrada ouvindo boatos sobre si. Leve ironia, cansado; o fim baixo, como regra de vida.
 
-> I came south hearing about myself. In the inns along the road, people who had never been north argued about lights seen over the Edge one night, green or gold depending on the wine. One swore it was a dragon. Another, that it was the Lúmae coming back. No one asked anything of the old man eating alone in the corner. I did what I know how to do: I kept my eyes on my plate and my thoughts on nothing.
+> I came south hearing about myself. In the inns along the road, people who had never been north argued about lights seen over the Edge one night, green or gold depending on the wine. One swore it was a dragon. Another, that it was the Lúmae coming back. None of them asked anything of the old man eating alone in the corner. I did what I know how to do: I kept my eyes on my plate and my thoughts on nothing.
 
 _81 palavras_
 
@@ -105,7 +107,7 @@ _81 palavras_
 
 **Direção:** Lembrança da descida silenciosa. Distante, quase aliviado.
 
-> I came south the way snow leaves a roof, all at once and without a sound. Forty days of walking. The ice turned to scree, the scree to stone, the stone to sand, and in all that long slope of the world nobody thought to look twice at one more old man going downhill. I saw to that: I kept my eyes on my feet and my thoughts on nothing.
+> I came south the way snow leaves a roof, all at once and without a sound. Forty days of walking. The ice turned to scree, the scree to stone, the stone to sand, and in all that long slope of the world no eye lingered on one more old man going downhill. I saw to that: I kept my eyes on my feet and my thoughts on nothing.
 
 _70 palavras_
 
@@ -143,7 +145,7 @@ _51 palavras_
 
 **Direção:** Pesado, lento, solene. Silêncio entre as frases.
 
-> They came without being called. The survivors of the wells, the wounded and the whole, came across the sand in ones and twos and stood around us, around Shaa and me, until there was a wall of them, a hundred deep, and no light came through it but what came from above.
+> They came without being called. The survivors of the wells, the wounded and the unhurt, came across the sand in ones and twos and stood around us, around Shaa and me, until there was a wall of them, a hundred deep, and no light came through it but what came from above.
 >
 > Nobody spoke. I had never heard a hundred Grakh together make no sound at all.
 >
@@ -208,7 +210,7 @@ _66 palavras_
 >
 > Behind me, the count broke from three to four. They had found me. That was the idea.
 >
-> I had spent thirty years making no sound. That night, with no one to hear it but the sand and the things that were following me, I made one.
+> I had spent thirty years making no sound. That night, with no ears around but the sand and the things that were following me, I made one.
 
 _78 palavras_
 
@@ -255,7 +257,7 @@ Como as do Cap. I (a mente, os goles): **sussurro**, perto do microfone, quase p
 ## `voz/c03-trai.mp3`
 *Parte III · o quinto virote: a luz sai sozinha*
 
-> At the fifth, the light came out of me all at once, up to my face, and I did nothing to hold it. There was nothing left to hide from anyone.
+> At the fifth, the light came out of me, up to my face, and I did nothing to hold it. There was nothing left to hide from anyone.
 
 
 ---
