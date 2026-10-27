@@ -6,7 +6,7 @@ Gerado do roteiro do jogo (capitulo5.js), na ordem do arquivo. Em cada página a
 ## a00 · abertura jogável
 
 - Desci do gelo quase apagado. Eu sempre fui bom nisso. O que sobrou era uma brasa do tamanho de uma unha, e ela demorou muito para entender que devia ir embora também.
-  - *EN:* I came down from the ice almost dark. I have always been good at that. What was left was an ember the size of a fingernail, and it took a long time to understand that it ought to leave as well.
+  - *EN:* I came down from the ice almost dark. I have always been good at that. What was left was an ember the size of a fingernail, and it took a very long time to understand that it should leave too.
 - Desci do gelo com a luz pela metade, contando os degraus no escuro.
   - *EN:* I came down from the ice half lit, counting the steps in the dark.
 - Desci do gelo ainda aceso, uma brasa esquecida na cinza.

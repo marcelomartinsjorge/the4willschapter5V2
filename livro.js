@@ -88,8 +88,9 @@ const A = {
   async once(url, vol = .7) { const b = await this.buf(url); if (!b) return 0; const s = this.ctx.createBufferSource(); s.buffer = b; const g = this.ctx.createGain(); g.gain.value = vol; s.connect(g); g.connect(this.fx); s.start(); return b.duration; },
   // fila: se já há uma voz falando, espera ela acabar em vez de cortá-la (pensamentos e dublagens de parágrafo)
   async narrate(url, onEnd, fila) {
-    if (fila && this.narr) { (this.fila = this.fila || []).push([url, onEnd]); return true; }
-    this.stopNarr(true); const b = await this.buf(url); if (!b) return false;
+    if (fila && (this.narr || this.carregando)) { (this.fila = this.fila || []).push([url, onEnd]); return true; }
+    this.stopNarr(true); this.carregando = true; const b = await this.buf(url); this.carregando = false;
+    if (!b) { const q = this.fila && this.fila.shift(); if (q && !this.narr) this.narrate(q[0], q[1]); return false; }
     const s = this.ctx.createBufferSource(); s.buffer = b; s.connect(this.master); s.start();
     this.duck(true); this.narr = s; s.onended = () => { if (this.narr === s) { this.narr = null; this.duck(false); onEnd && onEnd(); const q = this.fila && this.fila.shift(); if (q) this.narrate(q[0], q[1]); } };
     return true;

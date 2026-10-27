@@ -454,9 +454,11 @@ window.LIVRO = {
     // A Luz que o leitor trouxe do Cap. I aparece no topo e cai, gole a gole, até 10.
     // Ensina o odre (toque nele ou tecla B) sem gastar os seis goles do capítulo.
     { id: 'a00', zona: 'noite', fundo: { img: IMG('cantil-areia'), kb: 'in', dim: .48, foco: '72% 50%', lado: 'dir', clima: 'estrelas' }, capitular: true,
+      // uma voz por variante da primeira frase (quieto / medido / aceso); a segunda frase é igual para todos
+      sons: [{ voz: 'a00-quieto', p: 0, se: (st) => persona1(st) === 'quieto' }, { voz: 'a00-medido', p: 0, se: (st) => persona1(st) === 'medido' }, { voz: 'a00-aceso', p: 0, se: (st) => persona1(st) === 'aceso' }, { voz: 'a00-apagar', p: 0 }],
       texto: [
         (st) => ({
-          quieto: T('Desci do gelo quase apagado. Eu sempre fui bom nisso. O que sobrou era uma brasa do tamanho de uma unha, e ela demorou muito para entender que devia ir embora também.', 'I came down from the ice almost dark. I have always been good at that. What was left was an ember the size of a fingernail, and it took a long time to understand that it ought to leave as well.'),
+          quieto: T('Desci do gelo quase apagado. Eu sempre fui bom nisso. O que sobrou era uma brasa do tamanho de uma unha, e ela demorou muito para entender que devia ir embora também.', 'I came down from the ice almost dark. I have always been good at that. What was left was an ember the size of a fingernail, and it took a very long time to understand that it should leave too.'),
           medido: T('Desci do gelo com a luz pela metade, contando os degraus no escuro.', 'I came down from the ice half lit, counting the steps in the dark.'),
           aceso: T('Desci do gelo ainda aceso, uma brasa esquecida na cinza.', 'I came down from the ice still lit, an ember forgotten in the ash.'),
         }[persona1(st)]),
