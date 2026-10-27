@@ -692,3 +692,8 @@ body.escuro #ptext > p { font-size: clamp(18px, 1.6vw, 22px); }
   opacity: 0; animation: interIn 1.6s ease .5s forwards; }
 @keyframes interIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { #intertitulo p { animation: none; opacity: 1; } }
+
+/* o texto para antes do parágrafo com som: o leitor clica em Continuar */
+#ptext p.em-espera { display: none; }
+#ptext .portao { margin: .4em 0 1.3em; text-align: left; }
+#ptext .portao-btn { font-size: 14px; padding: 10px 24px; cursor: pointer; animation: surge .9s ease both; }

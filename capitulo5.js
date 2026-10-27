@@ -590,7 +590,7 @@ window.LIVRO = {
 
     { id: 'a07', zona: 'acampamento', estado: 'companhia', fundo: { img: IMG('shaa'), kb: 'in', dim: .4, foco: '78% 40%', clima: 'poeira' }, capitular: true,
       texto: [
-        T('Só Shaa veio. Atravessou a areia devagar, uma mão embaixo da barriga, e já vinha rindo antes de chegar, as tranças batendo nas costas. Os dentes de baixo eram grandes demais para a boca, e quando ela ria apareciam todos. A maioria dos Grakh fica a uma lança de distância de mim. Shaa sentou tão perto que nossos joelhos quase se tocaram.', 'Only Shaa came. She crossed the sand slowly, one hand under her belly, and she was laughing before she reached me, her braids slapping against her back. Her lower teeth were too big for her mouth, and when she laughed they all showed. Most of the Grakh keep a spear’s length from me. Shaa sat down so close our knees almost touched.'),
+        T('Só Shaa veio. Atravessou a areia devagar, uma mão embaixo da barriga, e já vinha rindo antes de chegar, as tranças batendo nas costas. Os dentes de baixo eram grandes demais para a boca, e quando ela ria apareciam todos. A maioria dos Grakh não se aproxima de mim. Shaa sentou tão perto que nossos joelhos quase se tocaram.', 'Only Shaa came. She crossed the sand slowly, one hand under her belly, and she was laughing before she reached me, her braids slapping against her back. Her lower teeth were too big for her mouth, and when she laughed they all showed. Most of the Grakh do not come near me. Shaa sat down so close our knees almost touched.'),
         se(quieto, T('Não me afastei.', 'I did not move away.')),
         se(medido, T('Com ela ali, a minha cabeça ficou quieta.', 'With her there, my head went quiet.')),
         se(aceso, T('Com ela tão perto, a cabeça parou de fazer contas. Os Grakh não ligam para o que eu sou, e isso me descansa mais do que o vinho.', 'With her that close, my head stopped doing sums. The Grakh do not care what I am, and that rests me more than the wine does.')),
@@ -884,7 +884,7 @@ window.LIVRO = {
       sons: [{ sfx: 'marreta-chao', p: 1, v: .7 }],
       texto: [
         T('A parede se abriu, e Hessa passou por ela.', 'The wall opened, and Hessa came through it.'),
-        T('Ela parou a uma lança de distância de mim, a distância de sempre. Então deu o último passo, o que nunca tinha dado, e deixou a maça escorregar das costas para a areia, aos meus pés.', 'She stopped a spear’s length from me, the old distance. Then she took the last step, the one she had never taken, and let the mace slide off her back onto the sand at my feet.'),
+        T('Ela parou onde sempre parava. Então deu o último passo, o que nunca tinha dado, e deixou a maça escorregar das costas para a areia, aos meus pés.', 'She stopped where she always stopped. Then she took the last step, the one she had never taken, and let the mace slide off her back onto the sand at my feet.'),
         se((st) => (c1(st).aug || 0) >= 1, T('O último que me acompanhou além da distância de sempre era do tamanho de uma pedra, e também não disse nada.', 'The last one who walked with me past the usual distance was the size of a boulder, and he did not say anything either.')),
         se((st) => !st.f.abriu_guarda, T('O braço ainda sangrava onde os três homens o tinham achado. Ela não tinha amarrado.', 'Her arm was still bleeding where the three men had found it. She had not tied it.')),
         T('Era a mão que sempre estivera pousada naquele cabo. Agora, vazia, não sabia o que fazer. Fechou, e abriu.', 'It was the hand that had always rested on that haft. Now, empty, it did not know what to do. It closed, and opened.'),
@@ -951,10 +951,10 @@ window.LIVRO = {
         st.tacetsCedo = (parto(st) === 'dois' ? 1 : 0) + (fl >= 3 ? 1 : 0) + (st.f.tacets_eclipse ? 1 : 0);
       },
       depois: [
-        T('A luz subiu por mim como água subindo num poço, toda ela, cada linha ao mesmo tempo, a testa, a garganta, o peito, os braços, até as caras da roda ficarem iluminadas de ouro por baixo e eu poder ver cada uma delas, e cada uma delas poder me ver.', 'The light came up through me like water up a well, all of it, every line at once, the forehead, the throat, the chest, the arms, until the faces in the ring were lit gold from below and I could see every one of them, and every one of them could see me.'),
+        T('A luz subiu por mim como água subindo num poço, toda ela, cada linha ao mesmo tempo, a testa, a garganta, o peito, os braços, até os rostos da roda ficarem iluminados de ouro por baixo e eu poder ver cada um deles, e cada um deles poder me ver.', 'The light came up through me like water up a well, all of it, every line at once, the forehead, the throat, the chest, the arms, until the faces in the ring were lit gold from below and I could see every one of them, and every one of them could see me.'),
         se(marcado, T('Pelo antebraço onde o bronze tinha fechado, nada passou. A luz deu a volta.', 'Through the forearm where the bronze had closed, nothing came. The light went around it.')),
         T('— Aqui. A lâmina, aqui. Não mais fundo que o seu polegar.', '— Here. The blade, here. No deeper than your thumb.'),
-        T('Hessa ajoelhou do outro lado de Shaa com uma faca curta e curva e fez exatamente o que eu disse: a mulher que não bebia da minha mão, recebendo ordens da luz que vigiava havia quinze anos a uma lança de distância.', 'Hessa knelt on the other side of Shaa with a short curved knife and did exactly what I told her: the woman who would not drink from my hand, taking orders from the light she had watched for fifteen years from a spear’s length away.'),
+        T('Hessa ajoelhou do outro lado de Shaa com uma faca curta e curva e fez exatamente o que eu disse: a mulher que não bebia da minha mão, recebendo ordens da luz que vigiava havia quinze anos.', 'Hessa knelt on the other side of Shaa with a short curved knife and did exactly what I told her: the woman who would not drink from my hand, taking orders from the light she had watched for fifteen years.'),
       ] },
 
     { id: 'd06', zona: 'roda', fundo: { img: IMG('maos-hessa'), kb: 'in', dim: .38, foco: '55% 50%', lado: 'dir', clima: 'brasas' },
@@ -1012,7 +1012,7 @@ window.LIVRO = {
         se((st) => (st.tacetsCedo || 0) - (st.f.tacets_eclipse ? 1 : 0) >= 1, T('Com o tanto que eu tinha arrancado de mim por Shaa e pela cria, eles viriam depressa, e eu teria de levá-los longe.', 'With as much as I had pulled out of myself for Shaa and the child, they would be coming fast, and I would have to take them far.')),
       ] },
 
-    { id: 'e02', zona: 'deserto', fundo: { img: IMG('recem-nascido'), kb: 'in', dim: .45, foco: '60% 50%', lado: 'dir', clima: 'estrelas' },
+    { id: 'e02', zona: 'deserto', fundo: { img: IMG('recem-nascido'), kb: 'in', dim: .45, foco: '60% 50%', clima: 'estrelas' },
       texto: [
         T('Hessa me achou antes que eu terminasse de amarrar os panos. Trazia a cria no ombro, enrolada numa pele, e a mão livre já estava de volta no cabo da maça, onde sempre esteve.', 'Hessa found me before I had finished tying the wraps. She carried the child on her shoulder, wrapped in a hide, and her free hand was already back on the haft of the mace, where it has always been.'),
         T('— Você vai embora.', '— You are leaving.'),
@@ -1041,7 +1041,7 @@ window.LIVRO = {
           ] },
       ] } },
 
-    { id: 'e03', zona: 'deserto', fundo: { img: IMG('recem-nascido'), kb: 'out', dim: .45, foco: '60% 50%', lado: 'dir', clima: 'estrelas' },
+    { id: 'e03', zona: 'deserto', fundo: { img: IMG('recem-nascido'), kb: 'out', dim: .45, foco: '60% 50%', clima: 'estrelas' },
       se: (st) => st.escolhas.adeus !== 'cala',
       texto: [
         T('A cria dormia no ombro dela, de punho fechado numa dobra da pele, muito apertado.', 'The child was asleep on her shoulder, his fist closed tight on a fold of the hide.'),
@@ -1145,9 +1145,9 @@ window.LIVRO = {
     };
     const n = [];
     n.push(st.f.abriu_guarda ? t(T('Hessa: viu os cavalos empinarem. Vai lembrar de quem abriu o caminho.', 'Hessa: she saw the horses go up. She will remember who opened the way.'))
-      : st.hessa >= 1 ? t(T('Hessa: entre você e ela, agora, há menos do que uma lança de distância.', 'Hessa: there is less than a spear’s length between you and her now.'))
+      : st.hessa >= 1 ? t(T('Hessa: entre você e ela, agora, não há mais distância.', 'Hessa: there is no distance left between you and her now.'))
         : st.hessa <= -1 ? t(T('Hessa: vai lembrar das ervas, e da luz.', 'Hessa: she will remember the herbs, and the light.'))
-          : t(T('Hessa: a distância de sempre, uma lança e um pouco mais.', 'Hessa: the old distance, a spear and a little more.')));
+          : t(T('Hessa: nada mudou entre você e ela.', 'Hessa: nothing has changed between you and her.')));
     n.push(parto(st) === 'dois' ? t(T('Shaa: viveu o bastante para segurar o filho.', 'Shaa: she lived long enough to hold her son.')) : t(T('Shaa: deu o nome ao filho com o último fôlego.', 'Shaa: she named her son with her last breath.')));
     if (st.f.mostrou_luz) n.push(t(T('A cria sentiu a sua luz antes de nascer.', 'The child felt your light before he was born.')));
     n.push(st.f.ouviu_oficial ? t(T('A graxa cinza: agora você sabe por que o exército veio. Os Grakh nunca vão saber.', 'The grey grease: you know now why the army came. The Grakh will never know.'))

@@ -474,8 +474,10 @@ function parto(root, c) {
       // dois corações: a faixa sobe e desce puxada pelos dois ritmos
       return .62 + Math.sin(tt * 1.15) * .1 + Math.sin(tt * .47 + 1) * .08;
     };
-    const linha = () => {
+    const linha = (voz) => {
       if (mostradas >= cfg.linhas.length) return;
+      // cada pensamento que sobe também é dito: quem segura a luz não consegue ler (parto-1 … parto-8)
+      if (voz) c.narrate('parto-' + (mostradas + 1), true);
       const p = document.createElement('p'); p.textContent = tr(cfg.linhas[mostradas]); p.style.setProperty('--i', mostradas); linhas.appendChild(p); mostradas++;
       if (linhas.children.length > 4) linhas.firstElementChild.classList.add('vai');
       setTimeout(() => { const f = linhas.querySelector('.vai'); f && f.remove(); }, 1500);
@@ -502,7 +504,7 @@ function parto(root, c) {
       // os corações
       if (t >= proxR) { proxR = t + 60 / bpmR; A.sfx('coracao-rapido', .5, () => A.batida(.35, false)); const r = $('.pt-c.rapido'); r.classList.remove('bate'); void r.offsetWidth; r.classList.add('bate'); }
       if (dois && t >= proxL) { bpmL = Math.max(26, 46 - t * .6); proxL = t + 60 / bpmL; A.sfx('coracao-lento', clamp(.55 - t / DUR * .35, .12, .55), () => A.batida(clamp(.6 - t / DUR * .5, .1, .6), true)); const l = $('.pt-c.lento'); l.classList.remove('bate'); void l.offsetWidth; l.classList.add('bate'); l.style.opacity = clamp(1 - t / DUR, .25, 1); }
-      if (vida >= (mostradas + 1) / (cfg.linhas.length + 1)) linha();
+      if (vida >= (mostradas + 1) / (cfg.linhas.length + 1)) linha(true);
       if (t >= DUR) return termina();
       requestAnimationFrame(loop);
     };
@@ -617,7 +619,7 @@ function rastro(root, c) {
         if (dd > .8) { tc.x += dx / dd * vel * dt; tc.y += (dy / dd) * vel * dt / AR; }
         tc.el.style.left = tc.x + '%'; tc.el.style.top = tc.y + '%';
       });
-      if (!quebrou && luzes.length > 1) { quebrou = true; root.classList.add('quatro'); const m = document.createElement('p'); m.className = 'rt-quatro'; m.textContent = tr(cfg.quatroT); root.appendChild(m); setTimeout(() => m.remove(), 4200); A.once('assets/audio/tacet_passos.mp3', .45); }
+      if (!quebrou && luzes.length > 1) { quebrou = true; root.classList.add('quatro'); const m = document.createElement('p'); m.className = 'rt-quatro'; m.textContent = tr(cfg.quatroT); root.appendChild(m); c.narrate('rastro-quatro', true); setTimeout(() => m.remove(), 4200); A.once('assets/audio/tacet_passos.mp3', .45); }
       requestAnimationFrame(loop);
     };
     desenha(); requestAnimationFrame(loop);

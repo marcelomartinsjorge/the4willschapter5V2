@@ -409,6 +409,7 @@ function traicao(t) {
   setTimeout(() => cl.remove('trai'), 2600);
 }
 // o gesto final do Cap. V: o avesso do apagar do Cap. I. O leitor acende as veias, linha por linha.
+let acCues = {};
 function renderAcender(p) {
   const ps = [...txt.children]; const cl = document.body.classList;
   const esq = new Set([0, 1, 2, 3, 8]), marca = !!(st.c1 && st.c1.marcado);
@@ -425,7 +426,7 @@ function renderAcender(p) {
     A.ctx && A.acende(); mudaLuz(2);
     const passos = Math.max(1, total - 1), porVez = Math.ceil(grupos.length / passos);
     grupos.splice(0, porVez).forEach(acendeGrupo);
-    if (vis < total) { const el = ps[vis++]; el.style.display = ''; el.classList.add('novo'); panel.scrollTop = panel.scrollHeight; }
+    if (vis < total) { const el = ps[vis++]; el.style.display = ''; el.classList.add('novo'); panel.scrollTop = panel.scrollHeight; (acCues[vis - 1] || []).forEach(tocaItem); }
     if (vis >= total) {
       grupos.splice(0).forEach(acendeGrupo);
       box.innerHTML = ''; st.feitos['ac:' + p.id] = 1; salvar();
@@ -493,14 +494,43 @@ const fala = (nome, ms = 0) => { if (!nome) return; later(() => { if (A.ctx && A
 let cuesPend = [];
 const palavras = (el) => (el.textContent || '').trim().split(/\s+/).length;
 const msAte = (els, k) => { if (!els.length) return 900; if (k < 0) k = els.length + k; k = Math.max(0, Math.min(els.length - 1, k)); let w = 0; for (let i = 0; i < k; i++) w += palavras(els[i]); return (700 + (w / 3.3) * 1000) * (window.__LEITURA_K || 1); };
+const tocaItem = (it) => { if (!A.ctx || !A.on) return; if (it.voz) A.narrate(vozUrl(it.voz), null, true); else if (it.fn) it.fn(A); else if (it.sfx) A.sfx(it.sfx, it.v != null ? it.v : .7); else if (it.s) A.once(it.s, it.v != null ? it.v : .7); };
 function agendaItens(itens, els, base = 0) {
   (itens || []).forEach((it) => {
     if (it.se && !it.se(st)) return;
     const c = { done: false, fim: !!it.fim };
-    c.tocar = () => { if (c.done) return; c.done = true; if (!A.ctx || !A.on) return; if (it.voz) A.narrate(vozUrl(it.voz), null, true); else if (it.fn) it.fn(A); else if (it.sfx) A.sfx(it.sfx, it.v != null ? it.v : .7); else if (it.s) A.once(it.s, it.v != null ? it.v : .7); };
+    c.tocar = () => { if (c.done) return; c.done = true; tocaItem(it); };
     if (c.fim) cuesPend.push(c);
     later(c.tocar, base + (it.p != null ? msAte(els, it.p) : (it.ms != null ? it.ms : 900)));
   });
+}
+
+// som no meio do texto: ninguém lê no mesmo ritmo, então o texto PARA antes do parágrafo que tem som.
+// O leitor clica em Continuar quando terminou de ler; só então o parágrafo aparece e o som toca.
+// (p:0, ms e fim:true seguem como antes: não há trecho lido antes deles, ou tocam ao virar a página.)
+function agendaPortoes(itens, els, aoAcabar) {
+  const n = els.length, idx = (it) => (it.p < 0 ? Math.max(0, n + it.p) : Math.min(n - 1, it.p));
+  const lista = (itens || []).filter((it) => !(it.se && !it.se(st)));
+  const meio = lista.filter((it) => !it.fim && it.p != null && idx(it) > 0);
+  agendaItens(lista.filter((it) => !meio.includes(it)), els);
+  const gates = [...new Set(meio.map(idx))].sort((x, y) => x - y);
+  if (!gates.length) return false;
+  els.slice(gates[0]).forEach((el) => el.classList.add('em-espera'));
+  const mostra = (k) => {
+    const g = gates[k], ate = k + 1 < gates.length ? gates[k + 1] : n;
+    const w = document.createElement('div'); w.className = 'portao';
+    const b = document.createElement('button'); b.className = 'cta portao-btn'; b.type = 'button'; b.textContent = LANG === 'en' ? 'Continue' : 'Continuar';
+    w.appendChild(b); els[g].before(w);
+    b.onclick = () => {
+      if (!w.isConnected) return; w.remove();
+      for (let i = g; i < ate; i++) { els[i].classList.remove('em-espera'); els[i].classList.add('novo'); els[i].style.animationDelay = ((i - g) * .35) + 's'; }
+      meio.filter((it) => idx(it) === g).forEach(tocaItem);
+      if (k + 1 < gates.length) mostra(k + 1); else aoAcabar();
+      const nb = $('.portao-btn'); nb ? nb.scrollIntoView({ behavior: 'smooth', block: 'nearest' }) : els[g].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    };
+  };
+  mostra(0);
+  return true;
 }
 
 function render(dir = 1) {
@@ -521,7 +551,7 @@ function render(dir = 1) {
     txt.innerHTML = `<div class="ct"><p class="ct-num">${U('parte')} ${c.num}</p><h2 class="ct-nome">${esc(tr(c.nome))}</h2><span class="ct-orn">✦</span>
       <blockquote class="ct-epi"><p>${esc(tr(c.epigrafe))}</p><cite>${esc(tr(c.fonte))}</cite></blockquote></div>`;
   } else txt.innerHTML = paras(p.texto).map((t, k) => pHTML(t, k === 0 && p.capitular ? 'cap' : '')).join('');
-  box.innerHTML = ''; box.classList.remove('urgente', 'sobPressao');
+  box.innerHTML = ''; box.style.display = ''; box.classList.remove('urgente', 'sobPressao');
   [...txt.children].forEach((el, k) => { el.style.animationDelay = (k * .35) + 's'; });
   const extras = $('#extras'); extras.innerHTML = '';
   const narr = narrOf(p);
@@ -530,7 +560,7 @@ function render(dir = 1) {
   const cena = typeof p.cena === 'function' ? p.cena(st) : p.cena;
   if (cena) extras.insertAdjacentHTML('beforeend', `<button class="chip" id="cena">${U('cena')}</button>`);
   if (narr) ligaNarr(p, narr, dir);
-  if (p.sons && dir >= 0) agendaItens(p.sons, [...txt.children]);
+  let portao = false;
   if (cena) $('#cena').onclick = () => verCena(cena);
   let livre = true;
   if (p.escolha) livre = renderEscolha(p);
@@ -540,6 +570,19 @@ function render(dir = 1) {
   sensacao(p, dir);
   if (p.acender) livre = renderAcender(p);
   setNext(livre);
+  acCues = {};
+  if (p.sons && dir >= 0 && p.acender) {
+    // na página de acender o leitor já libera um parágrafo por toque: o som toca junto com o parágrafo que ele revelou
+    const els = [...txt.children], n = els.length;
+    p.sons.filter((it) => !(it.se && !it.se(st))).forEach((it) => {
+      const k = it.p == null ? 0 : (it.p < 0 ? Math.max(0, n + it.p) : Math.min(n - 1, it.p));
+      if (!it.fim && it.p != null && k > 0) (acCues[k] = acCues[k] || []).push(it); else agendaItens([it], els);
+    });
+  } else if (p.sons && dir >= 0) {
+    const liberaTudo = () => { box.style.display = ''; setNext(livre); };
+    portao = agendaPortoes(p.sons, [...txt.children], liberaTudo);
+    if (portao) { box.style.display = 'none'; setNext(false); }
+  }
   // a primeira página do capítulo em que dá para beber: o odre se apresenta (uma vez)
   if (p.bebe && st.cantil > 0 && !st.f._tutOdre) { st.f._tutOdre = true; later(() => { if (P[st.i] === p) mostraCoach(U('odreTut'), U('odreTutSub'), 7000); }, 2200); }
   btnPrev.disabled = idxVis(st.i, -1) < 0; btnPrev.textContent = U('voltar');
@@ -673,7 +716,7 @@ function renovaOverlay() { const n = overlay.cloneNode(false); n.className = '';
 function abreOverlay(cls) { renovaOverlay(); overlay.className = 'show ' + cls; document.body.classList.add('mg-on'); desenhaCantil(); return overlay; }
 function fechaOverlay() { renovaOverlay(); document.body.classList.remove('mg-on'); desenhaCantil(); }
 // o que os jogos recebem: idioma, áudio, estado, tradução e as ferramentas do livro
-const ctxJogo = (p) => ({ lang: LANG, A, st, tr, U, p, paras, mudaLuz, beber, sobrio, toast: (t) => toast(tr(t)), registrar, salvar, esc, linkify, vsrc, L, narrate: (n) => { if (A.ctx && A.on) A.narrate(vozUrl(n)); },
+const ctxJogo = (p) => ({ lang: LANG, A, st, tr, U, p, paras, mudaLuz, beber, sobrio, toast: (t) => toast(tr(t)), registrar, salvar, esc, linkify, vsrc, L, narrate: (n, fila) => { if (A.ctx && A.on) A.narrate(vozUrl(n), null, fila); },
   // a instrução do jogo, como ícone no centro (some no primeiro toque)
   gesto: (root, icone, ms) => { const tipo = p.minijogo; return gesto(root, icone, (U('gesto') || {})[tipo] || '', ((U('gestoSub') || {})[tipo] || '') + (icone === 'segurar' && !matchMedia('(pointer: coarse)').matches ? ' · ' + U('teclaSeg') : ''), ms); } });
 function renderMinijogo(p) {
@@ -714,7 +757,7 @@ btnPrev.onclick = irAnterior;
 addEventListener('keydown', (e) => {
   if (document.body.classList.contains('mg-on') || !$('#cover').classList.contains('hide')) return;
   if ($('#codex').classList.contains('show')) { if (e.key === 'Escape') $('#codex').classList.remove('show'); return; }
-  if (['ArrowRight', 'Enter', ' '].includes(e.key)) { e.preventDefault(); if (!btnNext.disabled) irProxima(); }
+  if (['ArrowRight', 'Enter', ' '].includes(e.key)) { e.preventDefault(); const pb = $('.portao-btn'); if (pb) pb.click(); else if (!btnNext.disabled) irProxima(); }
   else if (e.key === 'ArrowLeft') irAnterior();
   else if (/^[1-5]$/.test(e.key)) { const b = box.querySelectorAll('.opt:not(:disabled)')[+e.key - 1]; b && b.click(); }
   else if (e.key === 'b' || e.key === 'B') { const c = $('#cantil'); c && !c.disabled && c.click(); }
