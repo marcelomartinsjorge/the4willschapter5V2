@@ -447,9 +447,28 @@ function minutos(root, c) {
   });
 }
 
+// ================================================================== DERROTA (parto e rastro)
+// Duas linhas na voz do Aheryn e um botão que recomeça só este jogo. A Luz volta ao que era na entrada.
+function derrota(root, c, linhas, botao, refaz, luz0, voz) {
+  const { tr, A, st } = c;
+  A.abafa && A.abafa(false);
+  const d = document.createElement('div'); d.className = 'j5-derrota';
+  d.innerHTML = linhas.map((l, k) => `<p class="${k ? 'l2' : 'l1'}">${c.esc(tr(l))}</p>`).join('') + `<button class="cta">${c.esc(tr(botao))}</button>`;
+  root.appendChild(d); requestAnimationFrame(() => d.classList.add('on'));
+  A.tone(110, 2.2, 'sawtooth', .04, 0, 2); A.tone(73, 2.6, 'sine', .08, .1, 2.4);
+  if (voz) setTimeout(() => c.narrate(voz), 1200);   // a voz do Aheryn, se o arquivo existir (sem arquivo, segue muda)
+  const b = d.querySelector('button');
+  b.onclick = () => { b.disabled = true; if (luz0 != null) c.mudaLuz(luz0 - st.luz); root.innerHTML = ''; root.className = root.className.split(' ').filter((x) => !['final', 'lento', 'ok', 'flare', 'quatro', 'canta', 'longe', 'sai', 'dor'].includes(x)).join(' '); refaz(); };
+  if (BOT()) setTimeout(() => b.click(), 200);
+}
+
 // ================================================================== PARTO (Pensamento · o clímax)
 function parto(root, c) {
   const { tr, A, st, L } = c, cfg = L.parto;
+  const luz0 = st.luz;
+  // a preparação: 5+ pontos, nenhuma dor; menos, as dores aparecem como runas (Q W E A S D) e é preciso apertá-las sem largar a luz
+  const prep = cfg.preparo ? cfg.preparo(st) : 5;
+  const TECLAS = 'QWEASD';
   const dois = (st.escolhas.proibido5 || 'crianca') === 'dois';
   const turvo = st.turvo || 0, marca = !!(st.c1 && st.c1.marcado);
   return new Promise((resolve) => {
@@ -467,6 +486,28 @@ function parto(root, c) {
     A.abafa(true);
     const pz = pensar(root);
     c.gesto(root, 'segurar');
+    // ---- as dores (runas): aparecem no meio da tela; a letra certa (ou um toque nela) segura a dor; deixar apagar custa vida
+    const runas = [], intervalo = 2.3 + .6 * prep, vidaRuna = 2.2 + .15 * prep;
+    let proxRuna = prep >= 5 ? Infinity : 4;
+    const acerta = (r) => {
+      if (r.fim) return; r.fim = true; r.el.classList.add('ok'); setTimeout(() => r.el.remove(), 350);
+      vida = Math.min(1, vida + .02); A.tone(587.33 * (1 + TECLAS.indexOf(r.k) * .12), .3, 'sine', .05); A.tone(1174.7, .2, 'triangle', .02);
+    };
+    const novaRuna = () => {
+      const k = TECLAS[Math.floor(Math.random() * TECLAS.length)];
+      const el = document.createElement('button'); el.type = 'button'; el.className = 'pt-runa'; el.textContent = k;
+      el.style.left = (26 + Math.random() * 40) + '%'; el.style.top = (24 + Math.random() * 44) + '%'; el.style.setProperty('--v', vidaRuna + 's');
+      const r = { k, el, t: t, fim: false };
+      el.addEventListener('pointerdown', (ev) => { ev.stopPropagation(); ev.preventDefault(); acerta(r); }, true);
+      root.appendChild(el); runas.push(r);
+      A.tone(220, .5, 'triangle', .035); A.tone(165, .7, 'sine', .03, .05);
+    };
+    const tecla = (ev) => {
+      const k = ev.key && ev.key.length === 1 ? ev.key.toUpperCase() : '';
+      if (!TECLAS.includes(k) || fim) return;
+      ev.preventDefault(); const r = runas.find((x) => !x.fim && x.k === k); if (r) acerta(r);
+    };
+    addEventListener('keydown', tecla);
     let Lz = .1, vel = 0, t = 0, dentro = 0, flares = 0, alto = 0, vida = 0, mostradas = 0, fim = false, last = performance.now();
     let bpmR = 148, bpmL = 46, proxR = 0, proxL = .4;
     const centro = (tt) => {
@@ -484,7 +525,7 @@ function parto(root, c) {
     };
     const loop = (now) => {
       if (fim || !faixaEl.isConnected) return;
-      const dt = Math.min(.05, (now - last) / 1000); last = now; t += dt;
+      const dt = Math.min(.05, (now - last) / 1000) * (window.__JOGO_RAPIDO || 1); last = now; t += dt;
       // a luz: segurar sobe, soltar cai; o vinho faz a mão tremer
       const acel = pz.segura ? 1.7 : -1.45;
       vel = clamp(vel + acel * dt, -.9, .9); vel *= Math.pow(.25, dt);
@@ -504,13 +545,24 @@ function parto(root, c) {
       // os corações
       if (t >= proxR) { proxR = t + 60 / bpmR; A.sfx('coracao-rapido', .5, () => A.batida(.35, false)); const r = $('.pt-c.rapido'); r.classList.remove('bate'); void r.offsetWidth; r.classList.add('bate'); }
       if (dois && t >= proxL) { bpmL = Math.max(26, 46 - t * .6); proxL = t + 60 / bpmL; A.sfx('coracao-lento', clamp(.55 - t / DUR * .35, .12, .55), () => A.batida(clamp(.6 - t / DUR * .5, .1, .6), true)); const l = $('.pt-c.lento'); l.classList.remove('bate'); void l.offsetWidth; l.classList.add('bate'); l.style.opacity = clamp(1 - t / DUR, .25, 1); }
+      if (window.__JOGO_DEBUG) window.__ptT = [t, proxRuna, vida, runas.length];
+      if (t >= proxRuna && t < DUR - 2.5 && !BOT()) { novaRuna(); proxRuna = t + intervalo * (.8 + Math.random() * .4); }
+      runas.forEach((r) => { if (!r.fim && t - r.t > vidaRuna) { r.fim = true; r.el.classList.add('apagou'); setTimeout(() => r.el.remove(), 400); vida = Math.max(0, vida - .07); vel -= .45; root.classList.remove('dor'); void root.offsetWidth; root.classList.add('dor'); A.tone(98, .5, 'sawtooth', .05, 0, .6); } });
       if (vida >= (mostradas + 1) / (cfg.linhas.length + 1)) linha(true);
       if (t >= DUR) return termina();
       requestAnimationFrame(loop);
     };
     // o fim em câmera lenta: o vídeo quase para, a luz toma a tela, um último coração, e só então o texto
     const termina = () => {
-      fim = true; pz.fim();
+      fim = true; pz.fim(); removeEventListener('keydown', tecla); runas.forEach((r) => r.el.remove());
+      // a vida não chegou: a cria não respira. Volta para o começo do parto (como a pedra de Gromm no Cap. I)
+      const falhou = window.__PARTO_FALHA || (!BOT() && vida < .6);
+      if (falhou) {
+        c.registrar('parto_falhou', String(Math.round(vida * 100)));
+        if (v) { try { v.playbackRate = .25; } catch (e) {} }
+        setTimeout(() => { window.__PARTO_FALHA = false; derrota(root, c, cfg.falhaT, cfg.tentarT, () => parto(root, c).then(resolve), luz0, 'parto-falha'); }, BOT() ? 100 : 1600);
+        return;
+      }
       while (mostradas < cfg.linhas.length) linha();
       const fr = clamp(dentro / DUR, 0, 1);
       c.mudaLuz((dois ? 30 : 20));
@@ -530,6 +582,9 @@ function parto(root, c) {
 // Segurar num ponto do deserto, dentro do alcance, acende uma luz ali. Cada luz puxa os Tacets.
 function rastro(root, c) {
   const { tr, A, st, L } = c, cfg = L.rastro;
+  const luz0 = st.luz;
+  // quanto mais cedo os Tacets começaram a andar (parto com os dois, faróis demais, luz alta no eclipse), mais rápido vêm
+  const cedo = st.tacetsCedo || 0;
   return new Promise((resolve) => {
     root.classList.add('explorar');
     const { caixa } = palco(root, 'assets/images/mapa-rastro.jpg', 1920 / 1080);
@@ -613,12 +668,24 @@ function rastro(root, c) {
       if (fim || !root.isConnected) { clearInterval(passo); return; }
       const dt = Math.min(.05, (now - last) / 1000); last = now;
       const destino = luzes.length > 1 ? ultima() : cfg.pira;
-      const vel = (luzes.length > 1 ? (cantou ? 4.6 : 3.8) : 1.6) * (BOT() ? 4 : 1);
+      const vel = (luzes.length > 1 ? (cantou ? 5 : 4.2) + 1.6 * cedo : 1.6 + .8 * cedo) * (BOT() ? 4 : 1);
       tacets.forEach((tc, k) => {
         const ax = destino.x + (k - 1) * 2, ay = destino.y + (k % 2) * 2, dx = ax - tc.x, dy = (ay - tc.y) * AR, dd = Math.hypot(dx, dy);
         if (dd > .8) { tc.x += dx / dd * vel * dt; tc.y += (dy / dd) * vel * dt / AR; }
         tc.el.style.left = tc.x + '%'; tc.el.style.top = tc.y + '%';
       });
+      // o compasso alcança: antes do primeiro farol, a Pira; depois, o Aheryn. Longe o bastante, é o que ele queria.
+      if (!BOT() || window.__RASTRO_FALHA) {
+        const u = ultima(), naPira = luzes.length <= 1 && tacets.some((tc) => d(tc, cfg.pira) < 3);
+        const pegou = luzes.length > 1 && tacets.some((tc) => d(tc, u) < 2.2);
+        if (window.__RASTRO_FALHA || naPira || (pegou && d(u, cfg.pira) < minimo)) {
+          fim = true; pz.fim(); clearInterval(passo); window.__RASTRO_FALHA = false; c.registrar('rastro_falhou', String(Math.round(d(u, cfg.pira))));
+          root.classList.add('sai');
+          setTimeout(() => derrota(root, c, cfg.falhaT, cfg.tentarT, () => rastro(root, c).then(resolve), luz0, 'rastro-falha'), BOT() ? 100 : 900);
+          return;
+        }
+        if (pegou) { ir.disabled = false; ir.click(); return; }
+      }
       if (!quebrou && luzes.length > 1) { quebrou = true; root.classList.add('quatro'); const m = document.createElement('p'); m.className = 'rt-quatro'; m.textContent = tr(cfg.quatroT); root.appendChild(m); c.narrate('rastro-quatro', true); setTimeout(() => m.remove(), 4200); A.once('assets/audio/tacet_passos.mp3', .45); }
       requestAnimationFrame(loop);
     };

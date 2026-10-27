@@ -647,6 +647,7 @@ function aplicar(o) {
   if (o.gole) beber('escolha');
   if (o.trai) later(() => traicao(o.trai), o.trai.atraso || 1500);
   if (o.flag) [].concat(o.flag).forEach((f) => { st.f[f] = true; });
+  if (o.aoEscolher) o.aoEscolher(st);   // gasto de item, flag com qualidade… antes da resposta (que pode ler o resultado)
   const av = typeof o.aviso === 'function' ? o.aviso(st) : o.aviso;
   if (av) later(() => toast(tr(av)), 500);
 }
