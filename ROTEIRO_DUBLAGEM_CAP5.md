@@ -20,11 +20,11 @@ Texto **exato** que está no capítulo (gerado direto do roteiro final, sem cóp
 _105 palavras_
 
 ## `voz/a03-relato.mp3`
-*Parte I, p. 3 · só para quem matou o caçador no Cap. I com Luz ≥ 45 (o registro da Juíza, como no Cap. II)*
+*Parte I, p. 3 · só para quem matou o caçador no Cap. I com Luz ≥ 45*
 
 **Direção:** Lembrança da emboscada no desfiladeiro. Plano, tenso por baixo; o "and I did not look back" firme. O fim quase com alívio.
 
-> I did not come south in peace. Three weeks past the last ice, in a pass of black rock, men were waiting for me with nets and a writ sealed with the Judge’s scales. Someone had sworn before a judge. I came out of that pass running, with the bolt wound in my shoulder open again, and they stayed behind, turning over stones in search of an old man.
+> I did not come south in peace. Three weeks past the last ice, in a pass of black rock, men were waiting for me with nets and a mind to collect a bounty. Someone had told what they saw.
 
 _69 palavras_
 

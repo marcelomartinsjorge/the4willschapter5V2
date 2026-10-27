@@ -166,6 +166,7 @@ window.LIVRO = {
   chaveEstado: 'cap5',
   titulo: 'Aheryn',
   subtitulo: 'O Dia Comido',
+  intertitulo: T('Trinta anos depois de Aheryn deixar a Borda do Mundo.', 'Thirty years after Aheryn left the Edge of the World.'),
   subtituloEn: 'The Eaten Day',
   tituloPag: 'Aheryn, o Dia Comido · As Quatro Vontades',
   tituloPagEn: 'Aheryn, the Eaten Day · The Four Wills',
@@ -508,7 +509,7 @@ window.LIVRO = {
       texto: [
         // a saída da Borda do Mundo: teve problemas ou não, conforme o que o mundo soube (a regra do Cap. II)
         (st) => ({
-          relato: T('Não desci para o sul em paz. Três semanas depois do último gelo, num desfiladeiro de rocha negra, homens me esperavam com redes e uma ordem lacrada com a balança da Juíza. Alguém tinha jurado diante de um juiz. Saí daquele desfiladeiro correndo, com a ferida da seta aberta outra vez, e eles ficaram lá dentro, revirando as pedras atrás de um velho.', 'I did not come south in peace. Three weeks past the last ice, in a pass of black rock, men were waiting for me with nets and a writ sealed with the Judge’s scales. Someone had sworn before a judge. I came out of that pass running, with the bolt wound in my shoulder open again, and they stayed behind, turning over stones in search of an old man.'),
+          relato: T('Não desci para o sul em paz. Três semanas depois do último gelo, num desfiladeiro de rocha negra, homens me esperavam com redes e de olho numa recompensa. Alguém tinha contado o que viu.', 'I did not come south in peace. Three weeks past the last ice, in a pass of black rock, men were waiting for me with nets and a mind to collect a bounty. Someone had told what they saw.'),
           taverna: T('A estrada para o sul passava por Frígia. Numa taverna de teto baixo, perto da fronteira, três caçadores contavam a história de um velho que acendia a mão na neve. Contavam bem: a cada rodada o velho ficava mais alto e a luz mais forte. Ninguém acreditava, e todo mundo pagava. Paguei uma rodada também, de capuz, no fundo da sala, e saí antes do fim. Nas versões que ouvi depois, eu morria.', 'The road south went through Frígia. In a low-roofed tavern near the border, three hunters were telling the story of an old man who lit up his hand in the snow. They told it well: with every round the old man grew taller and the light grew brighter. Nobody believed them, and everybody paid. I paid for a round too, hooded, at the back of the room, and left before the end. In the versions I heard later, I died.'),
           boato: T('Desci para o sul ouvindo falar de mim. Nas estalagens do caminho, gente que nunca tinha ido ao norte discutia umas luzes vistas sobre a Borda, numa noite, verdes ou douradas conforme o vinho. Um jurava que era um dragão. Outro, que eram os Lúmae voltando. Nenhum deles perguntou nada ao velho que comia sozinho no canto. Fiz o que sei fazer: mantive os olhos no prato e os pensamentos em coisa nenhuma.', 'I came south hearing about myself. In the inns along the road, people who had never been north argued about lights seen over the Edge one night, green or gold depending on the wine. One swore it was a dragon. Another, that it was the Lúmae coming back. None of them asked anything of the old man eating alone in the corner. I did what I know how to do: I kept my eyes on my plate and my thoughts on nothing.'),
           extintos: T('Desci para o sul do jeito que a neve sai de um telhado, toda de uma vez e sem ruído. Quarenta dias de caminhada. O gelo virou cascalho, o cascalho virou pedra, a pedra virou areia, e em toda aquela encosta comprida do mundo nenhum olho se demorou em mais um velho descendo a ladeira. Cuidei disso: mantive os olhos nos pés e os pensamentos em coisa nenhuma.', 'I came south the way snow leaves a roof, all at once and without a sound. Forty days of walking. The ice turned to scree, the scree to stone, the stone to sand, and in all that long slope of the world no eye lingered on one more old man going downhill. I saw to that: I kept my eyes on my feet and my thoughts on nothing.'),
@@ -557,6 +558,7 @@ window.LIVRO = {
       depois: (st) => [fechoLaje(st)] },
 
     { id: 'a05', zona: 'acampamento', estado: 'seco', fundo: { img: IMG('acampamento'), kb: 'in', dim: .45, foco: '30% 50%', lado: 'dir', clima: 'areia' }, capitular: true,
+      sons: [{ voz: 'a05-nome', p: 3 }],
       pensa: [{ id: 'imitar', voz: 'p-imitar', atraso: 16000, luz: 3, tomSeguir: 'ternura', t: T('Ninguém me imitava desde que eu era alguém.', 'No one had copied me since I was someone.'),
         mais: T('Na Cidade-Espelho, os aprendizes copiavam o meu passo na praça, e eu fingia não ver, e via.', 'In the Mirror City, the apprentices used to copy my walk across the square, and I pretended not to see, and saw.') }],
       texto: [
@@ -683,6 +685,7 @@ window.LIVRO = {
       ] } },
 
     { id: 'a10', zona: 'noite', fundo: { clip: CLIP('fogueiras'), img: IMG('laje-noite'), dim: .35, foco: '45% 60%', clima: 'estrelas' }, capitular: true, bebe: true,
+      sons: [{ voz: 'a10-sem-lua', p: -1 }],
       texto: [
         T('Naquela noite sentei na beira da Laje com o odre de vinho de cacto e fiquei olhando as hordas chegarem. As fogueiras foram acendendo uma a uma pelo escuro, até a planície lá embaixo ficar mais acesa que o céu.', 'That night I sat at the edge of the slab with the skin of cactus wine and watched the hordes come in. Their fires went on one by one across the dark, until the plain below was brighter than the sky.'),
         T('Sem lua. Na noite anterior também não houvera. O meu povo costumava esperar por noites assim, por motivos que eu tinha bebido para fora da cabeça havia muito tempo.', 'No moon. There had been none the night before, either. My people used to watch for nights like these, for reasons I had drunk out of my head a long time ago.'),
@@ -748,7 +751,7 @@ window.LIVRO = {
       } },
 
     { id: 'b02', zona: 'goelas', fundo: { video: VID('coluna'), img: IMG('coluna-redom'), dim: .38, foco: '40% 50%', lado: 'dir', clima: 'poeira' }, capitular: true, bebe: true,
-      sons: [{ sfx: 'corneta-redom', p: 0, v: .6 }, { sfx: 'armadura-tinido', p: 1, v: .5 }],
+      sons: [{ sfx: 'corneta-redom', p: 0, v: .6 }, { sfx: 'armadura-tinido', p: 1, v: .5 }, { voz: 'b02-tinido', p: 2 }],
       texto: [
         T('Vieram do leste na hora em que as sombras são mais curtas, numa coluna tão reta que parecia riscada a régua na areia. Escudos, lanças, pano vermelho. Atrás deles, as armações de madeira das máquinas de cerco, puxadas por bois, balançando como pássaros lentos.', 'They came out of the east at the hour when shadows are shortest, in a column so straight it looked ruled onto the sand. Shields, spears, red cloth. Behind them the timber frames of siege engines, dragged by oxen, nodding like slow birds.'),
         T('Na frente, debaixo de uma bandeira vermelha, vinha o Tinido.', 'At the front, under a red banner, rode the Tinn.'),
@@ -804,6 +807,7 @@ window.LIVRO = {
       cartao: { num: 'III', nome: T('O Dia Comido', 'The Eaten Day'), epigrafe: T('O que se apaga no céu se apaga nos homens.', 'What goes out in the sky goes out in men.'), fonte: T('nota Lúmae à margem, sem assinatura', 'Lúmae note in a margin, unsigned') } },
 
     { id: 'c01', zona: 'eclipse', fundo: { img: IMG('goelas-escuro'), kb: 'in', dim: .4, foco: '50% 50%', clima: 'cinza' }, bebe: true,
+      sons: [{ voz: 'c01-cinco', p: 0 }],
       texto: [
         T('Eu tinha, pelas contas mais velhas que conheço, cinco minutos. Talvez seis.', 'I had, by the oldest arithmetic I know, five minutes. Perhaps six.'),
       ],
@@ -840,7 +844,7 @@ window.LIVRO = {
 
     { id: 'c03', zona: 'batalha', estado: 'alerta',
       trai: { luz: 6, atraso: 15000, voz: 'c03-trai', texto: [T('No quinto, a luz saiu de mim, até o rosto, e eu não fiz nada para segurá-la. Não havia mais nada para esconder de ninguém.', 'At the fifth, the light came out of me, up to my face, and I did nothing to hold it. There was nothing left to hide from anyone.')] }, fundo: { clip: CLIP('luz-volta'), img: IMG('luz-volta'), dim: .35, foco: '70% 40%', clima: 'poeira' },
-      sons: [{ sfx: 'virotes', p: 1, v: .75, fim: true }, { sfx: 'virote-impacto', p: 3, v: .6 }],
+      sons: [{ sfx: 'virotes', p: 1, v: .75, fim: true }, { sfx: 'virote-impacto', p: 3, v: .6 }, { voz: 'c03-sol-volta', p: 0 }],
       texto: [
         T('Então o sol voltou. Primeiro uma única conta branca na beira do escuro, depois uma lâmina, e todas as sombras do campo giraram de uma vez, e homens que gritavam um instante antes ficaram piscando uns para os outros.', 'Then the sun came back. First a single white bead on the rim of the dark, then a blade of it, and every shadow on the field swung around at once, and men who had been shouting a moment before stood blinking at each other.'),
         T('Redom recuou. E recuou bem, isso eu admito: em ordem, os escudos travados, levando o Tinido entre quatro homens, em cima da própria capa. Os besteiros vinham de costas na retaguarda, como são treinados a fazer, e na última elevação se viraram e soltaram uma salva contra a multidão nos poços, como também são treinados a fazer.', 'Redom pulled back. It did it well, I will grant them that: in order, shields locked, carrying the Tinn between four men on his own cloak. The crossbowmen walked backward at the rear, as they are trained to, and at the last rise they turned and loosed one volley into the crowd at the wells, as they are also trained to.'),
@@ -891,6 +895,7 @@ window.LIVRO = {
       aoSair: (st) => { if (st.escolhas.pedido === 'graxa') usaPronto(st, 'unguento'); } },
 
     { id: 'd03', zona: 'roda', fundo: { img: IMG('cantil-areia'), kb: 'in', dim: .45, foco: '75% 50%', lado: 'dir', clima: 'poeira' },
+      sons: [{ voz: 'd03-pensar', p: 0 }],
       texto: [
         T('Para fazer o que ela pedia eu teria de pensar. Não os pensamentos pequenos que deixo passar em dia de chuva: tudo, de uma vez, como eu pensava antes, como fez o meu povo ser visto. E para pensar eu teria de parar de beber.', 'To do what she was asking I would have to think. Not the small thoughts I let through on rainy days: all of it, all at once, the way I used to think, the way that got my people seen. And to think, I would have to stop drinking.'),
         (st) => (st.cantil > 0 ? T('O odre de vinho de cacto pendia do meu quadril, como sempre. Ainda havia um pouco.', 'The skin of cactus wine hung at my hip, as always. There was some left.')
@@ -908,7 +913,7 @@ window.LIVRO = {
       aoSair: (st) => { if (st.escolhas.odre !== 'gole') st.cantil = 0; } },
 
     { id: 'd04', zona: 'roda', fundo: { img: IMG('shaa-luz'), kb: 'in', dim: .4, foco: '50% 45%', clima: 'poeira' }, capitular: true,
-      sons: [{ voz: 'd04-mao', p: -1, se: tocouProibido }],
+      sons: [{ voz: 'd04-mao', p: -1, se: tocouProibido }, { voz: 'd04-magia', p: 0 }],
       texto: [
         T('Conheço dois tipos de magia. Um é uma cortesia que se pede ao mundo, como pedir ao vizinho que tire a carroça do caminho; o gelo me fez esse favor por cinquenta anos. O outro não pede. É enfiar a mão no pano de que o mundo é tecido e puxar um fio, e cada fio puxado acende você como uma lamparina numa janela, para qualquer coisa que saiba olhar.', 'I know two kinds of magic. One is a courtesy you ask of the world, like asking a neighbour to move his cart; the ice did me that favour for fifty years. The other does not ask. It is reaching into the cloth the world is woven from and pulling a thread, and every thread you pull lights you up like a lamp in a window, for anything that knows how to look.'),
         se((st) => (c1(st).gelunah || 0) >= 1, T('Pedi ao frio primeiro. Por hábito, por afeto, não sei. Não havia frio a quem pedir. Havia areia por cem léguas em todas as direções, e a areia nunca me fez cortesia nenhuma.', 'I asked the cold first. From habit, from affection, I do not know. There was no cold to ask. There was sand for a hundred leagues in every direction, and the sand has never once done me a courtesy.')),
@@ -955,7 +960,7 @@ window.LIVRO = {
     { id: 'd07', zona: 'roda',
       pensa: [{ id: 'maior', voz: 'p-maior', luzMin: 60, atraso: 24000, luz: 3, tomSeguir: 'ternura', t: T('Maior.', 'Greatest.'),
         mais: T('Uma vez me deram uma palavra assim, e uma canção para carregá-la. Que sirva melhor nele.', 'Once they gave me a word like that, and a song to carry it. May it fit him better.') }], fundo: { img: IMG('recem-nascido'), kb: 'out', dim: .4, foco: '60% 50%', lado: 'dir', clima: 'brasas' },
-      sons: [{ p: 4, fim: true, fn: rodaDizONome }],
+      sons: [{ p: 4, fim: true, fn: rodaDizONome }, { voz: 'd07-pergunta', p: -1 }],
       texto: [
         (st) => (parto(st) === 'dois' ? T('Shaa ainda estava ali. Eu a tinha segurado até ali. Ela estendeu a mão, e Hessa deitou a cria na dobra do braço dela, e Shaa olhou para ela, de cima a baixo, sem pressa.', 'Shaa was still there. I had held her that long. She put out a hand, and Hessa laid the child in the crook of her arm, and Shaa looked it over from top to bottom, taking her time.')
           : T('Shaa quase não estava mais ali. Os olhos dela acharam o som antes de achar a cria.', 'Shaa was almost gone. Her eyes found the sound before they found the child.')),
@@ -970,7 +975,7 @@ window.LIVRO = {
       ] },
 
     { id: 'd08', zona: 'roda', fundo: { img: IMG('depois'), kb: 'in', dim: .4, foco: '60% 60%', lado: 'dir', clima: 'poeira' },
-      sons: [{ s: 'assets/audio/tacet_passos.mp3', p: 2, v: .5, fim: true }],
+      sons: [{ s: 'assets/audio/tacet_passos.mp3', p: 2, v: .5, fim: true }, { voz: 'd08-ritmo', p: 2 }],
       texto: [
         T('Depois a roda se desfez devagar. Voltaram para os seus mortos. Hessa foi com a cria.', 'Afterwards the ring came apart slowly. They went back to their dead. Hessa went with the child.'),
         (st) => (parto(st) === 'dois'
@@ -1052,6 +1057,7 @@ window.LIVRO = {
       ] } },
 
     { id: 'e05', zona: 'deserto',
+      sons: [{ voz: 'e05-noite', p: 0 }],
       pensa: [{ id: 'geracoes', voz: 'p-geracoes', luzMin: 31, atraso: 9000, luz: 3, tomSeguir: 'ironia', t: T('Eles vão contar isso por gerações.', 'They will tell this for generations.'),
         mais: T('Um velho que acendeu na roda e foi embora antes do sol. Em três gerações eu teria asas. Em cinco, seria uma lua.', 'An old man who lit up in the ring and left before sunrise. In three generations I would have wings. In five, I would be a moon.') }], fundo: { img: IMG('mapa-rastro'), kb: 'in', dim: .4, foco: '50% 50%', clima: 'estrelas' },
       texto: [

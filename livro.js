@@ -86,13 +86,15 @@ const A = {
     if (this.zone === z) this.zoneH = h; else this.stop(h, .3);
   },
   async once(url, vol = .7) { const b = await this.buf(url); if (!b) return 0; const s = this.ctx.createBufferSource(); s.buffer = b; const g = this.ctx.createGain(); g.gain.value = vol; s.connect(g); g.connect(this.fx); s.start(); return b.duration; },
-  async narrate(url, onEnd) {
-    this.stopNarr(); const b = await this.buf(url); if (!b) return false;
+  // fila: se já há uma voz falando, espera ela acabar em vez de cortá-la (pensamentos e dublagens de parágrafo)
+  async narrate(url, onEnd, fila) {
+    if (fila && this.narr) { (this.fila = this.fila || []).push([url, onEnd]); return true; }
+    this.stopNarr(true); const b = await this.buf(url); if (!b) return false;
     const s = this.ctx.createBufferSource(); s.buffer = b; s.connect(this.master); s.start();
-    this.duck(true); this.narr = s; s.onended = () => { if (this.narr === s) { this.narr = null; this.duck(false); onEnd && onEnd(); } };
+    this.duck(true); this.narr = s; s.onended = () => { if (this.narr === s) { this.narr = null; this.duck(false); onEnd && onEnd(); const q = this.fila && this.fila.shift(); if (q) this.narrate(q[0], q[1]); } };
     return true;
   },
-  stopNarr() { if (this.narr) { const s = this.narr; this.narr = null; try { s.stop(); } catch (e) {} this.duck(false); } },
+  stopNarr(manterFila) { if (!manterFila) this.fila = []; if (this.narr) { const s = this.narr; this.narr = null; try { s.stop(); } catch (e) {} this.duck(false); } },
   sobe() { this.tone(330, 1.4, 'sine', .035, 0, 1.6); this.tone(495, 1.6, 'sine', .02, .15, 1.5); },
   trai() { this.tone(110, 2.2, 'sawtooth', .04, 0, 2); this.hiss(2, 1500, .5, .1, 0); this.sfx('luz', .7); },
   acende() { this.tone(392, .9, 'sine', .04, 0, 1.5); this.tone(588, 1.1, 'sine', .025, .1, 1.4); },
@@ -485,7 +487,7 @@ let timers = [];
 const clearTimers = () => { timers.forEach(clearTimeout); timers = []; };
 const later = (fn, ms) => timers.push(setTimeout(fn, ms));
 const vozUrl = (n) => 'assets/audio/voz/' + n + '.mp3';
-const fala = (nome, ms = 0) => { if (!nome) return; later(() => { if (A.ctx && A.on) A.narrate(vozUrl(nome)); }, ms); };
+const fala = (nome, ms = 0) => { if (!nome) return; later(() => { if (A.ctx && A.on) A.narrate(vozUrl(nome), null, true); }, ms); };
 // sons amarrados a um parágrafo: tocam quando o leitor, no ritmo médio de leitura, chega nele (p = índice; -1 = o último)
 let cuesPend = [];
 const palavras = (el) => (el.textContent || '').trim().split(/\s+/).length;
@@ -494,7 +496,7 @@ function agendaItens(itens, els, base = 0) {
   (itens || []).forEach((it) => {
     if (it.se && !it.se(st)) return;
     const c = { done: false, fim: !!it.fim };
-    c.tocar = () => { if (c.done) return; c.done = true; if (!A.ctx || !A.on) return; if (it.voz) A.narrate(vozUrl(it.voz)); else if (it.fn) it.fn(A); else if (it.sfx) A.sfx(it.sfx, it.v != null ? it.v : .7); else if (it.s) A.once(it.s, it.v != null ? it.v : .7); };
+    c.tocar = () => { if (c.done) return; c.done = true; if (!A.ctx || !A.on) return; if (it.voz) A.narrate(vozUrl(it.voz), null, true); else if (it.fn) it.fn(A); else if (it.sfx) A.sfx(it.sfx, it.v != null ? it.v : .7); else if (it.s) A.once(it.s, it.v != null ? it.v : .7); };
     if (c.fim) cuesPend.push(c);
     later(c.tocar, base + (it.p != null ? msAte(els, it.p) : (it.ms != null ? it.ms : 900)));
   });
@@ -849,8 +851,20 @@ const comecar = (continuar) => {
   if (!(continuar && salvo) && L.inicio) L.inicio(st);
   luzShown = st.luz; salvar();
   ['assets/audio/hino/louvor.mp3', 'assets/audio/sfx/gole.mp3', 'assets/audio/sfx/luz.mp3', 'assets/audio/sfx/pagina.mp3'].forEach((u) => A.buf(u));
-  $('#cover').classList.add('hide'); document.body.classList.remove('na-capa'); A.virar(); render(1);
+  $('#cover').classList.add('hide'); document.body.classList.remove('na-capa'); A.virar();
+  // o intertítulo: tela escura, só a frase, antes da primeira página (só em começo novo)
+  if (!(continuar && salvo) && L.intertitulo) intertitulo(tr(L.intertitulo), () => render(1)); else render(1);
 };
+function intertitulo(frase, depois) {
+  let el = $('#intertitulo');
+  if (!el) { el = document.createElement('section'); el.id = 'intertitulo'; el.setAttribute('aria-live', 'polite'); document.body.appendChild(el); }
+  el.innerHTML = `<p>${esc(frase)}</p>`; el.classList.remove('sai'); el.classList.add('show');
+  let feito = false;
+  const fim = () => { if (feito) return; feito = true; clearTimeout(t); el.classList.add('sai'); setTimeout(() => { el.classList.remove('show', 'sai'); }, 1200); setTimeout(depois, 500); };
+  const t = setTimeout(fim, 5200);
+  el.onclick = fim; const tecla = (e) => { if (e.key === ' ' || e.key === 'Enter' || e.key === 'ArrowRight') { document.removeEventListener('keydown', tecla, true); e.preventDefault(); e.stopPropagation(); fim(); } };
+  document.addEventListener('keydown', tecla, true);
+}
 $('#cvGo').onclick = () => comecar(false);
 $('#cvCont').onclick = () => comecar(true);
 $('#som').onclick = () => { A.init(); A.setOn(!A.on); $('#som').classList.toggle('off', !A.on); };
