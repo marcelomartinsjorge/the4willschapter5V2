@@ -517,3 +517,8 @@ body.impacto #bg { animation: impacto 1.8s ease-out; }
 .j5-derrota.on { opacity: 1; }
 .j5-derrota .l1 { font-family: var(--serif-d, serif); font-size: clamp(26px, 3vw, 40px); color: #efe3c6; margin: 0; }
 .j5-derrota .l2 { font-size: clamp(16px, 1.3vw, 19px); color: #b9b2a6; max-width: 34em; margin: 0 0 18px; }
+/* parto · 'os dois': a segunda barra é o coração de Shaa (mais baixa, cor de brasa); se ele para, a barra apaga */
+.pt-vida.pt-vida-s { bottom: calc(52px + env(safe-area-inset-bottom,0px)); }
+.pt-vida.pt-vida-s i { background: #d9825b; box-shadow: 0 0 10px rgba(217,130,91,.7); transition: width .2s linear; }
+.pt-vida.pt-vida-s.parou { opacity: .25; transition: opacity 1.2s; }
+.pt-c.parou { animation: none !important; filter: grayscale(1); }

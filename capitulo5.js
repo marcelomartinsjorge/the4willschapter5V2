@@ -80,6 +80,19 @@ const quantos = (st, id) => alf(st).prontos.filter((x) => x.id === id).length;
 const hessaFaixa = (st) => { const h = st.hessa || 0; return h <= -2 ? 'hostil' : h === -1 ? 'fria' : h === 0 ? 'neutra' : h === 1 ? 'respeito' : 'confianca'; };
 const hessaBem = (st) => ['respeito', 'confianca'].includes(hessaFaixa(st));
 // Tukk: inteiro (arrastado e tratado), sem o braço (arrastado, sem graxa boa), morto (ficou na linha)
+// Shaa salva ('os dois'): quanto Aheryn ajudou os outros antes da roda, de 0 a 9.
+//   Shaa: o dente (aceitar ou dar de presente), a luz mostrada, junto dela no eclipse (até 3) · Hessa: confiança 2, respeito 1
+//   tintura no parto: bem feita 2, média ou mal feita 1 · as três trocas fechadas: 1 · Tukk arrastado da linha: 1
+const preparoDois = (st) => {
+  const ok = Object.values((st.jogos.troca || {}).ok || {}).filter(Boolean).length;
+  return (['aceitar', 'presente'].includes(st.escolhas.dente) ? 1 : 0) + (st.f.mostrou_luz ? 1 : 0) + (st.f.junto_shaa ? 1 : 0)
+    + ({ confianca: 2, respeito: 1 }[hessaFaixa(st)] || 0) + ({ bom: 2, medio: 1, ruim: 1 }[st.f.tinturaParto] || 0)
+    + (ok >= 3 ? 1 : 0) + (st.f.salvou_tukk ? 1 : 0);
+};
+const nivelDois = (st) => window.LIVRO.parto.dois.find((n) => preparoDois(st) >= n.min);
+const shaaViva = (st) => parto(st) === 'dois' && !!st.f.shaa_viva;
+// o vinho passa com o tempo: cada virada que o texto marca (a batalha, o fim do eclipse, a roda) tira 1 do turvo
+const passaTempo = (k) => (st) => { if (st.f['_tempo_' + k]) return; st.f['_tempo_' + k] = true; st.turvo = Math.max(0, (st.turvo || 0) - 1); };
 const tukkFim = (st) => (!st.f.salvou_tukk ? 'morto' : st.f.tukk || 'sem_braco');
 const usaPronto = (st, id) => { const a = alf(st); let k = -1; a.prontos.forEach((x, i) => { if (x.id === id && (k < 0 || QORD[x.q] < QORD[a.prontos[k].q])) k = i; }); return k >= 0 ? a.prontos.splice(k, 1)[0] : null; };
 
@@ -125,7 +138,7 @@ window.LIVRO_UI = {
       troca: 'Toque no que brilha para ler o corpo do Grakh. Depois ponha no couro o que ele precisa. Bem feito, basta; se não for, ele vai querer mais alguma coisa junto. Tocar no que está no couro traz de volta.',
       bancada: (st) => 'Leia a receita no couro e feche-o: o couro cobre a bancada. Depois faça de memória: toque num ingrediente e no pilão ou no pote, segure o pilão para moer e o pote para mexer, toque na brasa para pôr e tirar do fogo e conte os riscos. Sem erro, sai bem feito.' + ((st.turvo || 0) >= 2 ? ' O vinho vai embaralhar o couro.' : ''),
       minutos: 'O anel é o sol voltando. Cada ação gasta tempo. Não vai dar para tudo. Quem ouve antes, pisa melhor.',
-      parto: (st) => 'Segure para pensar: a luz sobe. Solte: ela cai. Mantenha dentro da faixa dourada.' + ((st.turvo || 0) >= 2 ? ' O vinho vai fazer a mão tremer.' : '') + (window.LIVRO.parto.preparo(st) < 5 ? ' As dores dela aparecem com uma letra: aperte a letra, ou toque nela, sem largar a luz.' : ''),
+      parto: (st) => 'Segure para pensar: a luz sobe. Solte: ela cai. Mantenha dentro da faixa dourada.' + ((st.turvo || 0) >= 2 ? ' O vinho vai fazer a mão tremer.' : '') + (parto(st) === 'dois' ? (nivelDois(st).runas ? ' As dores dela aparecem com uma letra: aperte a letra, ou toque nela, sem largar a luz.' : '') + ' Com os dois, a barra de baixo é o coração de Shaa: ele cai sozinho, e só a luz dentro da faixa o sustenta.' : window.LIVRO.parto.preparo(st) < 5 ? ' As dores dela aparecem com uma letra: aperte a letra, ou toque nela, sem largar a luz.' : ''),
       rastro: 'Segure no deserto para acender uma luz. Cada luz puxa os Tacets atrás de você. Leve-os para longe da Pira.',
     },
     // a instrução no centro da tela, na primeira vez de cada jogo
@@ -154,7 +167,7 @@ window.LIVRO_UI = {
       troca: 'Touch what glows to read the Grakh’s body. Then put on the hide what he needs. Well made, it is enough; if not, he will want something more on top. Touch what is on the hide to take it back.',
       bancada: (st) => 'Read the recipe on the hide and close it: the hide covers the bench. Then make it from memory: touch an ingredient and then the mortar or the pot, hold the mortar to grind and the pot to stir, touch the embers to put on and take off the fire, and count the marks. No mistakes, and it comes out well made.' + ((st.turvo || 0) >= 2 ? ' The wine will scramble the hide.' : ''),
       minutos: 'The ring is the sun coming back. Every action costs time. You will not have enough. Whoever listens first steps better.',
-      parto: (st) => 'Hold to think: the light rises. Let go: it falls. Keep it inside the golden band.' + ((st.turvo || 0) >= 2 ? ' The wine will make the hand shake.' : '') + (window.LIVRO.parto.preparo(st) < 5 ? ' Her pains appear with a letter: press it, or tap it, without letting go of the light.' : ''),
+      parto: (st) => 'Hold to think: the light rises. Let go: it falls. Keep it inside the golden band.' + ((st.turvo || 0) >= 2 ? ' The wine will make the hand shake.' : '') + (parto(st) === 'dois' ? (nivelDois(st).runas ? ' Her pains appear with a letter: press it, or tap it, without letting go of the light.' : '') + ' With both, the lower bar is Shaa’s heart: it falls on its own, and only the light inside the band holds it up.' : window.LIVRO.parto.preparo(st) < 5 ? ' Her pains appear with a letter: press it, or tap it, without letting go of the light.' : ''),
       rastro: 'Hold on the desert to light a point. Each light pulls the Tacets after you. Lead them far from the Pyre.',
     },
     gesto: { ressaca: 'Hold to remember', parto: 'Hold to think', rastro: 'Hold to light', laje: 'Touch what glows', troca: 'Touch what glows', bancada: 'Read, then make', minutos: 'Every action spends sun' },
@@ -284,7 +297,7 @@ window.LIVRO = {
       { id: 'tintura', nome: T('Tintura', 'Tincture'), sub: T('para febre e dor', 'for fever and pain'), ic: 'frasco', usa: ['seiva', 'flor'],
         passos: ['pote:seiva', 'fogo:3', 'pilao:flor', 'moer', 'verter', 'fogo:1', 'guardar'],
         linhas: [T('Seiva no pote. Fogo até o terceiro risco.', 'Sap in the pot. Fire to the third mark.'), T('A flor no pilão. Moer.', 'The flower in the mortar. Grind.'), T('O pilão no pote. Mais um risco de fogo.', 'The mortar into the pot. One more mark of fire.'), T('Guardar no frasco.', 'Into the flask.')] },
-      { id: 'antidoto', nome: T('Antídoto', 'Antidote'), sub: T('para bicho de ferrão', 'for things that sting'), ic: 'gota', usa: ['ferrao', 'raiz', 'seiva'],
+      { id: 'antidoto', nome: T('Antídoto', 'Antidote'), sub: T('para picada de ferrão', 'for stings'), ic: 'gota', usa: ['ferrao', 'raiz', 'seiva'],
         passos: ['pilao:ferrao', 'pilao:raiz', 'moer', 'pote:seiva', 'verter', 'mexer', 'guardar'],
         linhas: [T('Ferrão e raiz no pilão. Moer.', 'Sting and root in the mortar. Grind.'), T('Seiva no pote. Sem fogo.', 'Sap in the pot. No fire.'), T('O pilão no pote. Mexer.', 'The mortar into the pot. Stir.'), T('Guardar no frasco.', 'Into the flask.')] },
       { id: 'po', nome: T('Pó de esconder cheiro', 'Scent-masking powder'), sub: T('para caçador', 'for hunters'), ic: 'bolsa', usa: ['creosoto', 'cinza'],
@@ -356,7 +369,7 @@ window.LIVRO = {
         pistas: {
           mao: T('Levou o pulso ao nariz, cheirou a parte de dentro e fez uma careta.', 'He lifted his wrist to his nose, sniffed the inside of it, and made a face.'),
           corpo: T('Ficou agachado em vez de sentar, o peso na ponta dos pés, e cheirou o pulso outra vez.', 'He crouched instead of sitting, his weight on his toes, and sniffed his wrist again.'),
-          oferta: T('Uma pele de gato-do-deserto. Só se pega esse bicho chegando contra o vento.', 'A sand-cat hide. You only catch that animal by coming at it downwind.'),
+          oferta: T('Uma pele de gato-do-deserto. Só se pega um desses chegando contra o vento.', 'A sand-cat hide. You only catch one of those by coming at it downwind.'),
         },
         bom: T('Ele se inclinou para a frente.', 'He leaned in.'),
         quer: { medio: T('Durr esfregou um pouco do pó no pulso, cheirou e ficou esperando, agachado.', 'Durr rubbed a little of the powder into his wrist, sniffed, and waited, crouching.'),
@@ -398,7 +411,7 @@ window.LIVRO = {
       { id: 'shaa', custo: 2, x: 58, y: 64, rotulo: T('Ir até Shaa, no poço', 'Go to Shaa, at the well'),
         texto: [T('Shaa estava na borda do poço, de joelhos, os dois braços em volta da barriga. Ajoelhei ao lado dela, peguei-a pelo braço e comecei a puxá-la para as pedras, e ela veio, devagar.', 'Shaa was on the rim of the well, on her knees, both arms around her belly. I knelt beside her, took her by the arm and began to pull her toward the rocks, and she came, slowly.')] },
       { id: 'beber', custo: 1, x: 50, y: 93, rotulo: T('Beber', 'Drink'), trava: (st) => st.cantil <= 0, motivo: T('o odre está vazio', 'the skin is empty'),
-        texto: [T('Bebi, ali, no escuro, com o mundo acabando em volta, porque é o que minhas mãos sabem fazer quando não sabem o que fazer.', 'I drank, there, in the dark, with the world ending around me, because it is what my hands do when they do not know what to do.')] },
+        texto: [T('Bebi, ali, no escuro, com o mundo acabando em volta.', 'I drank, there, in the dark, with the world ending around me.')] },
       { id: 'esconder', custo: 0, x: 22, y: 86, fim: true, rotulo: T('Esconder-se nas pedras e esperar', 'Hide among the rocks and wait'),
         texto: [T('Encostei as costas nas pedras e esperei a luz voltar. Sei fazer isso muito bem.', 'I pressed my back into the rocks and waited for the light to come back. I am very good at that.')] },
     ],
@@ -425,6 +438,20 @@ window.LIVRO = {
     // 5 pontos ou mais: nenhuma dor para apertar. Menos que isso: as dores aparecem como as runas do hino do gelo (Q W E A S D).
     preparo: (st) => ({ bom: 2, medio: 1, ruim: 1 }[st.f.tinturaParto] || 0) + ({ confianca: 2, respeito: 1 }[hessaFaixa(st)] || 0) + (st.f.junto_shaa ? 1 : 0),
     dorT: T('a dor dela', 'her pain'),
+    // 'os dois': o coração de Shaa cai sozinho (dreno por segundo) e só a luz dentro da faixa o sustenta (.08 por segundo).
+    // Quanto mais Aheryn ajudou os outros (preparoDois, 0 a 9), mais larga a faixa, mais devagar ele cai e menos dores aparecem.
+    //   larg: largura da faixa · runas: [intervalo, duração] em segundos, ou null · criaMin: a vida da cria que basta no fim
+    //   (a cria não fica mais difícil que no 'só a cria': o difícil é Shaa).
+    // Calibrado numa simulação da física com três jogadores (na faixa ~90%, ~65% e ~40% do tempo), Shaa salva:
+    //   8-9 pontos: todos · 5-7: o bom e o médio · 2-4: o bom · 0-1: metade das vezes do bom.
+    dois: [
+      { min: 8, larg: .27, dreno: .065, runas: null, criaMin: .5 },
+      { min: 5, larg: .24, dreno: .078, runas: [3.6, 3.0], criaMin: .48 },
+      { min: 2, larg: .22, dreno: .092, runas: [2.6, 2.4], criaMin: .42 },
+      { min: 0, larg: .20, dreno: .107, runas: [2.0, 2.0], criaMin: .25 },
+    ],
+    vidaShaaT: T('o coração dela', 'her heart'),
+    preparoDois,
     falhaT: [T('A luz não chegou a tempo.', 'The light did not get there in time.'), T('O coração pequeno parou debaixo da minha mão.', 'The small heart stopped under my hand.')],
     tentarT: T('Voltar ao começo do parto', 'Back to the start of the birth'),
   },
@@ -458,7 +485,7 @@ window.LIVRO = {
     titulo: T('Lembranças do Velho Mundo', 'Memories of the Old World'),
     entradas: [
       { titulo: T('Do primeiro ano seco', 'The first dry year'), texto: T('Areia em tudo. No pão, na tinta, nas dobras desta página. Decidi parar de brigar com ela e chamá-la de tempero.', 'Sand in everything. In the bread, in the ink, in the creases of this page. I have decided to stop fighting it and call it seasoning.') },
-      { titulo: T('Sobre os Grakh', 'On the Grakh'), texto: T('Dão nome a uma coisa pelo primeiro som que ela faz. Uma criança, pelo primeiro choro; um bicho, pelo último. Em onze anos não me deram nome. Considero o maior elogio que o deserto sabe fazer.', 'They name a thing by the first sound it makes. A child by its first cry; a beast by its last. In eleven years they have not named me. I take it as the highest compliment the desert knows how to pay.') },
+      { titulo: T('Sobre os Grakh', 'On the Grakh'), texto: T('Dão nome a uma coisa pelo primeiro som que ela faz. Uma criança, pelo primeiro choro; um animal, pelo último. Em onze anos não me deram nome. Considero o maior elogio que o deserto sabe fazer.', 'They name a thing by the first sound it makes. A child by its first cry; a beast by its last. In eleven years they have not named me. I take it as the highest compliment the desert knows how to pay.') },
       { titulo: T('Sobre a menina', 'On the girl'), texto: T('A febre levou a menina na quarta noite. Eu tive a cura na cabeça o tempo todo, dobrada bem pequena, onde guardo tudo o que não me é permitido usar. A mãe parou de vir ao ponto de troca.', 'The fever took the girl on the fourth night. I had the cure in my head the whole time, folded small, where I keep everything I am not allowed to use. Her mother has stopped coming to the trading stone.') },
       { titulo: T('Ontem à noite', 'Last night'), texto: T('Duas noites sem lua. O meu povo saberia o que isso quer dizer. Eu só sei que eles saberiam.', 'Two nights without a moon. My people would have known what that means. I only know that they would have known.') },
       { titulo: T('Outras páginas', 'Other pages'), texto: T('Há outras. Podem esperar. Tudo neste deserto pode esperar, menos a água.', 'There are others. They can wait. Everything in this desert can wait, except water.') },
@@ -509,7 +536,7 @@ window.LIVRO = {
         { id: 'ficar', tom: 'ternura', luz: 2, txt: T('Ficar mais um pouco com os pés nela.', 'Stay a little longer with my feet in it.'),
           resultado: [T('Fiquei. A um palmo de fundura a areia ainda guardava o frio da noite, e enterrei os dedos até achá-lo.', 'I stayed. A hand’s depth down the sand still kept the cold of the night, and I dug my toes in until I found it.')] },
         { id: 'gota', tom: 'ironia', txt: T('Procurar a última gota na cabaça.', 'Look in the gourd for a last drop.'),
-          resultado: [T('Virei a cabaça sobre a boca e esperei, com a paciência de um Tacet. Nada caiu. Aquilo me deu vontade de voltar para o norte, como se nada tivesse acontecido desde então.', 'I tipped the gourd over my mouth and waited, with the patience of a Tacet. Nothing fell. It made me want to go back north, as if nothing had happened since.')] },
+          resultado: [T('Virei a cabaça sobre a boca e esperei, com a paciência de um Tacet. Nada caiu. Quis estar de volta ao gelo, antes de virem me buscar.', 'I tipped the gourd over my mouth and waited, with the patience of a Tacet. Nothing fell. I wanted to be back on the ice, before they came for me.')] },
       ] } },
 
     { id: 'a02', zona: 'laje', fundo: { img: IMG('areia-amanhecer'), kb: 'in', dim: .5, foco: '70% 55%', clima: 'areia' },
@@ -553,7 +580,7 @@ window.LIVRO = {
           { id: 'cabacas', x: 64, y: 58, w: 14, h: 20, rotulo: T('As cabaças', 'The gourds'), som: 'cabaca',
             texto: [T('Fruto de cacto amassado, deixado fermentando no escuro por nove dias. No décimo destilo o que sobrou num alambique de barro que eu mesmo construí. Sai límpido, cheira a açúcar queimado e cachorro velho, e faz o que preciso que faça.', 'Cactus fruit, mashed and left to ferment in the dark for nine days. On the tenth I distill what is left in a clay still I built myself. It comes out clear, smells of burnt sugar and old dogs, and does what I need it to do.')] },
           { id: 'potes', x: 88, y: 80, w: 20, h: 22, rotulo: T('Os potes', 'The pots'), som: 'pote-abre',
-            texto: [T('Unguento para feridas, tintura para febre, antídoto para bicho de ferrão, o pó que esconde o cheiro de um homem daquilo que ele caça. No fim da estação seca, quase todos vazios. Sobrava um frasco de tintura. O resto eu teria de fazer na bancada. Quando cheguei, não conhecia nenhuma dessas plantas. Hoje conheço cada uma pelo cheiro.', 'Ointment for wounds, tincture for fever, antidote for things that sting, the powder that hides a man’s smell from whatever he hunts. At the end of the dry season, nearly all of them empty. One flask of tincture was left. The rest I would have to make at the bench. When I came, I knew none of these plants. Now I know each one by its smell.')] },
+            texto: [T('Unguento para feridas, tintura para febre, antídoto para picada de ferrão, o pó que esconde o cheiro de um homem daquilo que ele caça. No fim da estação seca, quase todos vazios. Sobrava um frasco de tintura. O resto eu teria de fazer na bancada. Quando cheguei, não conhecia nenhuma dessas plantas. Hoje conheço cada uma pelo cheiro.', 'Ointment for wounds, tincture for fever, antidote for stings, the powder that hides a man’s smell from whatever he hunts. At the end of the dry season, nearly all of them empty. One flask of tincture was left. The rest I would have to make at the bench. When I came, I knew none of these plants. Now I know each one by its smell.')] },
           { id: 'escorpiao', x: 47, y: 82, w: 8, h: 10, rotulo: T('Uma sombra que se mexe', 'A shadow that moves'), som: 'escorpiao', aoVer: (st) => { alf(st).ingr.ferrao = Math.max(1, alf(st).ingr.ferrao || 0); },
             texto: [T('Um escorpião, do tamanho do meu polegar, na sombra de uma pedra. Prendi com a tigela, tirei o ferrão com a ponta da faca e guardei. O resto dele soltei na areia.', 'A scorpion the size of my thumb, in the shade of a stone. I trapped it under the bowl, took the sting off with the point of the knife, and kept it. The rest of him I let go on the sand.')] },
           { id: 'riscos', x: 67, y: 30, w: 8, h: 14, rotulo: T('Os riscos', 'The marks'),
@@ -682,7 +709,7 @@ window.LIVRO = {
       ],
       aoEntrar: (st, k) => { if (st.luz >= 60 && !st.f.mostrou_luz && !st.f.hessa_viu_luz) { st.f.hessa_viu_luz = true; st.hessa -= 1; k.toast(T('Hessa viu a luz.', 'Hessa saw the light.')); } st.cantil = Math.max(0, st.cantil - 1); },
       dialogo: { interlocutor: 'Hessa', rodadas: [
-        { id: 'hessa1', antes: [T('— Você fica porque os potes mantêm o meu povo de pé. Homens que deviam cair não caem. É o único motivo de você ainda estar naquela pedra. Não confunda com outro.', '— You stay because the pots keep my people standing. Men who should fall, don’t. That is the only reason you are still on that stone. Do not mistake it for another.')],
+        { id: 'hessa1', antes: [T('— Você fica porque os potes mantêm os meus de pé. Homens que deviam cair não caem. É o único motivo de você ainda estar naquela pedra. Não confunda com outro.', '— You stay because the pots keep my own standing. Men who should fall, don’t. That is the only reason you are still on that stone. Do not mistake it for another.')],
           pergunta: T('Responder a Hessa:', 'Answer Hessa:'), opcoes: [
             { id: 'uteis', tom: 'ironia', txt: T('“Então somos úteis um ao outro.”', '“Then we are useful to each other.”'),
               resposta: [T('Ela não respondeu. Olhou os meus potes, depois para mim, e cuspiu na areia.', 'She did not answer. She looked at my pots, then at me, and spat on the sand.')] },
@@ -702,7 +729,7 @@ window.LIVRO = {
             { id: 'longe', tom: 'ironia', txt: T('“Estou sempre longe. Mesmo parado aqui.”', '“I am always far away. Even standing here.”'),
               resposta: [T('Alguma coisa se mexeu no canto da boca dela e foi guardada no mesmo instante.', 'Something moved at the corner of her mouth and was put away at once.')] },
             { id: 'cala', silencio: true, luzMax: 80, tom: 'frieza',
-              resposta: [T('Ela me deu as costas e foi embora. Era a primeira vez que fazia isso comigo armado.', 'She turned her back on me and walked away. It was the first time she had done that with me armed.')] },
+              resposta: [T('Ela virou e foi embora. Era a primeira vez que me dava as costas.', 'She turned and walked away. It was the first time she had turned her back on me.')] },
           ] },
       ] } },
 
@@ -775,7 +802,7 @@ window.LIVRO = {
     { id: 'b02', zona: 'goelas', fundo: { video: VID('coluna'), img: IMG('coluna-redom'), dim: .38, foco: '40% 50%', lado: 'dir', clima: 'poeira' }, capitular: true, bebe: true,
       sons: [{ sfx: 'corneta-redom', p: 0, v: .6 }, { sfx: 'armadura-tinido', p: 1, v: .5 }, { voz: 'b02-tinido', p: 2 }],
       texto: [
-        T('Vieram do leste na hora em que as sombras são mais curtas, numa coluna tão reta que parecia riscada a régua na areia. Escudos, lanças, pano vermelho. Atrás deles, as armações de madeira das máquinas de cerco, puxadas por bois, balançando como pássaros lentos.', 'They came out of the east at the hour when shadows are shortest, in a column so straight it looked ruled onto the sand. Shields, spears, red cloth. Behind them the timber frames of siege engines, dragged by oxen, nodding like slow birds.'),
+        T('Vieram do leste na hora em que as sombras são mais curtas, em coluna, sem uma curva do primeiro ao último homem. Escudos, lanças, pano vermelho. Atrás deles, as armações de madeira das máquinas de cerco, puxadas por bois, balançando como pássaros lentos.', 'They came out of the east at the hour when shadows are shortest, in column, without a bend from the first man to the last. Shields, spears, red cloth. Behind them the timber frames of siege engines, dragged by oxen, nodding like slow birds.'),
         T('Na frente, debaixo de uma bandeira vermelha, vinha o Tinido.', 'At the front, under a red banner, rode the Tinn.'),
         T('Dois Grakh, feridos em alguma escaramuça anterior, estavam caídos no descampado entre as linhas. O Tinido levantou a mão, e a coluna parou e esperou, em pleno sol, enquanto outros Grakh corriam e arrastavam os dois para longe. Depois ele baixou a mão.', 'Two Grakh, wounded in some earlier skirmish, lay in the open between the lines. The Tinn raised his hand, and the column stopped and waited, in the full sun, while other Grakh ran out and dragged the two of them away. Then he lowered his hand.'),
         se(quieto, T('A coluna parou. Esperei que voltasse a andar.', 'The column stopped. I waited for it to move again.')),
@@ -794,6 +821,7 @@ window.LIVRO = {
       ] } },
 
     { id: 'b03', zona: 'batalha', estado: 'alerta', fundo: { img: IMG('choque'), kb: 'in', dim: .42, foco: '55% 50%', lado: 'dir', clima: 'poeira' }, bebe: true,
+      aoEntrar: passaTempo('b03'),
       sons: [{ sfx: 'corneta-redom', p: 2, v: .55 }],
       texto: [
         T('Não houve conversa. Redom não manda arautos aos Grakh, e os Grakh não teriam esperado um deles terminar de falar. A coluna se abriu em linha a uns quinhentos passos dos poços, sem pressa nenhuma, e atrás dela os homens começaram a montar as máquinas, peça por peça. Tinham a tarde toda.', 'There was no parley. Redom sends no heralds to the Grakh, and the Grakh would not have waited for one to finish. The column opened into a line some five hundred paces from the wells, in no hurry at all, and behind it men began putting the engines together, piece by piece. They had all afternoon.'),
@@ -880,6 +908,7 @@ window.LIVRO = {
       ] },
 
     { id: 'c03', zona: 'batalha', estado: 'alerta',
+      aoEntrar: passaTempo('c03'),
       trai: { luz: 6, atraso: 15000, voz: 'c03-trai', texto: [T('No quinto, a luz saiu de mim, até o rosto, e eu não fiz nada para segurá-la. Não havia mais nada para esconder de ninguém.', 'At the fifth, the light came out of me, up to my face, and I did nothing to hold it. There was nothing left to hide from anyone.')] }, fundo: { clip: CLIP('luz-volta'), img: IMG('luz-volta'), dim: .35, foco: '70% 40%', clima: 'poeira' },
       sons: [{ sfx: 'virotes', p: 1, v: .75, fim: true }, { sfx: 'virote-impacto', p: 3, v: .6 }, { voz: 'c03-sol-volta', p: 0 }],
       texto: [
@@ -897,6 +926,7 @@ window.LIVRO = {
       cartao: { num: 'IV', nome: T('O Nome', 'The Name'), epigrafe: T('O primeiro som é o primeiro nome.', 'The first sound is the first name.'), fonte: T('costume Grakh', 'Grakh custom') } },
 
     { id: 'd01', zona: 'roda', fundo: { clip: CLIP('roda'), img: IMG('roda'), dim: .35, foco: '40% 55%', lado: 'dir', clima: 'poeira' }, capitular: true,
+      aoEntrar: passaTempo('d01'),
       narracao: 'assets/audio/voz/d01-roda.mp3', narracaoLang: 'en',
       texto: [
         T('Vieram sem serem chamados. Os sobreviventes dos poços, os feridos e os ilesos, atravessaram a areia de um em um, de dois em dois, e ficaram em volta de nós, de Shaa e de mim, até virarem uma parede, cem de fundura, e nenhuma luz passava por ela além da que vinha de cima.', 'They came without being called. The survivors of the wells, the wounded and the unhurt, came across the sand in ones and twos and stood around us, around Shaa and me, until there was a wall of them, a hundred deep, and no light came through it but what came from above.'),
@@ -912,12 +942,12 @@ window.LIVRO = {
         T('Ela parou onde sempre parava. Então deu o último passo, o que nunca tinha dado, e deixou a maça escorregar das costas para a areia, aos meus pés.', 'She stopped where she always stopped. Then she took the last step, the one she had never taken, and let the mace slide off her back onto the sand at my feet.'),
         se((st) => (c1(st).aug || 0) >= 1, T('O último que me acompanhou além da distância de sempre era do tamanho de uma pedra, e também não disse nada.', 'The last one who walked with me past the usual distance was the size of a boulder, and he did not say anything either.')),
         se((st) => !st.f.cuidou_hessa, T('O braço ainda sangrava. Ela não tinha amarrado.', 'Her arm was still bleeding. She had not tied it.')),
-        T('Era a mão que sempre estivera pousada naquele cabo. Agora, vazia, não sabia o que fazer. Fechou, e abriu.', 'It was the hand that had always rested on that haft. Now, empty, it did not know what to do. It closed, and opened.'),
+        T('Era a mão que sempre estivera pousada naquele cabo. Agora, vazia, fechou, e abriu.', 'It was the hand that had always rested on that haft. Now, empty, it closed, and opened.'),
         (st) => (st.hessa >= 1 ? T('— O que você guarda debaixo do pano. Use. Estou pedindo.', '— What you keep under the cloth. Use it. I am asking.')
           : st.hessa <= -1 ? T('— Eu sei o que você é. Não me importa. Salve a cria.', '— I know what you are. I do not care. Save the child.')
-            : T('— Seja lá o que você for. Seja. Agora.', '— Whatever it is you are. Be it. Now.')),
+            : T('— Seja lá o que você for. Agora.', '— Whatever it is you are. Now.')),
         T('Ela não terminou o que vinha depois disso. A boca ficou aberta um instante, e fechou.', 'She did not finish whatever came after that. Her mouth stayed open a moment, and closed.'),
-        T('Os Grakh não pedem. Pegam, trocam ou morrem sem. Eu já tinha visto Grakh morrerem sem.', 'The Grakh do not ask. They take, they trade, or they die without. I had seen Grakh die without.'),
+        T('Os Grakh não pedem. Pegam, trocam ou morrem sem.', 'The Grakh do not ask. They take, they trade, or they die without.'),
       ],
       escolha: { id: 'pedido', pergunta: T('Responder a Hessa:', 'Answer Hessa:'), opcoes: [
         { id: 'parte', tom: 'ironia', hessa: 1, txt: T('“Você já pôs a sua parte no couro.”', '“You have already put your part on the hide.”'),
@@ -945,7 +975,7 @@ window.LIVRO = {
         { id: 'entregar', tom: 'ironia', flag: 'deuOdre', txt: T('Entregar a Hessa.', 'Give it to Hessa.'),
           resultado: [T('Estendi para ela. Ela pegou sem olhar e ficou segurando, sem saber onde pôr.', 'I held it out to her. She took it without looking and stood holding it, not knowing where to put it.')] },
         { id: 'gole', tom: 'frieza', gole: true, riscavel: true, se: (st) => st.cantil > 0, motivo: T('o odre está vazio', 'the skin is empty'), txt: T('Um último gole.', 'One last swallow.'),
-          resultado: [T('Mais um. Pela firmeza da mão, disse a mim mesmo, e a minha mão, que me conhece há muito tempo, também não acreditou.', 'One more. For the steadiness of the hand, I told myself, and my hand, which has known me a long time, did not believe it either.')] },
+          resultado: [T('Mais um. Pela firmeza da mão, disse a mim mesmo.', 'One more. For the steadiness of the hand, I told myself.')] },
       ] },
       aoSair: (st) => { if (st.escolhas.odre !== 'gole') st.cantil = 0; } },
 
@@ -978,12 +1008,13 @@ window.LIVRO = {
       aoTerminar: (st, r) => {
         const fl = (r && r.flares) || 0;
         st.tacetsCedo = (parto(st) === 'dois' ? 1 : 0) + (fl >= 3 ? 1 : 0) + (st.f.tacets_eclipse ? 1 : 0);
+        st.f.shaa_viva = parto(st) === 'dois' && !!(r && r.shaa);
       },
       depois: [
         T('A luz subiu por mim como água subindo num poço, toda ela, cada linha ao mesmo tempo, a testa, a garganta, o peito, os braços, até os rostos da roda ficarem iluminados de ouro por baixo e eu poder ver cada um deles, e cada um deles poder me ver.', 'The light came up through me like water up a well, all of it, every line at once, the forehead, the throat, the chest, the arms, until the faces in the ring were lit gold from below and I could see every one of them, and every one of them could see me.'),
         se(marcado, T('Pelo antebraço onde o bronze tinha fechado, nada passou. A luz deu a volta.', 'Through the forearm where the bronze had closed, nothing came. The light went around it.')),
         T('— Aqui. A lâmina, aqui. Não mais fundo que o seu polegar.', '— Here. The blade, here. No deeper than your thumb.'),
-        T('Hessa ajoelhou do outro lado de Shaa com uma faca curta e curva e fez exatamente o que eu disse: a mulher que não bebia da minha mão, recebendo ordens da luz que vigiava havia quinze anos.', 'Hessa knelt on the other side of Shaa with a short curved knife and did exactly what I told her: the woman who would not drink from my hand, taking orders from the light she had watched for fifteen years.'),
+        T('Hessa ajoelhou do outro lado de Shaa com uma faca curta e curva e fez exatamente o que eu disse.', 'Hessa knelt on the other side of Shaa with a short curved knife and did exactly what I told her.'),
       ] },
 
     { id: 'd06', zona: 'roda', fundo: { img: IMG('maos-hessa'), kb: 'in', dim: .38, foco: '55% 50%', lado: 'dir', clima: 'brasas' },
@@ -995,20 +1026,23 @@ window.LIVRO = {
         T('Depois, nada. A roda não respirou. A cria nas mãos de Hessa também não respirou, pelo tempo que um coração leva para decidir.', 'Then nothing. The ring did not breathe. The child in Hessa’s hands did not breathe either, for as long as it takes a heart to decide.'),
         T('Depois respirou.', 'Then it did.'),
         T('Urrou, pequena e furiosa, para o céu, para o sol que tinha voltado, para todos nós. Os Grakh choram assim.', 'It roared, small and furious, at the sky, at the sun that had come back, at all of us. That is how the Grakh cry.'),
-        se((st) => armadilha(st) === 'salvar', T('Os olhos estavam abertos, virados para mim, como os daquele da cova, na Borda do Mundo. Nunca consegui resistir a isso.', 'Its eyes were open, and turned on me, like the one in the pit at the Edge of the World. I have never been able to resist that.')),
+        se((st) => armadilha(st) === 'salvar', T('Os olhos estavam abertos, virados para mim, como os daquele da cova, na Borda do Mundo.', 'Its eyes were open, and turned on me, like the one in the pit at the Edge of the World.')),
       ] },
 
     { id: 'd07', zona: 'roda',
       pensa: [{ id: 'maior', voz: 'p-maior', luzMin: 60, atraso: 24000, luz: 3, tomSeguir: 'ternura', t: T('Maior.', 'Greatest.'),
         mais: T('Uma vez me deram uma palavra assim, e uma canção para carregá-la. Que sirva melhor nele.', 'Once they gave me a word like that, and a song to carry it. May it fit him better.') }], fundo: { img: IMG('recem-nascido'), kb: 'out', dim: .4, foco: '60% 50%', lado: 'dir', clima: 'brasas' },
-      sons: [{ p: 4, fim: true, fn: rodaDizONome }, { voz: 'd07-pergunta', p: -1 }],
+      sons: [{ p: 4, fim: true, fn: rodaDizONome, se: (st) => !shaaViva(st) }, { p: 5, fim: true, fn: rodaDizONome, se: shaaViva }, { voz: 'd07-pergunta', p: -1 }],
       texto: [
-        (st) => (parto(st) === 'dois' ? T('Shaa ainda estava ali. Eu a tinha segurado até ali. Ela estendeu a mão, e Hessa deitou a cria na dobra do braço dela, e Shaa olhou para ela, de cima a baixo, sem pressa.', 'Shaa was still there. I had held her that long. She put out a hand, and Hessa laid the child in the crook of her arm, and Shaa looked it over from top to bottom, taking her time.')
+        (st) => (shaaViva(st) ? T('Shaa ainda estava ali. O coração lento batia debaixo da minha outra mão, fraco, mas no mesmo lugar. Hessa deitou a cria na dobra do braço dela, e Shaa olhou para ela, de cima a baixo, sem pressa.', 'Shaa was still there. The slow heart was beating under my other hand, weak, but in the same place. Hessa laid the child in the crook of her arm, and Shaa looked it over from top to bottom, taking her time.')
+          : parto(st) === 'dois' ? T('Shaa ainda estava ali. Eu a tinha segurado até ali. Ela estendeu a mão, e Hessa deitou a cria na dobra do braço dela, e Shaa olhou para ela, de cima a baixo, sem pressa.', 'Shaa was still there. I had held her that long. She put out a hand, and Hessa laid the child in the crook of her arm, and Shaa looked it over from top to bottom, taking her time.')
           : T('Shaa quase não estava mais ali. Os olhos dela acharam o som antes de achar a cria.', 'Shaa was almost gone. Her eyes found the sound before they found the child.')),
         T('— Kronk…', '— Kronk…'),
         T('Era o som. Era o primeiro som, o que ele fez ao chegar ao mundo, e ela o tinha ouvido, e o devolvia a ele como nome, que é a lei mais antiga que os Grakh têm.', 'That was the sound. That was the first sound, the one he made coming into the world, and she had heard it, and she gave it back to him as a name, which is the oldest law the Grakh have.'),
-        T('Então ela parou de respirar, quieta, sem alarde.', 'Then she stopped breathing, quietly, without any fuss.'),
-        se((st) => armadilha(st) === 'frio', T('Contei a respiração dela até não haver mais nenhuma, como uma vez contei na beira de uma cova na neve. É a única reza que sei.', 'I counted her breaths until there were none, as I once counted at the edge of a pit in the snow. It is the only prayer I know.')),
+        se((st) => !shaaViva(st), T('Então ela parou de respirar, quieta, sem alarde.', 'Then she stopped breathing, quietly, without any fuss.')),
+        se(shaaViva, T('Depois achou o meu pulso na areia e deu dois tapinhas nele.', 'Then she found my wrist in the sand and gave it two small pats.')),
+        se(shaaViva, T('— Shaa ficar.', '— Shaa stay.')),
+        se((st) => armadilha(st) === 'frio' && !shaaViva(st), T('Contei a respiração dela até não haver mais nenhuma, como uma vez contei na beira de uma cova na neve. É a única reza que sei.', 'I counted her breaths until there were none, as I once counted at the edge of a pit in the snow. It is the only prayer I know.')),
         T('A roda disse o nome. Um por um, baixo, de dentro para fora. Kronk. Kronk. Kronk.', 'The ring said the name. One by one, low, from the inside out. Kronk. Kronk. Kronk.'),
         T('E Ghru, junto do meu ombro, sem riso nenhum:', 'And Ghru, at my shoulder, with no laugh anywhere in him:'),
         T('— Dia ser comido. Maior nascer.', '— Day be eaten. Greatest be born.'),
@@ -1018,7 +1052,8 @@ window.LIVRO = {
     { id: 'd08', zona: 'roda', fundo: { img: IMG('depois'), kb: 'in', dim: .4, foco: '60% 60%', lado: 'dir', clima: 'poeira' },
       sons: [{ s: 'assets/audio/tacet_passos.mp3', p: 2, v: .5, fim: true }, { voz: 'd08-ritmo', p: 2 }],
       texto: [
-        T('Depois a roda se desfez devagar. Voltaram para os seus mortos. Hessa foi com a cria.', 'Afterwards the ring came apart slowly. They went back to their dead. Hessa went with the child.'),
+        (st) => (shaaViva(st) ? T('Depois a roda se desfez. Voltaram para os seus mortos. Dois deles levaram Shaa numa pele esticada entre lanças, e Hessa foi junto, com a cria.', 'Afterwards the ring came apart. They went back to their dead. Two of them carried Shaa off on a hide stretched between spears, and Hessa went with them, with the child.')
+          : T('Depois a roda se desfez devagar. Voltaram para os seus mortos. Hessa foi com a cria.', 'Afterwards the ring came apart slowly. They went back to their dead. Hessa went with the child.')),
         (st) => (parto(st) === 'dois'
           ? T('Sentei na areia e comecei a apagar a luz, uma linha de cada vez, como faço todo dia há mais de um século. A testa apagou. A garganta apagou. O peito não quis, nem os braços. Eu tinha puxado dois fios, e o pano ainda tremia onde eu tinha mexido.', 'I sat in the sand and began to put the light out, one line at a time, as I have done every day for more than a century. The forehead went. The throat went. The chest would not, nor the arms. I had pulled two threads, and the cloth was still trembling where I had touched it.')
           : T('Sentei na areia e comecei a apagar a luz, uma linha de cada vez, como faço todo dia há mais de um século. A testa apagou. A garganta apagou. O peito apagou, devagar. Os braços não quiseram.', 'I sat in the sand and began to put the light out, one line at a time, as I have done every day for more than a century. The forehead went. The throat went. The chest went, slowly. The arms would not.')),
@@ -1052,6 +1087,7 @@ window.LIVRO = {
         (st) => (st.f.cuidou_hessa ? T('Hessa estava sentada na pedra mais alta, com a cria no colo e o braço ainda brilhando da graxa.', 'Hessa was sitting on the highest rock, the child in her lap and her arm still shining with the grease.')
           : st.f.abriu_guarda ? T('Hessa estava sentada na pedra mais alta, com a cria no colo e um corte no braço que a espada do Tinido tinha aberto antes de cair da mão dele.', 'Hessa was sitting on the highest rock, the child in her lap and a cut on her arm the Tinn’s sword had opened before it fell from his hand.')
             : T('Hessa estava sentada na pedra mais alta, com a cria no colo e o braço aberto pelos três homens que tinha atravessado.', 'Hessa was sitting on the highest rock, the child in her lap and her arm laid open by the three men she had gone through.')),
+        se(shaaViva, T('Ao pé da pedra, Shaa dormia enrolada numa pele. Respirava curto, mas respirava.', 'At the foot of the rock, Shaa was asleep, wrapped in a hide. Her breathing was short, but it went on.')),
         (st) => { const n = quantos(st, 'unguento');
           return n === 0 ? T('No alforje, nenhum pote de graxa.', 'In the pack, not one pot of grease.')
             : n === 1 ? T('No alforje, um pote de graxa.', 'In the pack, one pot of grease.')
@@ -1114,7 +1150,12 @@ window.LIVRO = {
       se: (st) => st.escolhas.adeus !== 'cala',
       texto: [
         T('A cria dormia no ombro dela, de punho fechado numa dobra da pele, muito apertado.', 'The child was asleep on her shoulder, his fist closed tight on a fold of the hide.'),
-        (st) => ({ confianca: T('— Kronk vai saber de quem eram as mãos na mãe dele. Eu mesma conto.', '— Kronk will know whose hands were on his mother. I will tell him myself.'),
+        (st) => (shaaViva(st) ? { confianca: T('— Shaa conta a Kronk quem tirou ele dela. Eu também.', '— Shaa will tell Kronk who took him out of her. So will I.'),
+          respeito: T('— Se Kronk perguntar, digo que foi você.', '— If Kronk asks, I will say it was you.'),
+          neutra: T('— Kronk vai ter a mãe dele. O resto ele pergunta quando tiver idade.', '— Kronk will have his mother. The rest he can ask when he is old enough.'),
+          fria: T('— Kronk vai ter a mãe dele. De você, não sei.', '— Kronk will have his mother. About you, I do not know.'),
+          hostil: T('— Kronk nunca vai saber que foi magia.', '— Kronk will never know it was magic.') }
+          : { confianca: T('— Kronk vai saber quem tirou ele da mãe. Eu mesma conto.', '— Kronk will know who took him out of his mother. I will tell him myself.'),
           respeito: T('— Se Kronk perguntar, digo que foi você.', '— If Kronk asks, I will say it was you.'),
           neutra: T('— Kronk vai saber da mãe dele. O resto ele pergunta quando tiver idade.', '— Kronk will know about his mother. The rest he can ask when he is old enough.'),
           fria: T('— Kronk vai saber da mãe dele. De você, não sei.', '— Kronk will know about his mother. About you, I do not know.'),
@@ -1180,7 +1221,7 @@ window.LIVRO = {
     parto: parto(st), odre: st.escolhas.odre || null, despedida: st.escolhas.adeus || null,
     disseNome: !!st.f.disse_nome, estalou: !!st.f.estalou, deixouPedra: !!st.f.deixou_pedra, escreveu: !!st.f.escreveu,
     abriuGuarda: !!st.f.abriu_guarda, ouviuOficial: !!st.f.ouviu_oficial, salvouTukk: !!st.f.salvou_tukk, mostrouLuz: !!st.f.mostrou_luz, mentiuErvas: !!st.f.mentiuErvas,
-    cuidouHessa: !!st.f.cuidou_hessa, hessaFaixa: hessaFaixa(st), tukk: tukkFim(st), hessaViuLuz: !!(st.f.mostrou_luz || st.f.hessa_viu_luz),
+    shaaViva: shaaViva(st), cuidouHessa: !!st.f.cuidou_hessa, hessaFaixa: hessaFaixa(st), tukk: tukkFim(st), hessaViuLuz: !!(st.f.mostrou_luz || st.f.hessa_viu_luz),
     // o que sobrou no alforje: os próximos capítulos do Aheryn leem (sem histórico, só o que há)
     alforje: { prontos: alf(st).prontos.map((x) => ({ id: x.id, q: x.q })), ingr: Object.fromEntries(Object.entries(alf(st).ingr).filter(([, v]) => v > 0)) },
     tom: st.tom, rastro: st.jogos.rastro || null, escolhas: st.escolhas,
@@ -1191,7 +1232,7 @@ window.LIVRO = {
     const t = st.jogos.troca || {}, m = st.jogos.minutos || {}, p = st.jogos.parto || {}, r = st.jogos.rastro || {};
     const pt = Math.max(500, Math.round((t.pontos || 0)));
     const pm = Math.max(500, Math.round(1500 * ((m.feitas || []).filter((a) => ['ouvir', 'po', 'tukk', 'shaa'].includes(a)).length) + 400 * (m.marcasSobrando || 0) + (m.feitas || []).includes('esconder') * 300));
-    const pp = Math.max(800, Math.round(12000 * (p.dentro || 0) - 600 * (p.flares || 0) + (parto(st) === 'dois' ? 3000 : 0)));
+    const pp = Math.max(800, Math.round(12000 * (p.dentro || 0) - 600 * (p.flares || 0) + (parto(st) === 'dois' ? 3000 : 0) + (shaaViva(st) ? 2500 : 0)));
     const pr = Math.max(800, Math.round(140 * (r.distancia || 0) + (r.cantou ? 2500 : 0) - 300 * Math.max(0, (r.luzes || 0) - 8)));
     const VALQ = { bom: 900, medio: 500, ruim: 200, falhou: 0 };
     const pb = Math.max(300, (alf(st).feitos || []).reduce((a, x) => a + (VALQ[x.q] || 0), 0));
@@ -1223,7 +1264,7 @@ window.LIVRO = {
           : fx === 'neutra' ? t(T('Hessa: nada mudou entre você e ela.', 'Hessa: nothing has changed between you and her.'))
             : fx === 'fria' ? t(T('Hessa: vai lembrar do que viu, e não vai contar tudo.', 'Hessa: she will remember what she saw, and she will not tell all of it.'))
               : t(T('Hessa: Kronk nunca vai saber que foi magia.', 'Hessa: Kronk will never know it was magic.'))); }
-    n.push(parto(st) === 'dois' ? t(T('Shaa: viveu o bastante para segurar o filho.', 'Shaa: she lived long enough to hold her son.')) : t(T('Shaa: deu o nome ao filho com o último fôlego.', 'Shaa: she named her son with her last breath.')));
+    n.push(shaaViva(st) ? t(T('Shaa: viva, com o filho no peito.', 'Shaa: alive, with her son at her breast.')) : parto(st) === 'dois' ? t(T('Shaa: viveu o bastante para segurar o filho.', 'Shaa: she lived long enough to hold her son.')) : t(T('Shaa: deu o nome ao filho com o último fôlego.', 'Shaa: she named her son with her last breath.')));
     if (st.f.mostrou_luz) n.push(t(T('A cria sentiu a sua luz antes de nascer.', 'The child felt your light before he was born.')));
     n.push(st.f.ouviu_oficial ? t(T('A graxa cinza: agora você sabe por que o exército veio. Os Grakh nunca vão saber.', 'The grey grease: you know now why the army came. The Grakh will never know.'))
       : st.f.sentiu_unguento ? t(T('A graxa cinza: você sentiu o cheiro dela na linha de frente, e não perguntou por quê.', 'The grey grease: you smelled it on the front line, and did not ask why.'))

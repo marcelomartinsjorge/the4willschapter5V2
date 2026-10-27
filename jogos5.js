@@ -470,6 +470,9 @@ function parto(root, c) {
   const prep = cfg.preparo ? cfg.preparo(st) : 5;
   const TECLAS = 'QWEASD';
   const dois = (st.escolhas.proibido5 || 'crianca') === 'dois';
+  // 'os dois': o coração de Shaa cai sozinho; a preparação (o quanto Aheryn ajudou os outros) decide a velocidade e as dores
+  const ptsDois = dois && cfg.preparoDois ? cfg.preparoDois(st) : 0;
+  const nivel = dois && cfg.dois ? cfg.dois.find((n) => ptsDois >= n.min) : null;
   const turvo = st.turvo || 0, marca = !!(st.c1 && st.c1.marcado);
   return new Promise((resolve) => {
     root.innerHTML = `<video class="j5-bg" src="${c.vsrc('assets/clip/veias.mp4')}" muted loop playsinline autoplay></video><div class="j5-veu"></div>
@@ -477,21 +480,23 @@ function parto(root, c) {
       <div class="pt-linhas"></div>
       <div class="pt-medidor"><div class="pt-faixa"></div><div class="pt-luz"></div><div class="pt-marca"></div></div>
       <div class="pt-cores"><span class="pt-c rapido" title="cria"></span>${dois ? '<span class="pt-c lento" title="Shaa"></span>' : ''}</div>
-      <div class="pt-vida"><i></i><span>${c.esc(tr(cfg.vidaT))}</span></div>`;
+      <div class="pt-vida"><i></i><span>${c.esc(tr(cfg.vidaT))}</span></div>${dois ? `<div class="pt-vida pt-vida-s"><i></i><span>${c.esc(tr(cfg.vidaShaaT))}</span></div>` : ''}`;
     const v = root.querySelector('video'); v && v.play().catch(() => {});
     const $ = (s) => root.querySelector(s);
-    const faixaEl = $('.pt-faixa'), luzEl = $('.pt-luz'), marcaEl = $('.pt-marca'), vidaEl = $('.pt-vida i'), brilho = $('.pt-brilho'), linhas = $('.pt-linhas');
-    const DUR = BOT() ? 6 : 28, larg = Math.max(.14, (dois ? .22 : .26) - (marca ? .03 : 0) - Math.min(.04, turvo * .01));
+    const faixaEl = $('.pt-faixa'), luzEl = $('.pt-luz'), marcaEl = $('.pt-marca'), vidaEl = $('.pt-vida i'), vidaSEl = $('.pt-vida-s i'), brilho = $('.pt-brilho'), linhas = $('.pt-linhas');
+    const DUR = BOT() ? 6 : 28, larg = Math.max(.14, (nivel ? nivel.larg : dois ? .22 : .26) - (marca ? .03 : 0) - Math.min(.04, turvo * .01));
     // o mundo some: só ficam os corações
     A.abafa(true);
     const pz = pensar(root);
     c.gesto(root, 'segurar');
     // ---- as dores (runas): aparecem no meio da tela; a letra certa (ou um toque nela) segura a dor; deixar apagar custa vida
-    const runas = [], intervalo = 2.3 + .6 * prep, vidaRuna = 2.2 + .15 * prep;
-    let proxRuna = prep >= 5 ? Infinity : 4;
+    const runas = [];
+    let intervalo = 2.3 + .6 * prep, vidaRuna = 2.2 + .15 * prep, proxRuna = prep >= 5 ? Infinity : 4;
+    if (nivel) { proxRuna = nivel.runas ? 4 : Infinity; if (nivel.runas) { intervalo = nivel.runas[0]; vidaRuna = nivel.runas[1]; } }
+    let vidaS = 1, shaaFoi = false;   // o coração dela (só em 'os dois')
     const acerta = (r) => {
       if (r.fim) return; r.fim = true; r.el.classList.add('ok'); setTimeout(() => r.el.remove(), 350);
-      vida = Math.min(1, vida + .02); A.tone(587.33 * (1 + TECLAS.indexOf(r.k) * .12), .3, 'sine', .05); A.tone(1174.7, .2, 'triangle', .02);
+      vida = Math.min(1, vida + .02); if (dois && !shaaFoi) vidaS = Math.min(1, vidaS + .03); A.tone(587.33 * (1 + TECLAS.indexOf(r.k) * .12), .3, 'sine', .05); A.tone(1174.7, .2, 'triangle', .02);
     };
     const novaRuna = () => {
       const k = TECLAS[Math.floor(Math.random() * TECLAS.length)];
@@ -538,16 +543,21 @@ function parto(root, c) {
       root.classList.toggle('ok', ok);
       if (ok) { dentro += dt; vida = Math.min(1, vida + dt / (DUR * .48)); } else vida = Math.max(0, vida - dt * .01);
       vidaEl.style.width = (vida * 100) + '%';
+      if (dois && !shaaFoi && !BOT()) {
+        vidaS = clamp(vidaS + ((ok ? .08 : 0) - nivel.dreno) * dt, 0, 1);
+        if (vidaS <= 0) { shaaFoi = true; const l = $('.pt-c.lento'); if (l) { l.classList.add('parou'); l.style.opacity = .12; } root.querySelector('.pt-vida-s').classList.add('parou'); A.tone(65, 1.6, 'sine', .07, 0, 1.4); c.registrar('shaa_parou', String(Math.round(t))); }
+      }
+      if (vidaSEl) vidaSEl.style.width = (vidaS * 100) + '%';
       if (Lz > .95) { alto += dt; if (alto > .45) { alto = -1.2; flares++; root.classList.remove('flare'); void root.offsetWidth; root.classList.add('flare'); c.mudaLuz(3); A.sfx('farol', .5, () => A.tone(1200, .6, 'sine', .05, 0, 1.4)); } } else if (alto > 0) alto = 0; else alto = Math.min(0, alto + dt);
       brilho.style.opacity = (.15 + Lz * .85).toFixed(2);
       pz.brilho(Lz);
       document.documentElement.style.setProperty('--luzParto', Lz.toFixed(3));
       // os corações
       if (t >= proxR) { proxR = t + 60 / bpmR; A.sfx('coracao-rapido', .5, () => A.batida(.35, false)); const r = $('.pt-c.rapido'); r.classList.remove('bate'); void r.offsetWidth; r.classList.add('bate'); }
-      if (dois && t >= proxL) { bpmL = Math.max(26, 46 - t * .6); proxL = t + 60 / bpmL; A.sfx('coracao-lento', clamp(.55 - t / DUR * .35, .12, .55), () => A.batida(clamp(.6 - t / DUR * .5, .1, .6), true)); const l = $('.pt-c.lento'); l.classList.remove('bate'); void l.offsetWidth; l.classList.add('bate'); l.style.opacity = clamp(1 - t / DUR, .25, 1); }
+      if (dois && !shaaFoi && t >= proxL) { bpmL = 24 + 24 * vidaS; proxL = t + 60 / bpmL; A.sfx('coracao-lento', clamp(.12 + .43 * vidaS, .12, .55), () => A.batida(clamp(.1 + .5 * vidaS, .1, .6), true)); const l = $('.pt-c.lento'); l.classList.remove('bate'); void l.offsetWidth; l.classList.add('bate'); l.style.opacity = clamp(.25 + .75 * vidaS, .25, 1); }
       if (window.__JOGO_DEBUG) window.__ptT = [t, proxRuna, vida, runas.length];
       if (t >= proxRuna && t < DUR - 2.5 && !BOT()) { novaRuna(); proxRuna = t + intervalo * (.8 + Math.random() * .4); }
-      runas.forEach((r) => { if (!r.fim && t - r.t > vidaRuna) { r.fim = true; r.el.classList.add('apagou'); setTimeout(() => r.el.remove(), 400); vida = Math.max(0, vida - .07); vel -= .45; root.classList.remove('dor'); void root.offsetWidth; root.classList.add('dor'); A.tone(98, .5, 'sawtooth', .05, 0, .6); } });
+      runas.forEach((r) => { if (!r.fim && t - r.t > vidaRuna) { r.fim = true; r.el.classList.add('apagou'); setTimeout(() => r.el.remove(), 400); vida = Math.max(0, vida - .07); if (dois && !shaaFoi) vidaS = Math.max(0, vidaS - .06); vel -= .45; root.classList.remove('dor'); void root.offsetWidth; root.classList.add('dor'); A.tone(98, .5, 'sawtooth', .05, 0, .6); } });
       if (vida >= (mostradas + 1) / (cfg.linhas.length + 1)) linha(true);
       if (t >= DUR) return termina();
       requestAnimationFrame(loop);
@@ -556,7 +566,7 @@ function parto(root, c) {
     const termina = () => {
       fim = true; pz.fim(); removeEventListener('keydown', tecla); runas.forEach((r) => r.el.remove());
       // a vida não chegou: a cria não respira. Volta para o começo do parto (como a pedra de Gromm no Cap. I)
-      const falhou = window.__PARTO_FALHA || (!BOT() && vida < .6);
+      const falhou = window.__PARTO_FALHA || (!BOT() && vida < (nivel ? nivel.criaMin : .6));
       if (falhou) {
         c.registrar('parto_falhou', String(Math.round(vida * 100)));
         if (v) { try { v.playbackRate = .25; } catch (e) {} }
@@ -564,6 +574,8 @@ function parto(root, c) {
         return;
       }
       while (mostradas < cfg.linhas.length) linha();
+      if (window.__SHAA_FALHA) { shaaFoi = true; window.__SHAA_FALHA = false; }
+      const viva = dois && !shaaFoi;
       const fr = clamp(dentro / DUR, 0, 1);
       c.mudaLuz((dois ? 30 : 20));
       root.classList.add('final', 'lento');
@@ -571,8 +583,9 @@ function parto(root, c) {
       pz.brilho(1);
       setTimeout(() => A.sfx('coracao-rapido', .7, () => A.batida(.6, false)), 900);
       setTimeout(() => A.sfx('coracao-rapido', .5, () => A.batida(.4, false)), 2200);
-      c.registrar('parto', dois ? 'dois' : 'crianca');
-      setTimeout(() => { A.abafa(false); resolve({ dentro: fr, flares, vida }); }, BOT() ? 200 : 4200);
+      if (viva) setTimeout(() => A.sfx('coracao-lento', .45, () => A.batida(.5, true)), 1500);   // e o lento, ainda ali
+      c.registrar('parto', dois ? (viva ? 'dois_viva' : 'dois') : 'crianca');
+      setTimeout(() => { A.abafa(false); resolve({ dentro: fr, flares, vida, shaa: dois ? viva : null, preparoDois: dois ? ptsDois : null }); }, BOT() ? 200 : 4200);
     };
     requestAnimationFrame((n) => { last = n; requestAnimationFrame(loop); });
   });
