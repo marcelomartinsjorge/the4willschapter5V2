@@ -115,7 +115,7 @@ window.LIVRO_UI = {
       laje: 'Toque em cada coisa debaixo da Laje antes de descer.',
       troca: 'Toque no que brilha para ler o corpo do Grakh. Depois ponha no couro o que ele precisa. Bem feito, basta; se não for, ele vai querer mais alguma coisa junto. Tocar no que está no couro traz de volta.',
       bancada: (st) => 'Leia a receita no couro e feche-o: o couro cobre a bancada. Depois faça de memória: toque num ingrediente e no pilão ou no pote, segure o pilão para moer e o pote para mexer, toque na brasa para pôr e tirar do fogo e conte os riscos. Sem erro, sai bem feito.' + ((st.turvo || 0) >= 2 ? ' O vinho vai embaralhar o couro.' : ''),
-      minutos: 'O anel é o sol voltando. Cada ação gasta tempo. Não vai dar para tudo.',
+      minutos: 'O anel é o sol voltando. Cada ação gasta tempo. Não vai dar para tudo. Quem ouve antes, pisa melhor.',
       parto: (st) => 'Segure para pensar: a luz sobe. Solte: ela cai. Mantenha dentro da faixa dourada.' + ((st.turvo || 0) >= 2 ? ' O vinho vai fazer a mão tremer.' : ''),
       rastro: 'Segure no deserto para acender uma luz. Cada luz puxa os Tacets atrás de você. Leve-os para longe da Pira.',
     },
@@ -144,7 +144,7 @@ window.LIVRO_UI = {
       laje: 'Touch everything under the slab before going down.',
       troca: 'Touch what glows to read the Grakh’s body. Then put on the hide what he needs. Well made, it is enough; if not, he will want something more on top. Touch what is on the hide to take it back.',
       bancada: (st) => 'Read the recipe on the hide and close it: the hide covers the bench. Then make it from memory: touch an ingredient and then the mortar or the pot, hold the mortar to grind and the pot to stir, touch the embers to put on and take off the fire, and count the marks. No mistakes, and it comes out well made.' + ((st.turvo || 0) >= 2 ? ' The wine will scramble the hide.' : ''),
-      minutos: 'The ring is the sun coming back. Every action costs time. You will not have enough.',
+      minutos: 'The ring is the sun coming back. Every action costs time. You will not have enough. Whoever listens first steps better.',
       parto: (st) => 'Hold to think: the light rises. Let go: it falls. Keep it inside the golden band.' + ((st.turvo || 0) >= 2 ? ' The wine will make the hand shake.' : ''),
       rastro: 'Hold on the desert to light a point. Each light pulls the Tacets after you. Lead them far from the Pyre.',
     },
@@ -396,6 +396,7 @@ window.LIVRO = {
     marcas: 5, segundosPorMarca: 11,
     anelT: T('o sol voltando', 'the sun returning'),
     acabouT: T('A borda do sol aparece.', 'The rim of the sun appears.'),
+    pisarT: T('Agora eu sabia onde pisar.', 'Now I knew where to step.'),
   },
 
   parto: {
@@ -656,11 +657,13 @@ window.LIVRO = {
     { id: 'a09', zona: 'acampamento', fundo: { img: IMG('hessa'), kb: 'in', dim: .4, foco: '20% 45%', lado: 'dir', clima: 'poeira' }, capitular: true, bebe: true,
       texto: [
         T('Hessa estivera olhando o tempo todo, da distância de sempre, uma lança e um pouco mais, com uma das mãos pousada no cabo da maça às costas. O nome dela é o som que a água faz numa pedra quente.', 'Hessa had been watching the whole time, from the usual distance, a spear’s length and a little more, one hand resting on the haft of the mace across her back. Her name is the sound water makes on a hot stone.'),
+        T('Entre os guerreiros da Pira, Hessa é a que os outros usam de medida. Os mais novos copiam o passo dela; os mais velhos param de falar quando ela passa. Os Grakh a chamam de Quebra-Lanças: quando ela caça, a lança entra com tanta força que a haste estala dentro do animal.', 'Among the warriors of the Pyre, Hessa is the one the others measure themselves by. The young ones copy her stride; the old ones stop talking when she goes by. The Grakh call her Spear-Breaker: when she hunts, the spear goes in so hard that the shaft snaps inside the animal.'),
         T('Mandou Tukk embora com duas palavras, do jeito Grakh, sem dobra nenhuma nos verbos. Então se virou para mim e mudou.', 'She sent Tukk off with two words, in the Grakh way, with no bend in the verbs at all. Then she turned to me, and changed.'),
         T('Comigo Hessa fala a língua dos homens, inteira, cada verbo no lugar, com as vogais compridas e abertas dos Queimados. No ombro esquerdo ela tem uma velha marca deles, das que eles queimam nos cativos, e por cima dela alguém depois cortou três linhas a faca, fundas, como quem risca uma palavra.', 'With me Hessa speaks the language of men, all of it, every verb in its place, with the long open vowels of the Burned. On her left shoulder there is an old brand of theirs, the kind they burn into captives, and across it someone later cut three lines with a knife, deep, as if crossing out a word.'),
         (T('Estendi o odre de vinho. Ela pegou, arrancou a tampa com os dentes, cheirou e despejou um gole comprido na areia entre nós, devagar, olhando para mim o tempo todo. Depois me devolveu o odre.', 'I held out the skin of wine. She took it, pulled the stopper with her teeth, smelled it, and poured a long swallow of it out on the sand between us, slowly, looking at me the whole time. Then she handed the skin back.')),
+        se((st) => !!st.f.hessa_viu_luz, T('Os olhos dela desceram para o pano do meu pulso e para o que passava por baixo dele. A mão dela voltou para o cabo da maça.', 'Her eyes went down to the cloth at my wrist, and to what was moving under it. Her hand went back to the haft of the mace.')),
       ],
-      aoEntrar: (st) => { st.cantil = Math.max(0, st.cantil - 1); },
+      aoEntrar: (st, k) => { if (st.luz >= 60 && !st.f.mostrou_luz && !st.f.hessa_viu_luz) { st.f.hessa_viu_luz = true; st.hessa -= 1; k.toast(T('Hessa viu a luz.', 'Hessa saw the light.')); } st.cantil = Math.max(0, st.cantil - 1); },
       dialogo: { interlocutor: 'Hessa', rodadas: [
         { id: 'hessa1', antes: [T('— Você fica porque os potes mantêm o meu povo de pé. Homens que deviam cair não caem. É o único motivo de você ainda estar naquela pedra. Não confunda com outro.', '— You stay because the pots keep my people standing. Men who should fall, don’t. That is the only reason you are still on that stone. Do not mistake it for another.')],
           pergunta: T('Responder a Hessa:', 'Answer Hessa:'), opcoes: [
@@ -765,7 +768,7 @@ window.LIVRO = {
       escolha: { id: 'olhar', pergunta: T('Aheryn olha para:', 'Aheryn looks at:'), opcoes: [
         { id: 'bandeira', tom: 'ironia', txt: T('A bandeira.', 'The banner.'),
           resultado: [T('Uma espada branca sobre vermelho e, como guarda, uma balança.', 'A white sword on red, and for a guard, a pair of scales.')] },
-        { id: 'homem', tom: 'curiosidade', txt: T('O homem da frente.', 'The man in front.'), fundo: { img: IMG('tinido'), kb: 'in', dim: .38, foco: '70% 35%', lado: 'dir' },
+        { id: 'homem', tom: 'curiosidade', txt: T('O homem da frente.', 'The man in front.'), fundo: { img: IMG('tinido'), kb: 'in', dim: .38, foco: '70% 35%' },
           resultado: [T('Nem moço, nem velho. Sem elmo; levava-o debaixo do braço, e os homens dele podiam ver o seu rosto de qualquer ponto da coluna. Montava sem olhar para o chão.', 'Not young, not old. No helmet; he carried it under his arm, and his men could see his face from anywhere in the column. He rode without looking at the ground.')] },
         { id: 'maquinas', luzMin: 60, tom: 'curiosidade', txt: T('As máquinas de cerco.', 'The siege engines.'),
           resultado: [T('Trouxeram máquinas de cerco a um lugar sem muralhas. Não vinham sitiar nada. Vinham para ficar.', 'They had brought siege engines to a place with no walls. They had not come to besiege anything. They had come to stay.')] },
@@ -774,7 +777,10 @@ window.LIVRO = {
       ] } },
 
     { id: 'b03', zona: 'batalha', estado: 'alerta', fundo: { img: IMG('choque'), kb: 'in', dim: .42, foco: '55% 50%', lado: 'dir', clima: 'poeira' }, bebe: true,
+      sons: [{ sfx: 'corneta-redom', p: 2, v: .55 }],
       texto: [
+        T('Não houve conversa. Redom não manda arautos aos Grakh, e os Grakh não teriam esperado um deles terminar de falar. A coluna se abriu em linha a uns quinhentos passos dos poços, sem pressa nenhuma, e atrás dela os homens começaram a montar as máquinas, peça por peça. Tinham a tarde toda.', 'There was no parley. Redom sends no heralds to the Grakh, and the Grakh would not have waited for one to finish. The column opened into a line some five hundred paces from the wells, in no hurry at all, and behind it men began putting the engines together, piece by piece. They had all afternoon.'),
+        T('Durante uma hora, nada. O sol batia igual nos dois lados. Os Grakh se juntaram na borda dos poços, com as lanças de caça fincadas na areia atrás deles. Contra Redom, eles lutam de maça: a ponta de uma lança escorrega no aço, e uma maça não precisa furar a armadura para quebrar o que está dentro. Começaram a bater os pés e o cabo das maças no chão, devagar no começo, depois cada vez mais depressa, até que o som deixou de vir de algum lugar e passou a vir da areia. Do lado de Redom, ninguém se mexeu. Então uma corneta tocou uma vez só, e a linha vermelha começou a andar.', 'For an hour, nothing. The sun beat on both sides alike. The Grakh gathered at the lip of the wells, their hunting spears planted in the sand behind them. Against Redom they fight with the mace: a spearpoint skids on steel, and a mace does not need to pierce the armour to break what is inside it. They began to beat their feet and the hafts of their maces on the ground, slowly at first, then faster and faster, until the sound stopped coming from anywhere and started coming from the sand. On Redom\'s side, no one moved. Then a horn sounded, once, and the red line began to walk.'),
         T('Então as linhas se encontraram, e por um tempo não houve nada para ver além de homens e Grakh tentando ocupar o mesmo pedaço de chão.', 'Then the lines met, and for a while there was nothing to see but men and Grakh trying to occupy the same piece of ground.'),
         T('Tukk estava na frente. Uma semana antes, não conseguia ficar de pé. Agora levava uma lança no ombro, quebrava a haste e seguia.', 'Tukk was at the front. A week before, he could not stand. Now he was taking a spear in the shoulder, snapping off the shaft, and going on.'),
         se((st) => !sobrio(st), T('O vento trouxe alguma coisa. Poeira, sangue. Eu não estava em condições de separar uma da outra.', 'The wind brought something. Dust, blood. I was in no state to tell one from the other.')),
@@ -799,9 +805,10 @@ window.LIVRO = {
         T('— Dia ser comido! Dia ser comido!', '— Day be eaten! Day be eaten!'),
         T('E no meio de tudo isso, uma voz que eu ouvia do outro lado do campo, porque era o único homem ali gritando alguma coisa útil:', 'And in the middle of it, one voice I could hear across the whole field, because he was the only man there shouting something useful:'),
         T('— Firmes! É só o escuro! Segurem a linha!', '— Hold! It is only the dark! Hold the line!'),
-        T('O Tinido. Não olhou para cima nem uma vez. A essa altura eu também tinha parado de olhar. Éramos os dois únicos naquele campo que sabiam que o escuro ia passar, e só ele estava a descoberto.', 'The Tinn. He never once looked up. By then I had stopped looking too. We were the only two on that field who knew the dark would pass, and only he was standing in the open.'),
+        T('O Tinido. Não olhou para cima nem uma vez. A essa altura eu também tinha parado de olhar. Éramos os dois únicos naquele campo que sabiam que o escuro ia passar. Eu tinha dito isso baixinho, para mim mesmo. Ele gritava para a linha inteira.', 'The Tinn. He never once looked up. By then I had stopped looking too. We were the only two on that field who knew the dark would pass. I had said it under my breath, to myself. He was shouting it to his whole line.'),
         se(temPedra, T('No bolso, a pedra tinha ficado violeta, a cor que ela não tem em nenhuma outra luz, e fechei a mão em volta dela.', 'In my pocket the stone had gone violet, a colour it has in no other light, and I closed my hand over it.')),
       ],
+      aoSair: (st) => { if (st.luz >= 60) st.f.tacets_eclipse = true; },
       fimDeParte: true },
 
     // ===================================================== III · O DIA COMIDO
@@ -812,6 +819,9 @@ window.LIVRO = {
       sons: [{ voz: 'c01-cinco', p: 0 }],
       texto: [
         T('Eu tinha, pelas contas mais velhas que conheço, cinco minutos. Talvez seis.', 'I had, by the oldest arithmetic I know, five minutes. Perhaps six.'),
+        (st) => (quieto(st) ? T('No escuro, eu era só mais uma sombra entre milhares.', 'In the dark I was just one more shadow among thousands.')
+          : medido(st) ? T('Debaixo do pano do pulso corria um fio de luz. Mantive o braço junto do corpo.', 'Under the cloth at my wrist ran a thread of light. I kept the arm against my body.')
+          : T('No escuro, a luz debaixo da minha pele era a coisa mais clara do campo.', 'In the dark, the light under my skin was the brightest thing on the field.')),
       ],
       minijogo: 'minutos',
       aoTerminar: (st, r, k) => {
@@ -849,7 +859,7 @@ window.LIVRO = {
       sons: [{ sfx: 'virotes', p: 1, v: .75, fim: true }, { sfx: 'virote-impacto', p: 3, v: .6 }, { voz: 'c03-sol-volta', p: 0 }],
       texto: [
         T('Então o sol voltou. Primeiro uma única conta branca na beira do escuro, depois uma lâmina, e todas as sombras do campo giraram de uma vez, e homens que gritavam um instante antes ficaram piscando uns para os outros.', 'Then the sun came back. First a single white bead on the rim of the dark, then a blade of it, and every shadow on the field swung around at once, and men who had been shouting a moment before stood blinking at each other.'),
-        T('Redom recuou. E recuou bem, isso eu admito: em ordem, os escudos travados, levando o Tinido entre quatro homens, em cima da própria capa. Os besteiros vinham de costas na retaguarda, como são treinados a fazer, e na última elevação se viraram e soltaram uma salva contra a multidão nos poços, como também são treinados a fazer.', 'Redom pulled back. It did it well, I will grant them that: in order, shields locked, carrying the Tinn between four men on his own cloak. The crossbowmen walked backward at the rear, as they are trained to, and at the last rise they turned and loosed one volley into the crowd at the wells, as they are also trained to.'),
+        T('Redom recuou, e recuou bem, o que é mais difícil do que avançar bem: em ordem, os escudos travados, levando o Tinido entre quatro homens, em cima da própria capa. Os besteiros vinham de costas na retaguarda, como são treinados a fazer, e na última elevação se viraram e soltaram uma salva contra a multidão nos poços, como também são treinados a fazer.', 'Redom fell back, and fell back well, which is harder than advancing well: in order, shields locked, carrying the Tinn between four men on his own cloak. The crossbowmen walked backward at the rear, as they are trained to, and at the last rise they turned and loosed one volley into the crowd at the wells, as they are also trained to.'),
         se(olhouBesta, T('Vi o dedo do primeiro besteiro sair do lado do gatilho e ir para cima dele. Já tinha visto aquilo uma vez, na neve. Daquela vez, eu estava na frente.', 'I saw the first crossbowman’s finger leave the side of the trigger and settle onto it. I had seen that once before, in the snow. That time, I was the one in front of it.')),
         T('Não havia mais mão nenhuma para empurrar as bestas para baixo.', 'There was no hand left to push the bows down.'),
         se((st) => !!st.f.junto_shaa, T('Eu segurava o braço de Shaa quando a acertaram. Senti cada um chegar, pelo corpo dela, até a minha mão. Cinco. Depois pus a outra mão na barriga dela, e a cria ainda se mexia.', 'I was holding Shaa’s arm when they hit her. I felt each one arrive through her body into my hand. Five. Then I put my other hand on her belly, and the child was still moving.')),
@@ -938,7 +948,7 @@ window.LIVRO = {
       minijogo: 'parto',
       aoTerminar: (st, r) => {
         const fl = (r && r.flares) || 0;
-        st.tacetsCedo = (parto(st) === 'dois' ? 1 : 0) + (fl >= 3 ? 1 : 0);
+        st.tacetsCedo = (parto(st) === 'dois' ? 1 : 0) + (fl >= 3 ? 1 : 0) + (st.f.tacets_eclipse ? 1 : 0);
       },
       depois: [
         T('A luz subiu por mim como água subindo num poço, toda ela, cada linha ao mesmo tempo, a testa, a garganta, o peito, os braços, até as caras da roda ficarem iluminadas de ouro por baixo e eu poder ver cada uma delas, e cada uma delas poder me ver.', 'The light came up through me like water up a well, all of it, every line at once, the forehead, the throat, the chest, the arms, until the faces in the ring were lit gold from below and I could see every one of them, and every one of them could see me.'),
@@ -985,6 +995,7 @@ window.LIVRO = {
           : T('Sentei na areia e comecei a apagar a luz, uma linha de cada vez, como faço todo dia há mais de um século. A testa apagou. A garganta apagou. O peito apagou, devagar. Os braços não quiseram.', 'I sat in the sand and began to put the light out, one line at a time, as I have done every day for more than a century. The forehead went. The throat went. The chest went, slowly. The arms would not.')),
         T('Então, através da areia e para dentro das minhas mãos, de muito longe, veio um ritmo que eu não sentia desde a Borda do Mundo. Metal e pedra em chão duro. Um, dois, três. Um, dois, três.', 'Then, through the sand and into my hands, from very far away, came a rhythm I had not felt since the Edge of the World. Metal and stone on hard ground. One, two, three. One, two, three.'),
         T('Claro. Claro que estavam escutando, todo esse tempo, à espera exatamente disto.', 'Of course. Of course they had been listening, all this time, for exactly this.'),
+        se((st) => !!st.f.tacets_eclipse, T('Longe, mas não tão longe quanto deviam estar. Tinham começado a andar antes, em algum momento do escuro.', 'Far off, but not as far off as they should have been. They had started walking sooner, somewhere in the dark.')),
       ],
       fimDeParte: true },
 
@@ -998,7 +1009,7 @@ window.LIVRO = {
         T('No norte, quando vieram atrás de mim, eu fugi. É o que eu faço. Sou o melhor fugitivo que o meu povo já produziu, e o único que ainda foge.', 'In the north, when they came for me, I ran. It is what I do. I am the finest fugitive my people ever produced, and the only one still running.'),
         T('Os Tacets seguem a luz. Não importa no acampamento de quem ela esteja. Se eu ficasse, eles entrariam na Pira no compasso de três, e a Pira os receberia com lanças, e bronze não se incomoda muito com lanças.', 'The Tacets follow the light. Whose camp it is standing in makes no difference. If I stayed, they would walk into the Pyre in their count of three, and the Pyre would meet them with spears, and bronze does not much mind spears.'),
         T('Então eu iria. Desta vez não para longe deles. À frente deles. Aceso.', 'So I would go. Not away from them, this time. Ahead of them. Lit.'),
-        se((st) => (st.tacetsCedo || 0) >= 1, T('Com o tanto que eu tinha arrancado de mim por Shaa e pela cria, eles viriam depressa, e eu teria de levá-los longe.', 'With as much as I had pulled out of myself for Shaa and the child, they would be coming fast, and I would have to take them far.')),
+        se((st) => (st.tacetsCedo || 0) - (st.f.tacets_eclipse ? 1 : 0) >= 1, T('Com o tanto que eu tinha arrancado de mim por Shaa e pela cria, eles viriam depressa, e eu teria de levá-los longe.', 'With as much as I had pulled out of myself for Shaa and the child, they would be coming fast, and I would have to take them far.')),
       ] },
 
     { id: 'e02', zona: 'deserto', fundo: { img: IMG('recem-nascido'), kb: 'in', dim: .45, foco: '60% 50%', lado: 'dir', clima: 'estrelas' },
@@ -1144,6 +1155,7 @@ window.LIVRO = {
         : t(T('A graxa cinza: você nunca soube por que Redom veio com tanta força este ano.', 'The grey grease: you never learned why Redom came in such force this year.')));
     n.push(st.f.salvou_tukk ? t(T('Tukk: vivo, com duas pontas de lança para mostrar.', 'Tukk: alive, with two spearheads to show for it.')) : t(T('Tukk: não voltou da linha.', 'Tukk: he did not come back from the line.')));
     const r = st.jogos.rastro || {};
+    if (st.f.tacets_eclipse) n.push(t(T('Os Tacets: começaram a andar durante o eclipse, puxados pela sua luz.', 'The Tacets: they began to walk during the eclipse, drawn by your light.')));
     if (r.distancia != null) n.push(t(T('Os Tacets: levados para longe da Pira, até onde a luz alcançou.', 'The Tacets: led away from the Pyre, as far as the light would reach.')));
     if (st.f.disse_nome) n.push(t(T('O seu nome: Hessa sabe.', 'Your name: Hessa knows it.')));
     if (st.f.estalou) n.push(t(T('As crianças da Pira deram um nome a você: um estalo de língua.', 'The children of the Pyre gave you a name: a click of the tongue.')));

@@ -38,6 +38,21 @@ window.CHAPTER_CONFIG = {
       ] },
     },
 
+    queimados: {
+      image: 'assets/images/codex-queimados.jpg',
+      aliasesEn: ['Burned'], aliasesPt: ['Queimados'],
+      en: { title: 'The Burned', eyebrow: 'Human tribes of the Dry Mouth', pages: [
+        ['The Burned are a human people of the Dry Mouth: lean, hardy, dark-skinned, and marked with ritual scars made with an ember. They bear the heat that kills foreigners and wander the sands, above all near the Ash Peaks.'],
+        ['They serve Azrahekt, the Hungry Sun, and offer him the blood of their enemies so that the sun will not devour them. They take captives from other peoples and mark them with a brand on the shoulder.'],
+        ['They share the sands with the Grakh, in war and in trade. The few fixed structures of the desert, stone shrines around the oases, are their work.'],
+      ] },
+      pt: { title: 'Os Queimados', eyebrow: 'Tribos humanas da Boca Seca', pages: [
+        ['Os Queimados são um povo humano da Boca Seca: magros, resistentes, de pele escura, marcados por cicatrizes rituais feitas com brasa. Suportam o calor que mata estrangeiros e vagam pelas areias, sobretudo junto aos Picos de Cinza.'],
+        ['Servem Azrahekt, o Sol Faminto, e oferecem a ele o sangue dos inimigos para que o sol não os devore. Fazem cativos de outros povos e os marcam com ferro em brasa no ombro.'],
+        ['Dividem as areias com os Grakh, em guerra e em comércio. As poucas estruturas fixas do deserto, santuários de pedra em volta dos oásis, são obra deles.'],
+      ] },
+    },
+
     goelas: {
       image: 'assets/images/codex-goelas.jpg',
       aliasesEn: ['Gullets'], aliasesPt: ['Goelas'],

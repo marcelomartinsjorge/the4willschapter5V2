@@ -506,8 +506,8 @@ Gerado do roteiro do jogo (capitulo5.js), na ordem do arquivo. Em cada página a
   - *EN:* And in the middle of it, one voice I could hear across the whole field, because he was the only man there shouting something useful:
 - — Firmes! É só o escuro! Segurem a linha!
   - *EN:* — Hold! It is only the dark! Hold the line!
-- O Tinido. Não olhou para cima nem uma vez. A essa altura eu também tinha parado de olhar. Éramos os dois únicos naquele campo que sabiam que o escuro ia passar, e só ele estava a descoberto.
-  - *EN:* The Tinn. He never once looked up. By then I had stopped looking too. We were the only two on that field who knew the dark would pass, and only he was standing in the open.
+- O Tinido. Não olhou para cima nem uma vez. A essa altura eu também tinha parado de olhar. Éramos os dois únicos naquele campo que sabiam que o escuro ia passar. Eu tinha dito isso baixinho, para mim mesmo. Ele gritava para a linha inteira.
+  - *EN:* The Tinn. He never once looked up. By then I had stopped looking too. We were the only two on that field who knew the dark would pass. I had said it under my breath, to myself. He was shouting it to his whole line.
 - No bolso, a pedra tinha ficado violeta, a cor que ela não tem em nenhuma outra luz, e fechei a mão em volta dela.
   - *EN:* In my pocket the stone had gone violet, a colour it has in no other light, and I closed my hand over it.
 
@@ -562,8 +562,8 @@ Gerado do roteiro do jogo (capitulo5.js), na ordem do arquivo. Em cada página a
   - *EN:* At the fifth, the light came out of me, up to my face, and I did nothing to hold it. There was nothing left to hide from anyone.
 - Então o sol voltou. Primeiro uma única conta branca na beira do escuro, depois uma lâmina, e todas as sombras do campo giraram de uma vez, e homens que gritavam um instante antes ficaram piscando uns para os outros.
   - *EN:* Then the sun came back. First a single white bead on the rim of the dark, then a blade of it, and every shadow on the field swung around at once, and men who had been shouting a moment before stood blinking at each other.
-- Redom recuou. E recuou bem, isso eu admito: em ordem, os escudos travados, levando o Tinido entre quatro homens, em cima da própria capa. Os besteiros vinham de costas na retaguarda, como são treinados a fazer, e na última elevação se viraram e soltaram uma salva contra a multidão nos poços, como também são treinados a fazer.
-  - *EN:* Redom pulled back. It did it well, I will grant them that: in order, shields locked, carrying the Tinn between four men on his own cloak. The crossbowmen walked backward at the rear, as they are trained to, and at the last rise they turned and loosed one volley into the crowd at the wells, as they are also trained to.
+- Redom recuou, e recuou bem, o que é mais difícil do que avançar bem: em ordem, os escudos travados, levando o Tinido entre quatro homens, em cima da própria capa. Os besteiros vinham de costas na retaguarda, como são treinados a fazer, e na última elevação se viraram e soltaram uma salva contra a multidão nos poços, como também são treinados a fazer.
+  - *EN:* Redom fell back, and fell back well, which is harder than advancing well: in order, shields locked, carrying the Tinn between four men on his own cloak. The crossbowmen walked backward at the rear, as they are trained to, and at the last rise they turned and loosed one volley into the crowd at the wells, as they are also trained to.
 - Vi o dedo do primeiro besteiro sair do lado do gatilho e ir para cima dele. Já tinha visto aquilo uma vez, na neve. Daquela vez, eu estava na frente.
   - *EN:* I saw the first crossbowman’s finger leave the side of the trigger and settle onto it. I had seen that once before, in the snow. That time, I was the one in front of it.
 - Não havia mais mão nenhuma para empurrar as bestas para baixo.

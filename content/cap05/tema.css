@@ -221,6 +221,7 @@ body.na-abertura #hudA #luz .bar { width: 120px; }
 .mn-pt i { display: block; width: 22px; height: 22px; margin: 0 auto; border-radius: 50%; border: 1.5px solid #dfe9f2; box-shadow: 0 0 16px rgba(200,220,240,.75); animation: exPulso 2s ease-in-out infinite; }
 .mn-pt span { display: block; margin-top: 6px; white-space: nowrap; font-family: var(--sans); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: #eef3f8; background: rgba(6,8,12,.82); padding: 4px 9px; text-align: center; }
 .mn-pt b { display: block; color: #ffe7b0; font-size: 9px; letter-spacing: .3em; margin-top: 2px; font-weight: 400; }
+.mn-pt.desc b { color: #bfe3ff; text-shadow: 0 0 8px rgba(160,210,255,.8); }
 .mn-pt small { display: block; text-transform: none; letter-spacing: 0; font-size: 11px; color: var(--mist); }
 .mn-pt.trava i { border-color: rgba(171,154,131,.5); box-shadow: none; animation: none; }
 .mn-pt.trava span { text-decoration: line-through; color: var(--mist); }

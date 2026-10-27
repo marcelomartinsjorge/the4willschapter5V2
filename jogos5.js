@@ -375,14 +375,19 @@ function minutos(root, c) {
       <div class="mn-anel"><svg viewBox="0 0 100 100"><circle class="fundo" cx="50" cy="50" r="40"/><circle class="sol" cx="50" cy="50" r="40" pathLength="100"/><circle class="lua" cx="50" cy="50" r="31"/></svg><span>${c.esc(tr(cfg.anelT))}</span></div>
       <div class="mn-painel"><div class="mn-txt"></div><button class="cta mn-ok">${c.lang === 'en' ? 'Continue' : 'Continuar'}</button></div>`);
     const anel = root.querySelector('.mn-anel'), anelSol = root.querySelector('.sol'), painel = root.querySelector('.mn-painel'), ptxt = root.querySelector('.mn-txt'), ok = root.querySelector('.mn-ok');
-    const total = cfg.marcas * cfg.segundosPorMarca;
+    // no escuro, quem está apagado anda sem ser visto: Luz baixa ganha uma marca
+    const marcas = cfg.marcas + (st.luz <= 30 ? 1 : 0);
+    const total = marcas * cfg.segundosPorMarca;
     let t = 0, pausado = true, fim = false, last = performance.now();
     const feitas = [];
-    const restam = () => Math.max(0, cfg.marcas - Math.ceil(t / cfg.segundosPorMarca - 1e-6));
+    // ouvir os soldados mostra onde pisar: a próxima ação custa uma marca a menos (quem bebe não ouve, mas ganha a marca extra)
+    let desc = 0;
+    const custoDe = (a) => (desc && !a.fim && a.custo > 1 && a.id !== 'ouvir' ? a.custo - 1 : a.custo);
+    const restam = () => Math.max(0, marcas - Math.ceil(t / cfg.segundosPorMarca - 1e-6));
     const desenha = () => {
       anelSol.style.strokeDasharray = `${(t / total) * 100} 100`;
       anel.classList.toggle('pouco', restam() <= 1);
-      root.querySelectorAll('.mn-pt').forEach((b) => { const a = cfg.acoes.find((x) => x.id === b.dataset.id); b.classList.toggle('caro', !feitas.includes(a.id) && a.custo > restam() && !a.fim); });
+      root.querySelectorAll('.mn-pt').forEach((b) => { const a = cfg.acoes.find((x) => x.id === b.dataset.id); const cu = custoDe(a); b.classList.toggle('caro', !feitas.includes(a.id) && cu > restam() && !a.fim); b.classList.toggle('desc', cu < a.custo); const bb = b.querySelector('b'); if (bb && !feitas.includes(a.id)) bb.textContent = '●'.repeat(cu); });
     };
     const encerra = (motivoFim) => {
       if (fim) return; fim = true;
@@ -399,7 +404,7 @@ function minutos(root, c) {
         ptxt.innerHTML = lista.map((s) => `<p class="${s.startsWith('—') ? 'dlg' : ''}">${c.esc(s)}</p>`).join(''); ptxt.scrollTop = 0;
         if (a.voz && k === passos.length - 1) setTimeout(() => c.narrate(a.voz), 600);
         ok.textContent = c.lang === 'en' ? 'Continue' : 'Continuar';
-        ok.onclick = () => { k++; if (k < passos.length) return passo(); painel.classList.remove('on'); pausado = false; last = performance.now(); if (a.fim || t >= total - .01) encerra(a.fim ? 'esconder' : 'tempo'); };
+        ok.onclick = () => { k++; if (k < passos.length) return passo(); painel.classList.remove('on'); pausado = false; last = performance.now(); if (a.id === 'ouvir' && cfg.pisarT) { c.toast(cfg.pisarT); setTimeout(() => c.narrate('c01-pisar'), 500); } if (a.fim || t >= total - .01) encerra(a.fim ? 'esconder' : 'tempo'); };
         if (BOT()) setTimeout(() => ok.click(), 200);
       };
       painel.classList.add('on'); pausado = true; passo();
@@ -411,12 +416,13 @@ function minutos(root, c) {
       b.innerHTML = `<i></i><span>${c.esc(tr(a.rotulo))}${a.custo ? `<b>${'●'.repeat(a.custo)}</b>` : ''}${trava ? `<small>${c.esc(tr(a.motivo))}</small>` : ''}</span>`;
       b.onclick = (e) => {
         e.stopPropagation(); if (fim || pausado || trava || feitas.includes(a.id)) return;
-        if (!a.fim && a.custo > restam()) { b.classList.remove('nao'); void b.offsetWidth; b.classList.add('nao'); A.tone(160, .3, 'square', .03); return; }
+        if (!a.fim && custoDe(a) > restam()) { b.classList.remove('nao'); void b.offsetWidth; b.classList.add('nao'); A.tone(160, .3, 'square', .03); return; }
         feitas.push(a.id); b.classList.add('feito'); c.registrar('minuto_' + feitas.length, a.id);
         if (a.id === 'beber') c.beber('minutos');
         if (a.id === 'po') A.sfx('po-vento', .6, () => A.hiss(1.2, 1800, .6, .12)), setTimeout(() => A.sfx('cavalos-panico', .7), 600);
         if (a.id === 'tukk') A.sfx('arrasta', .5, () => A.hiss(1.4, 300, .6, .14, 0, 'lowpass'));
-        t = Math.min(total, t + a.custo * cfg.segundosPorMarca); desenha();
+        const cu = custoDe(a); if (cu < a.custo) desc = 0; if (a.id === 'ouvir') desc = 1;
+        t = Math.min(total, t + cu * cfg.segundosPorMarca); desenha();
         abrePassos(a);
       };
       caixa.appendChild(b);
@@ -431,6 +437,7 @@ function minutos(root, c) {
     };
     desenha(); requestAnimationFrame(loop);
     A.sfx('eclipse-total', .4);
+    setTimeout(() => c.narrate('c01-dica'), BOT() ? 100 : 3600);
     // o tempo só começa a correr depois que o leitor viu o cartão do gesto (ou tocou na tela)
     const solta = () => { if (!fim && pausado && !painel.classList.contains('on')) { pausado = false; last = performance.now(); } };
     c.gesto(root, 'sol', BOT() ? 50 : 3200);
@@ -844,7 +851,7 @@ function bancada(root, c) {
     };
     const escolhe = (r) => {
       rec = r; log = []; mao = null;
-      const k = turvo >= 4 ? r.linhas.length - 1 : turvo >= 2 ? Math.ceil(r.linhas.length / 2) : 0;
+      const k = turvo >= 4 ? r.linhas.length - 1 : turvo >= 2 ? Math.ceil(r.linhas.length / 2) : turvo >= 1 ? 1 : 0;
       borrado = [...r.linhas.keys()].sort(() => Math.random() - .5).slice(0, k);
       A.sfx('receita-couro', .45, () => A.hiss(.4, 2400, .5, .05)); desenhaEst(); receitaCouro();
     };
