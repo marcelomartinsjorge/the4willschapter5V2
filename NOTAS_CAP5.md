@@ -238,3 +238,19 @@ Um risco a mais ou a menos de fogo vale meio erro. Ingrediente posto errado se p
 4. A duna (minutos): com Luz 60+, ouvir custa uma marca a mais ("o pulso brilha na duna"); muda na hora se ele beber no minijogo.
 5. O rastro: Luz baixa deixa os Tacets lentos.
 (Já existia: Luz 30 ou menos dá uma marca a mais nos minutos.)
+
+## Rastro em tabuleiro, Shaa e a luz, ajustes de teste (28/10/2026)
+
+**O rastro virou tabuleiro** (a coleira contínua foi descartada depois do teste do Marcelo: confusa e sem vitória clara).
+- Casas ligadas sobre o mapa. Na vez dele: andar uma casa, correr duas (−6 de Luz, piso 10) ou esperar. Cantar, uma vez: nesta vez e na seguinte, os três ouvem de onde estiverem.
+- Depois, cada Tacet anda uma casa pelo caminho mais curto: até ele, se está a até 4 casas; senão, para a Pira. O número na peça é a distância em casas; a seta mostra o próximo passo (vermelha quando vai para a Pira).
+- Perde: um Tacet entra na casa dele (perto da Pira, a fala dublada `rastro-falha`) ou chega à Pira. Vence: na areia aberta com os três a até 4 casas.
+- Os Tacets descem das pedras a leste, por trás dele (descendo do norte, cortavam o caminho e o jogo não tinha saída).
+- Passo duplo ("o compasso aperta", avisado na vez anterior): com os Tacets saídos cedo (cedo 2: a cada 6; cedo 3: a cada 5) e com Luz 60+ (a cada 4).
+- Sem a fogueira da horda.
+- Verificado com um resolvedor: toda combinação de Luz e cedo tem saída (5 a 8 vezes). Jogadores modelados (300 partidas): o médio vence 95% a 100%; o fraco, 76% a 100%.
+- Peças com rosto: `assets/images/rosto-aheryn.png` e `rosto-tacet.png` (chroma key tirado).
+
+**A luz para a Shaa (a07).** A opção é só "Puxar o pano do pulso."; o resultado depende da Luz de antes da escolha: baixa (≤30) a chuva sobe um fio, ela segura o pulso com as duas mãos, "— A cria gostar. Shaa gostar." (+2 com ela, Hessa não vê); média, como antes (+1); alta (60+), a luz salta até o pescoço e ela recua, "— Muito. Luz muito." (0). A segunda opção virou recusa direta, "“Não. Isso não se mostra.”" (−1). Saiu a opção de ficar calado. Dá para beber no a07. O preparo da Shaa no parto acompanha (de 0 a 3).
+
+**Outros.** Tela de derrota (a animação de saída apagava tudo) consertada. Som `sfx/guerra-comeca` (do Marcelo) quando as linhas se encontram, no b03. O cartão do parto avisa "e aperte as letras que aparecerem" quando elas vão aparecer.

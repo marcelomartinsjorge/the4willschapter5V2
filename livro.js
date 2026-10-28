@@ -655,7 +655,8 @@ function aplicar(o) {
   if (!o) return;
   if (o.eixo) { st.perfil = st.perfil || {}; st.perfil[o.eixo] = (st.perfil[o.eixo] || 0) + 1; }
   if (o.tom) [].concat(o.tom).forEach((t) => { st.tom[t] = (st.tom[t] || 0) + 1; });
-  if (o.luz) mudaLuz(o.luz);
+  st._luzEscolha = st.luz;   // a Luz de antes da escolha (uma resposta pode depender dela)
+  { const lz = typeof o.luz === 'function' ? o.luz(st) : o.luz; if (lz) mudaLuz(lz); }
   ['hessa', 'shaa', 'pira'].forEach((k) => { if (o[k]) st[k] = (st[k] || 0) + o[k]; });
   if (o.gole) beber('escolha');
   if (o.trai) later(() => traicao(o.trai), o.trai.atraso || 1500);
@@ -740,7 +741,7 @@ function fechaOverlay() { renovaOverlay(); document.body.classList.remove('mg-on
 // o que os jogos recebem: idioma, áudio, estado, tradução e as ferramentas do livro
 const ctxJogo = (p) => ({ lang: LANG, A, st, tr, U, p, paras, mudaLuz, beber, sobrio, toast: (t) => toast(tr(t)), registrar, salvar, esc, linkify, vsrc, L, narrate: (n, fila) => { if (A.ctx && A.on) A.narrate(vozUrl(n), null, fila); },
   // a instrução do jogo, como ícone no centro (some no primeiro toque)
-  gesto: (root, icone, ms) => { const tipo = p.minijogo; return gesto(root, icone, (U('gesto') || {})[tipo] || '', ((U('gestoSub') || {})[tipo] || '') + (icone === 'segurar' && !matchMedia('(pointer: coarse)').matches ? ' · ' + U('teclaSeg') : ''), ms); } });
+  gesto: (root, icone, ms) => { const tipo = p.minijogo; return gesto(root, icone, (U('gesto') || {})[tipo] || '', ((g) => (typeof g === 'function' ? g(st) : g || ''))((U('gestoSub') || {})[tipo]) + (icone === 'segurar' && !matchMedia('(pointer: coarse)').matches ? ' · ' + U('teclaSeg') : ''), ms); } });
 function renderMinijogo(p) {
   const tipo = p.minijogo, done = st.feitos['mg:' + p.id];
   if (done) { appendParas(p.depois); return true; }

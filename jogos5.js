@@ -455,13 +455,15 @@ function minutos(root, c) {
 function derrota(root, c, linhas, botao, refaz, luz0, voz) {
   const { tr, A, st } = c;
   A.abafa && A.abafa(false);
+  // a animação de saída apagava a tela inteira, inclusive esta: tira antes de mostrar
+  root.classList.remove('sai'); root.style.animation = 'none'; root.style.opacity = '1'; root.style.filter = 'none';
   const d = document.createElement('div'); d.className = 'j5-derrota';
   d.innerHTML = linhas.map((l, k) => `<p class="${k ? 'l2' : 'l1'}">${c.esc(tr(l))}</p>`).join('') + `<button class="cta">${c.esc(tr(botao))}</button>`;
   root.appendChild(d); requestAnimationFrame(() => d.classList.add('on'));
   A.tone(110, 2.2, 'sawtooth', .04, 0, 2); A.tone(73, 2.6, 'sine', .08, .1, 2.4);
   if (voz) setTimeout(() => c.narrate(voz), 1200);   // a voz do Aheryn, se o arquivo existir (sem arquivo, segue muda)
   const b = d.querySelector('button');
-  b.onclick = () => { b.disabled = true; if (luz0 != null) c.mudaLuz(luz0 - st.luz); root.innerHTML = ''; root.className = root.className.split(' ').filter((x) => !['final', 'lento', 'ok', 'flare', 'quatro', 'canta', 'longe', 'sai', 'dor'].includes(x)).join(' '); refaz(); };
+  b.onclick = () => { b.disabled = true; if (luz0 != null) c.mudaLuz(luz0 - st.luz); root.innerHTML = ''; root.style.animation = ''; root.style.opacity = ''; root.style.filter = ''; root.className = root.className.split(' ').filter((x) => !['final', 'lento', 'ok', 'flare', 'quatro', 'canta', 'longe', 'sai', 'dor'].includes(x)).join(' '); refaz(); };
   if (BOT()) setTimeout(() => b.click(), 200);
 }
 
@@ -595,177 +597,141 @@ function parto(root, c) {
   });
 }
 
-// ================================================================== RASTRO (Pensamento · a coleira)
-// Dar aos Tacets só a luz necessária para seguirem. Cada Tacet enxerga a luz do Aheryn até o anel dele:
-// perto demais, alcançam; longe demais, o que perdeu a luz vira para o fogo mais próximo (a Pira ou o de uma horda).
-// Andam no compasso, um passo por batida, e o próximo passo aparece antes (um ponto apagado).
-// O fim é a areia aberta, a oeste, com os três atrás dele. A Luz é o recurso: cada farol gasta um pouco;
-// Luz alta, eles enxergam de longe e andam rápido; Luz baixa, lentos, e perdem a luz mais fácil.
-const dentroPoligono = (p, pts) => { let d = false; for (let i = 0, j = pts.length - 1; i < pts.length; j = i++) { const [xi, yi] = pts[i], [xj, yj] = pts[j]; if ((yi > p.y) !== (yj > p.y) && p.x < (xj - xi) * (p.y - yi) / (yj - yi) + xi) d = !d; } return d; };
+// ================================================================== RASTRO (Pensamento · o tabuleiro)
+// Casas ligadas no mapa. Na vez dele: andar uma casa, correr duas (gasta Luz) ou esperar; cantar (uma vez) vale para esta vez e a seguinte.
+// Depois, cada Tacet anda uma casa (o caminho mais curto): até ele, se o enxerga (a até R.visao casas, ou se ele canta); senão, para a Pira.
+// Perde: um Tacet entra na casa dele, ou chega à Pira. Vence: na areia aberta, com os três a até R.visao casas.
+// Passo duplo (o compasso aperta) a cada R.dobra[cedo] vezes; com Luz alta, a cada R.dobraAlta. A seta de cada Tacet mostra o próximo passo.
+// Calibrado com um resolvedor (toda partida tem saída) e com jogadores modelados (ver NOTAS_CAP5).
 function rastro(root, c) {
   const { tr, A, st, L } = c, cfg = L.rastro, R = cfg.regras;
   const luz0 = st.luz;
   const cedo = Math.min(3, st.tacetsCedo || 0);
   return new Promise((resolve) => {
-    root.classList.add('explorar');
+    root.classList.add('explorar', 'tabuleiro');
     const { caixa } = palco(root, 'assets/images/mapa-rastro.jpg', 1920 / 1080);
     const AR = 9 / 16;
-    const d = (a, b) => Math.hypot(a.x - b.x, (a.y - b.y) * AR);   // em % da largura
-    caixa.insertAdjacentHTML('beforeend', `<svg class="rt-svg" viewBox="0 0 100 56.25" preserveAspectRatio="none">
-        <rect class="rt-oeste" x="0" y="0" width="${cfg.oeste}" height="56.25"/>
-        ${cfg.pedras.map((pts) => `<polygon class="rt-pedra" points="${pts.map(([x, y]) => `${x},${y * AR}`).join(' ')}"/>`).join('')}
-        ${cfg.dunas.map((u) => `<ellipse class="rt-duna" cx="${u.x}" cy="${u.y * AR}" rx="${u.rx}" ry="${u.ry * AR}"/>`).join('')}
-        <polyline class="rt-linha" points=""/></svg>
-      ${cfg.fogos.map((f) => `<div class="rt-fogo ${f.id}" style="left:${f.x}%;top:${f.y}%"><i></i><span>${c.esc(tr(f.nome))}</span></div>`).join('')}
-      <div class="rt-oeste-rot" style="left:${cfg.oeste / 2}%;top:${cfg.oesteY}%">${c.esc(tr(cfg.oesteT))}</div>
-      <div class="rt-alcance"></div><div class="rt-carga"></div>`);
-    root.insertAdjacentHTML('beforeend', `<div class="rt-hud"><p class="rt-chips"><span>Tacets</span><i></i><i></i><i></i></p><p class="rt-msg"></p><div class="rt-bts"><button class="ghost rt-cantar">♪ ${c.esc(tr(cfg.cantarT))}</button><button class="cta rt-ir" disabled>${c.esc(tr(cfg.irT))}</button></div></div>`);
-    const $ = (s) => root.querySelector(s), linhaEl = $('.rt-linha'), alcance = $('.rt-alcance'), carga = $('.rt-carga'), msg = $('.rt-msg'), ir = $('.rt-ir'), cantarB = $('.rt-cantar');
+    // ---- o grafo
+    const ids = Object.keys(cfg.casas), ix = Object.fromEntries(ids.map((k, i) => [k, i])), n = ids.length;
+    const pos = ids.map((k) => ({ x: cfg.casas[k][0], y: cfg.casas[k][1] }));
+    const adj = ids.map(() => []); cfg.ligacoes.forEach(([a, b]) => { adj[ix[a]].push(ix[b]); adj[ix[b]].push(ix[a]); }); adj.forEach((l) => l.sort((a, b) => a - b));
+    const dist = ids.map((_, s) => { const d = Array(n).fill(99); d[s] = 0; const q = [s]; while (q.length) { const u = q.shift(); for (const v of adj[u]) if (d[v] > d[u] + 1) { d[v] = d[u] + 1; q.push(v); } } return d; });
+    const prox = (de, para) => (de === para ? de : adj[de].reduce((m, v) => (dist[v][para] < dist[m][para] ? v : m), adj[de][0]));
+    const PIRA = ix[cfg.pira], META = ix[cfg.meta];
+    // ---- o desenho
+    caixa.insertAdjacentHTML('beforeend', `<svg class="tb-svg" viewBox="0 0 100 56.25" preserveAspectRatio="none">
+        ${cfg.ligacoes.map(([a, b]) => `<line class="tb-lig" x1="${pos[ix[a]].x}" y1="${pos[ix[a]].y * AR}" x2="${pos[ix[b]].x}" y2="${pos[ix[b]].y * AR}"/>`).join('')}
+        <g class="tb-setas"></g></svg>`);
+    const setasG = caixa.querySelector('.tb-setas');
+    const casaEl = ids.map((k, i) => {
+      const e = document.createElement('button'); e.type = 'button';
+      e.className = 'tb-casa' + (i === PIRA ? ' pira' : '') + (i === META ? ' meta' : '');
+      e.style.left = pos[i].x + '%'; e.style.top = pos[i].y + '%';
+      if (i === PIRA) e.innerHTML = `<span>${c.esc(tr(cfg.piraT))}</span>`;
+      if (i === META) e.innerHTML = `<span>${c.esc(tr(cfg.oesteT))}</span>`;
+      e.addEventListener('click', (ev) => { ev.stopPropagation(); clica(i); });
+      caixa.appendChild(e); return e;
+    });
+    const peca = (cls, img) => { const e = document.createElement('div'); e.className = 'tb-peca ' + cls; e.innerHTML = `<img src="${img}" alt=""><b></b>`; caixa.appendChild(e); return e; };
+    const euEl = peca('eu', 'assets/images/rosto-aheryn.png');
+    root.insertAdjacentHTML('beforeend', `<div class="rt-hud tb-hud"><p class="rt-chips"><span>Tacets</span><i></i><i></i><i></i></p><p class="rt-msg"></p><div class="rt-bts"><button class="ghost tb-esperar">${c.esc(tr(cfg.esperarT))}</button><button class="ghost rt-cantar">♪ ${c.esc(tr(cfg.cantarT))}</button></div></div>`);
+    const $ = (s) => root.querySelector(s), msg = $('.rt-msg'), cantarB = $('.rt-cantar'), esperarB = $('.tb-esperar');
     const chips = [...root.querySelectorAll('.rt-chips i')];
-    const pira = cfg.fogos.find((f) => f.id === 'pira');
-    let cantando = false, cantou = false, fim = false, quebrou = false, perdeu = 0, avisoDuna = false, msgFixa = 0;
-    const luzes = [{ x: pira.x - 5, y: pira.y - 7, ini: true }];
-    const ultima = () => luzes[luzes.length - 1];
-    const naDuna = (p) => cfg.dunas.some((u) => ((p.x - u.x) / u.rx) ** 2 + ((p.y - u.y) / u.ry) ** 2 <= 1);
-    const naPedra = (p) => cfg.pedras.some((pts) => dentroPoligono(p, pts));
-    const visao = () => R.visao + R.visaoLuz * st.luz + (cantando ? R.visaoCanto : 0);
-    const alc = () => (cantando ? R.passoCanto : R.passo) * (naDuna(ultima()) ? R.duna : 1);
-    const passoT = (tc) => (R.tacet + R.tacetCedo * cedo + R.tacetLuz * st.luz) * tc.vk * (cantando ? R.tacetCanto : 1);
-    // os três: um pouco mais lento, um no meio, um mais rápido (com o tempo se espalham, e a coleira aperta)
-    const tacets = [0, 1, 2].map((k) => {
-      const tc = { k, x: cfg.tacetsDe.x + (k - 1) * 3, y: cfg.tacetsDe.y + (k % 2) * 2, vk: R.vk[k], estado: 'chamado', fora: 0, fogo: pira };
-      tc.anel = document.createElement('div'); tc.anel.className = 'rt-visao'; caixa.appendChild(tc.anel);
-      tc.fant = document.createElement('div'); tc.fant.className = 'rt-fant'; caixa.appendChild(tc.fant);
-      tc.el = document.createElement('div'); tc.el.className = 'rt-tacet'; caixa.appendChild(tc.el);
-      return tc;
-    });
-    const eu = document.createElement('div'); eu.className = 'rt-eu'; caixa.appendChild(eu);
-    const avisa = (t, ms) => { msg.textContent = tr(t); if (ms) msgFixa = performance.now() + ms; };
-    // para onde cada um vai agora: a luz dele, se ainda enxerga (ou acabou de perder), senão o fogo
-    // (antes de enxergá-lo, vêm para a luz dele; só quem já o seguiu e perdeu a luz vira para um fogo)
-    const alvoDe = (tc) => (tc.estado === 'perdido' ? tc.fogo : ultima());
-    const passo = (tc, alvo) => { const dx = alvo.x - tc.x, dy = (alvo.y - tc.y) * AR, dd = Math.hypot(dx, dy), s = Math.min(dd, passoT(tc)); return dd < .01 ? { x: tc.x, y: tc.y } : { x: tc.x + dx / dd * s, y: tc.y + dy / dd * s / AR }; };
+    // ---- o estado
+    let eu = ix[cfg.inicio], vez = 0, fim = false, ocupado = false, cantoArmado = false, cantoResta = 0, cantou = false, perdeu = 0, corridas = 0, viuPrimeiro = false;
+    const tacets = cfg.tacetsDe[cedo].map((k, i) => ({ i, at: ix[k], el: peca('tacet', 'assets/images/rosto-tacet.png') }));
+    const dobraDe = () => Math.min(R.dobra[cedo] || 999, st.luz >= 60 ? R.dobraAlta : 999);
+    const passosNa = (v) => (v % dobraDe() === 0 ? 2 : 1);
+    const ve = (tc, onde, cantando) => cantando || dist[tc.at][onde] <= R.visao;
+    const alvoDe = (tc, onde, cantando) => (ve(tc, onde, cantando) ? onde : PIRA);
+    const avisa = (t) => { msg.textContent = tr(t); };
+    // casas para onde ele pode ir: vizinhas (andar) e a duas casas (correr, se tem Luz), sem Tacet e sem a Pira
+    const opcoes = () => {
+      const livre = (v) => v !== PIRA && !tacets.some((tc) => tc.at === v), out = new Map();
+      for (const v of adj[eu]) if (livre(v)) { out.set(v, 'andar'); }
+      if (st.luz - R.custoCorrer >= R.luzPiso) for (const v of adj[eu]) if (livre(v)) for (const w of adj[v]) if (w !== eu && livre(w) && !out.has(w)) out.set(w, 'correr');
+      return out;
+    };
     const desenha = () => {
-      const u = ultima(), v = visao();
-      linhaEl.setAttribute('points', luzes.map((l) => `${l.x},${l.y * AR}`).join(' '));
-      alcance.style.left = u.x + '%'; alcance.style.top = u.y + '%'; alcance.style.width = (alc() * 2) + '%';
-      eu.style.left = u.x + '%'; eu.style.top = u.y + '%';
-      tacets.forEach((tc, i) => {
-        tc.el.style.left = tc.x + '%'; tc.el.style.top = tc.y + '%';
-        tc.anel.style.left = tc.x + '%'; tc.anel.style.top = tc.y + '%'; tc.anel.style.width = (v * 2) + '%';
-        const fora = d(tc, u) > v;
-        tc.anel.classList.toggle('fora', fora && tc.estado !== 'chamado'); tc.anel.classList.toggle('perdido', tc.estado === 'perdido');
-        tc.el.classList.toggle('perdido', tc.estado === 'perdido');
-        const f = passo(tc, alvoDe(tc)); tc.fant.style.left = f.x + '%'; tc.fant.style.top = f.y + '%';
-        chips[i].className = tc.estado;
+      const p = pos[eu];
+      euEl.style.left = p.x + '%'; euEl.style.top = p.y + '%';
+      const op = fim || ocupado ? new Map() : opcoes();
+      casaEl.forEach((e, i) => { e.classList.toggle('andar', op.get(i) === 'andar'); e.classList.toggle('correr', op.get(i) === 'correr'); e.disabled = !op.has(i); });
+      const cantando = cantoArmado || cantoResta > 0, duplo = passosNa(vez + 1) === 2;
+      let setas = '';
+      tacets.forEach((tc, k) => {
+        const q = pos[tc.at]; tc.el.style.left = q.x + '%'; tc.el.style.top = q.y + '%';
+        // dois ou três na mesma casa: lado a lado, para os rostos e os números não se cobrirem
+        const juntos = tacets.filter((o) => o.at === tc.at), kk = juntos.indexOf(tc); tc.el.style.marginLeft = ((kk - (juntos.length - 1) / 2) * 26) + 'px';
+        const d = dist[tc.at][eu], segue = ve(tc, eu, cantando);
+        tc.el.classList.toggle('perdido', !segue); tc.el.querySelector('b').textContent = d;
+        chips[k].className = segue ? 'segue' : 'perdido';
+        // a seta: o próximo passo (dois, se o compasso aperta)
+        let de = tc.at; const alvo = alvoDe(tc, eu, cantando);
+        for (let s = 0; s < (duplo ? 2 : 1); s++) { const pr = prox(de, alvo); if (pr === de) break; setas += `<line class="tb-seta ${segue ? '' : 'pira'}" x1="${pos[de].x}" y1="${pos[de].y * AR}" x2="${pos[pr].x}" y2="${pos[pr].y * AR}" marker-end="url(#tbPonta)"/>`; de = pr; }
       });
-      const noOeste = u.x <= cfg.oeste, todos = tacets.every((tc) => tc.estado === 'segue');
-      ir.disabled = !(noOeste && todos);
-      root.classList.toggle('longe', noOeste && todos);
-      if (performance.now() > msgFixa) msg.textContent = noOeste ? tr(todos ? cfg.prontoT : cfg.faltaT) : tr(cfg.objetivoT);
+      setasG.innerHTML = `<defs><marker id="tbPonta" viewBox="0 0 6 6" refX="5" refY="3" markerWidth="3" markerHeight="3" orient="auto"><path d="M0 0L6 3L0 6z" fill="currentColor"/></marker></defs>` + setas;
+      cantarB.disabled = cantou || fim; cantarB.classList.toggle('on', cantoArmado || cantoResta > 0);
+      esperarB.disabled = fim || ocupado;
+      const fora = tacets.filter((tc) => !ve(tc, eu, cantando)).length;
+      avisa(fora ? cfg.perdeuT : duplo ? cfg.duploT : cfg.objetivoT);
     };
-    const acende = (p) => {
-      luzes.push(p);
-      const f = document.createElement('div'); f.className = 'rt-farol' + (cantando ? ' canto' : ''); f.style.left = p.x + '%'; f.style.top = p.y + '%'; caixa.appendChild(f);
-      // a luz custa: cada farol gasta um pouco da Luz (nunca abaixo do piso)
-      const custo = Math.min(R.custoFarol, Math.max(0, st.luz - R.luzPiso)); if (custo) c.mudaLuz(-custo);
-      A.sfx('farol', .55, () => { A.tone(700, .8, 'sine', .05, 0, 1.3); A.tone(1050, 1, 'sine', .03, .08); });
-      if (!avisoDuna && naDuna(p)) { avisoDuna = true; avisa(cfg.dunaT, 2600); }
+    const termina = (ok) => {
+      if (fim) return; fim = true; desenha();
+      c.registrar('rastro', String(dist[PIRA][eu]));
+      if (ok) { avisa(cfg.prontoT); root.classList.add('longe'); }
+      setTimeout(() => { root.classList.add('sai'); setTimeout(() => resolve({ distancia: dist[PIRA][eu] * 7, luzes: vez, cantou, perdeu, corridas }), BOT() ? 50 : 1400); }, BOT() ? 50 : 1400);
+    };
+    const perde = (linhas, voz, motivo) => {
+      fim = true; c.registrar('rastro_falhou', motivo); desenha();
+      setTimeout(() => derrota(root, c, linhas, cfg.tentarT, () => rastro(root, c).then(resolve), luz0, voz), BOT() ? 50 : 900);
+    };
+    // ---- a vez dele, depois a vez deles
+    const joga = (destino, tipo) => {
+      if (fim || ocupado) return;
+      ocupado = true; vez++;
+      const cantando = cantoArmado || cantoResta > 0;
+      if (cantoArmado) { cantoArmado = false; cantoResta = R.cantoVezes; cantou = true; canta(); }
+      if (tipo === 'correr') { corridas++; c.mudaLuz(-R.custoCorrer); }
+      eu = destino; A.tone(tipo === 'correr' ? 760 : 620, .25, 'sine', .03);
       desenha();
+      setTimeout(() => {
+        const passos = passosNa(vez);
+        for (let s = 0; s < passos && !fim; s++) {
+          for (const tc of tacets) {
+            const antes = ve(tc, eu, cantando);
+            tc.at = prox(tc.at, alvoDe(tc, eu, cantando));
+            if (antes && !ve(tc, eu, cantando)) perdeu++;
+          }
+        }
+        if (A.ctx && A.on) A.sfx('compasso-tres', .3, () => A.hiss(.12, 220, .8, .06, 0, 'lowpass'));
+        if (!viuPrimeiro && tacets.some((tc) => ve(tc, eu, cantando))) { viuPrimeiro = true; root.classList.add('quatro'); const m = document.createElement('p'); m.className = 'rt-quatro'; m.textContent = tr(cfg.quatroT); root.appendChild(m); c.narrate('rastro-quatro', true); setTimeout(() => m.remove(), 4200); }
+        if (cantoResta > 0 && !cantoArmado && cantando) cantoResta--;
+        ocupado = false;
+        if (window.__RASTRO_FALHA) { window.__RASTRO_FALHA = false; return perde(cfg.falhaT, 'rastro-falha', 'teste'); }
+        if (tacets.some((tc) => tc.at === eu)) return dist[PIRA][eu] <= R.vistaPira ? perde(cfg.falhaT, 'rastro-falha', 'perto') : perde(cfg.falhaLongeT, null, 'meio');
+        if (tacets.some((tc) => tc.at === PIRA)) return perde(cfg.falhaPiraT, null, 'pira');
+        if (eu === META && tacets.every((tc) => dist[tc.at][eu] <= R.visao)) return termina(true);
+        desenha();
+      }, BOT() ? 30 : 450);
     };
-    // segurar para acender: um anel enche no lugar do dedo; soltar antes apaga
-    const ponto = (e) => { const r = caixa.getBoundingClientRect(); return { x: (e.clientX - r.left) / r.width * 100, y: (e.clientY - r.top) / r.height * 100 }; };
-    let alvo = null, t0 = 0;
-    const DUR_CARGA = () => (cantando ? 380 : 560);
-    const recusa = (t) => { avisa(t, 2200); alcance.classList.remove('nao'); void alcance.offsetWidth; alcance.classList.add('nao'); A.tone(160, .25, 'square', .025); };
-    const pz = pensar(root, {
-      el: caixa, tecla: false,
-      alvo: (e) => {
-        if (fim || !e || e.button > 0 || window.__mgPausa) return false;
-        const p = ponto(e);
-        if (p.x < 1 || p.x > 99 || p.y < 3 || p.y > 97) return false;
-        if (d(p, ultima()) > alc()) { recusa(cfg.alcanceT); return false; }
-        if (naPedra(p)) { recusa(cfg.pedraT); return false; }
-        alvo = p; return true;
-      },
-      down: () => { t0 = performance.now(); carga.style.left = alvo.x + '%'; carga.style.top = alvo.y + '%'; carga.classList.add('on'); A.tone(440, .5, 'sine', .025, 0, 1.6); },
-      up: () => { carga.classList.remove('on'); carga.style.setProperty('--k', 0); alvo = null; },
-    });
-    const enche = () => {
-      if (fim || !root.isConnected) return;
-      if (pz.segura && alvo) {
-        const k = clamp((performance.now() - t0) / DUR_CARGA(), 0, 1); carga.style.setProperty('--k', k.toFixed(3)); pz.brilho(.3 + k * .6);
-        if (k >= 1) { const p = alvo; pz.segura = false; acende(p); }
-      } else pz.brilho(cantando ? .5 : .2);
-      requestAnimationFrame(enche);
-    };
-    requestAnimationFrame(enche);
-    c.gesto(root, 'segurar');
-    // cantar: o passo fica mais longo e eles enxergam de mais longe, mas escutam e apertam o passo
-    cantarB.onclick = () => {
-      if (cantando || fim || window.__mgPausa) return; cantando = true; cantou = true; cantarB.classList.add('on'); root.classList.add('canta');
-      c.mudaLuz(R.luzCanto);
+    const clica = (i) => { if (fim || ocupado || window.__mgPausa) return; const t = opcoes().get(i); if (t) joga(i, t); };
+    esperarB.onclick = () => { if (!fim && !ocupado && !window.__mgPausa) joga(eu, 'esperar'); };
+    // cantar: vale para a próxima jogada e a seguinte (os três ouvem de onde estiverem); o louvor do Cap. I com a letra
+    const canta = () => {
+      root.classList.add('canta');
       A.once('assets/audio/hino/louvor.mp3', .9).then((dur) => {
         const D = dur || 18, L5 = cfg.letra || [];
         const caixaL = document.createElement('div'); caixaL.className = 'rt-letra'; root.appendChild(caixaL);
         L5.forEach(([lm, tradu], k) => setTimeout(() => { if (!root.isConnected) return; caixaL.innerHTML = `<p>${c.esc(lm)}</p><small>${c.esc(tr(tradu))}</small>`; caixaL.classList.remove('on'); void caixaL.offsetWidth; caixaL.classList.add('on'); }, (k / L5.length) * D * 1000));
-        setTimeout(() => { cantando = false; cantarB.classList.remove('on'); root.classList.remove('canta'); caixaL.remove(); desenha(); }, (D + .5) * 1000);
+        setTimeout(() => { root.classList.remove('canta'); caixaL.remove(); }, (D + .5) * 1000);
       });
-      st.tom.ternura = (st.tom.ternura || 0) + 1; desenha();
+      st.tom.ternura = (st.tom.ternura || 0) + 1;
     };
-    const termina = () => {
-      if (fim) return; fim = true; pz.fim();
-      const dist = Math.round(d(ultima(), pira));
-      c.registrar('rastro', String(Math.min(99, dist)));
-      root.classList.add('sai');
-      setTimeout(() => resolve({ distancia: dist, luzes: luzes.length - 1, cantou, perdeu }), BOT() ? 100 : 1400);
-    };
-    ir.onclick = () => { if (!ir.disabled) termina(); };
-    const perde = (linhas, voz, motivo) => {
-      fim = true; pz.fim(); c.registrar('rastro_falhou', motivo);
-      root.classList.add('sai');
-      setTimeout(() => derrota(root, c, linhas, cfg.tentarT, () => rastro(root, c).then(resolve), luz0, voz), BOT() ? 100 : 900);
-    };
-    // ---------- o compasso: um passo por batida
-    const batida = () => {
-      const u = ultima(), v = visao();
-      if (A.ctx && A.on) A.sfx('compasso-tres', .25, () => A.hiss(.12, 220, .8, .06, 0, 'lowpass'));
-      for (const tc of tacets) {
-        const ve = d(tc, u) <= v;
-        if (ve) { if (tc.estado === 'perdido') avisa(cfg.voltouT, 1800); tc.estado = 'segue'; tc.fora = 0; }
-        else if (tc.estado === 'segue') {
-          tc.fora++;
-          if (tc.fora >= R.graca) {
-            tc.estado = 'perdido'; perdeu++;
-            tc.fogo = cfg.fogos.slice().sort((a, b) => d(tc, a) - d(tc, b))[0];
-            avisa(cfg.perdeuT, 2600); A.tone(150, .6, 'sawtooth', .035);
-          }
-        }
-        if (BOT()) { tc.estado = 'segue'; tc.fora = 0; }
-        const n = passo(tc, alvoDe(tc)); tc.x = n.x; tc.y = n.y;
-      }
-      desenha();
-      if (BOT() && !window.__RASTRO_FALHA) return;
-      if (window.__RASTRO_FALHA) { window.__RASTRO_FALHA = false; return perde(cfg.falhaT, 'rastro-falha', 'teste'); }
-      // alcançado: ainda à vista da Pira, a fala dublada; longe dela, a outra
-      const pegou = tacets.find((tc) => d(tc, u) < R.pega);
-      if (pegou) return d(u, pira) < R.vistaPira ? perde(cfg.falhaT, 'rastro-falha', 'perto') : perde(cfg.falhaLongeT, null, 'meio');
-      // um que perdeu a luz chegou a um fogo
-      const chegou = tacets.find((tc) => tc.estado === 'perdido' && d(tc, tc.fogo) < R.noFogo);
-      if (chegou) return perde(chegou.fogo.id === 'pira' ? cfg.falhaPiraT : cfg.falhaHordaT, null, 'fogo');
-    };
-    let last = performance.now(), acc = 0;
-    const loop = (now) => {
-      if (fim || !root.isConnected) return;
-      if (window.__mgPausa) { last = now; return requestAnimationFrame(loop); }
-      const dt = Math.min(.1, (now - last) / 1000) * (window.__JOGO_RAPIDO || 1); last = now;
-      acc += dt; const T = R.batida * (BOT() ? .25 : 1);
-      while (acc >= T && !fim) { acc -= T; batida(); }
-      if (!quebrou && luzes.length > 1) { quebrou = true; root.classList.add('quatro'); const m = document.createElement('p'); m.className = 'rt-quatro'; m.textContent = tr(cfg.quatroT); root.appendChild(m); c.narrate('rastro-quatro', true); setTimeout(() => m.remove(), 4200); }
-      requestAnimationFrame(loop);
-    };
-    desenha(); requestAnimationFrame(loop);
-    if (BOT()) { let k = 0; const pts = cfg.botRota; const tk = setInterval(() => { if (fim) return clearInterval(tk); const [x, y] = pts[k++]; acende({ x, y }); if (k >= pts.length) { clearInterval(tk); setTimeout(() => { tacets.forEach((tc) => { tc.estado = 'segue'; }); desenha(); termina(); }, 300); } }, 260); }
+    cantarB.onclick = () => { if (cantou || fim || window.__mgPausa) return; cantoArmado = !cantoArmado; desenha(); };
+    c.gesto(root, 'tocar');
+    desenha();
+    if (BOT()) setTimeout(() => { eu = META; tacets.forEach((tc) => { tc.at = adj[META][0]; }); desenha(); termina(true); }, 300);
   });
 }
 
