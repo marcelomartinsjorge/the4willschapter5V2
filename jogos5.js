@@ -152,6 +152,7 @@ function ressaca(root, c) {
     };
     const loop = (now) => {
       if (fim || !el.isConnected) return;
+      if (window.__mgPausa) { last = now; return requestAnimationFrame(loop); }   // o cartão de instrução ainda está na tela
       const dt = Math.min(.05, (now - last) / 1000); last = now;
       const p = lista[k];
       if (vivo && p) {
@@ -382,12 +383,14 @@ function minutos(root, c) {
     const feitas = [];
     // ouvir os soldados mostra onde pisar: a próxima ação custa uma marca a menos (quem bebe não ouve, mas ganha a marca extra)
     let desc = 0;
-    const custoDe = (a) => (desc && !a.fim && a.custo > 1 && a.id !== 'ouvir' ? a.custo - 1 : a.custo);
+    // a duna com a Luz alta no escuro: o pulso brilha, e subir escondido custa mais (custoExtra); muda na hora se ele beber no minijogo
+    const base = (a) => a.custo + (a.custoExtra ? a.custoExtra(st) : 0);
+    const custoDe = (a) => (desc && !a.fim && base(a) > 1 && a.id !== 'ouvir' ? base(a) - 1 : base(a));
     const restam = () => Math.max(0, marcas - Math.ceil(t / cfg.segundosPorMarca - 1e-6));
     const desenha = () => {
       anelSol.style.strokeDasharray = `${(t / total) * 100} 100`;
       anel.classList.toggle('pouco', restam() <= 1);
-      root.querySelectorAll('.mn-pt').forEach((b) => { const a = cfg.acoes.find((x) => x.id === b.dataset.id); const cu = custoDe(a); b.classList.toggle('caro', !feitas.includes(a.id) && cu > restam() && !a.fim); b.classList.toggle('desc', cu < a.custo); const bb = b.querySelector('b'); if (bb && !feitas.includes(a.id)) bb.textContent = '●'.repeat(cu); });
+      root.querySelectorAll('.mn-pt').forEach((b) => { const a = cfg.acoes.find((x) => x.id === b.dataset.id); const cu = custoDe(a); b.classList.toggle('caro', !feitas.includes(a.id) && cu > restam() && !a.fim); b.classList.toggle('desc', cu < base(a)); const bb = b.querySelector('b'); if (bb && !feitas.includes(a.id)) bb.textContent = '●'.repeat(cu); const ex = b.querySelector('small.extra'); if (ex) ex.style.display = a.custoExtra && a.custoExtra(st) && !feitas.includes(a.id) ? '' : 'none'; });
     };
     const encerra = (motivoFim) => {
       if (fim) return; fim = true;
@@ -413,7 +416,7 @@ function minutos(root, c) {
       const trava = a.trava && a.trava(st);
       const b = document.createElement('button'); b.className = 'mn-pt' + (trava ? ' trava' : '') + (a.fim ? ' fim' : ''); b.dataset.id = a.id;
       b.style.left = a.x + '%'; b.style.top = a.y + '%';
-      b.innerHTML = `<i></i><span>${c.esc(tr(a.rotulo))}${a.custo ? `<b>${'●'.repeat(a.custo)}</b>` : ''}${trava ? `<small>${c.esc(tr(a.motivo))}</small>` : ''}</span>`;
+      b.innerHTML = `<i></i><span>${c.esc(tr(a.rotulo))}${a.custo ? `<b>${'●'.repeat(a.custo)}</b>` : ''}${trava ? `<small>${c.esc(tr(a.motivo))}</small>` : ''}${a.extraT && !trava ? `<small class="extra">${c.esc(tr(a.extraT))}</small>` : ''}</span>`;
       b.onclick = (e) => {
         e.stopPropagation(); if (fim || pausado || trava || feitas.includes(a.id)) return;
         if (!a.fim && custoDe(a) > restam()) { b.classList.remove('nao'); void b.offsetWidth; b.classList.add('nao'); A.tone(160, .3, 'square', .03); return; }
@@ -421,7 +424,7 @@ function minutos(root, c) {
         if (a.id === 'beber') c.beber('minutos');
         if (a.id === 'po') A.sfx('po-vento', .6, () => A.hiss(1.2, 1800, .6, .12)), setTimeout(() => A.sfx('cavalos-panico', .7), 600);
         if (a.id === 'tukk') A.sfx('arrasta', .5, () => A.hiss(1.4, 300, .6, .14, 0, 'lowpass'));
-        const cu = custoDe(a); if (cu < a.custo) desc = 0; if (a.id === 'ouvir') desc = 1;
+        const cu = custoDe(a); if (cu < base(a)) desc = 0; if (a.id === 'ouvir') desc = 1;
         t = Math.min(total, t + cu * cfg.segundosPorMarca); desenha();
         abrePassos(a);
       };
@@ -431,18 +434,18 @@ function minutos(root, c) {
     const ouvir = cfg.acoes.find((a) => a.id === 'ouvir'); if (ouvir && !ouvir.passos) ouvir.passos = [ouvir.texto.slice(0, 3), ouvir.texto.slice(3)];
     const loop = (now) => {
       if (fim || !root.isConnected) return;
+      if (window.__mgPausa) { last = now; return requestAnimationFrame(loop); }
       const dt = Math.min(.1, (now - last) / 1000); last = now;
       if (!pausado) { t += dt * (BOT() ? 8 : 1); desenha(); if (t >= total) { t = total; desenha(); return encerra('tempo'); } }
       requestAnimationFrame(loop);
     };
     desenha(); requestAnimationFrame(loop);
     A.sfx('eclipse-total', .4);
-    setTimeout(() => c.narrate('c01-dica'), BOT() ? 100 : 3600);
+    { const ed = setInterval(() => { if (!window.__mgPausa) { clearInterval(ed); setTimeout(() => c.narrate('c01-dica'), BOT() ? 100 : 1200); } }, 80); }
     // o tempo só começa a correr depois que o leitor viu o cartão do gesto (ou tocou na tela)
     const solta = () => { if (!fim && pausado && !painel.classList.contains('on')) { pausado = false; last = performance.now(); } };
-    c.gesto(root, 'sol', BOT() ? 50 : 3200);
-    root.addEventListener('pointerdown', solta, { once: true, capture: true });
-    setTimeout(solta, BOT() ? 60 : 3300);
+    c.gesto(root, 'sol');
+    { const espera = setInterval(() => { if (!window.__mgPausa) { clearInterval(espera); solta(); } }, 80); }
     if (BOT()) setTimeout(() => { ['shaa', 'ouvir'].forEach((id, i) => setTimeout(() => { const b = caixa.querySelector(`.mn-pt[data-id="${id}"]`); b && b.click(); }, 300 + i * 1200)); }, 200);
   });
 }
@@ -530,6 +533,7 @@ function parto(root, c) {
     };
     const loop = (now) => {
       if (fim || !faixaEl.isConnected) return;
+      if (window.__mgPausa) { last = now; return requestAnimationFrame(loop); }
       const dt = Math.min(.05, (now - last) / 1000) * (window.__JOGO_RAPIDO || 1); last = now; t += dt;
       // a luz: segurar sobe, soltar cai; o vinho faz a mão tremer
       const acel = pz.segura ? 1.7 : -1.45;
@@ -591,57 +595,97 @@ function parto(root, c) {
   });
 }
 
-// ================================================================== RASTRO (Pensamento)
-// Segurar num ponto do deserto, dentro do alcance, acende uma luz ali. Cada luz puxa os Tacets.
+// ================================================================== RASTRO (Pensamento · a coleira)
+// Dar aos Tacets só a luz necessária para seguirem. Cada Tacet enxerga a luz do Aheryn até o anel dele:
+// perto demais, alcançam; longe demais, o que perdeu a luz vira para o fogo mais próximo (a Pira ou o de uma horda).
+// Andam no compasso, um passo por batida, e o próximo passo aparece antes (um ponto apagado).
+// O fim é a areia aberta, a oeste, com os três atrás dele. A Luz é o recurso: cada farol gasta um pouco;
+// Luz alta, eles enxergam de longe e andam rápido; Luz baixa, lentos, e perdem a luz mais fácil.
+const dentroPoligono = (p, pts) => { let d = false; for (let i = 0, j = pts.length - 1; i < pts.length; j = i++) { const [xi, yi] = pts[i], [xj, yj] = pts[j]; if ((yi > p.y) !== (yj > p.y) && p.x < (xj - xi) * (p.y - yi) / (yj - yi) + xi) d = !d; } return d; };
 function rastro(root, c) {
-  const { tr, A, st, L } = c, cfg = L.rastro;
+  const { tr, A, st, L } = c, cfg = L.rastro, R = cfg.regras;
   const luz0 = st.luz;
-  // quanto mais cedo os Tacets começaram a andar (parto com os dois, faróis demais, luz alta no eclipse), mais rápido vêm
-  const cedo = st.tacetsCedo || 0;
+  const cedo = Math.min(3, st.tacetsCedo || 0);
   return new Promise((resolve) => {
     root.classList.add('explorar');
     const { caixa } = palco(root, 'assets/images/mapa-rastro.jpg', 1920 / 1080);
-    caixa.insertAdjacentHTML('beforeend', `<svg class="rt-svg" viewBox="0 0 100 56.25" preserveAspectRatio="none"><polyline class="rt-linha" points=""/></svg><div class="rt-pira" style="left:${cfg.pira.x}%;top:${cfg.pira.y}%"></div><div class="rt-alcance"></div><div class="rt-carga"></div>`);
-    root.insertAdjacentHTML('beforeend', `<div class="rt-hud"><p class="rt-dist"></p><p class="rt-msg"></p><div class="rt-bts"><button class="ghost rt-cantar">♪ ${c.esc(tr(cfg.cantarT))}</button><button class="cta rt-ir" disabled>${c.esc(tr(cfg.irT))}</button></div></div>`);
-    const $ = (s) => root.querySelector(s), linhaEl = $('.rt-linha'), alcance = $('.rt-alcance'), carga = $('.rt-carga'), distEl = $('.rt-dist'), msg = $('.rt-msg'), ir = $('.rt-ir'), cantarB = $('.rt-cantar');
     const AR = 9 / 16;
     const d = (a, b) => Math.hypot(a.x - b.x, (a.y - b.y) * AR);   // em % da largura
-    const minimo = 46 + 9 * (st.tacetsCedo || 0) + (st.luz > 75 ? 4 : 0);
-    let cantando = false, cantou = false, fim = false, quebrou = false;
-    const luzes = [{ x: cfg.pira.x - 5, y: cfg.pira.y - 7, ini: true }];
-    const alc = () => (cantando ? 25 : 18);
-    const tacets = [0, 1, 2].map((k) => ({ x: cfg.tacetsDe.x + k * 3, y: cfg.tacetsDe.y + (k % 2) * 3, el: null }));
-    tacets.forEach((tc) => { tc.el = document.createElement('div'); tc.el.className = 'rt-tacet'; caixa.appendChild(tc.el); });
-    const eu = document.createElement('div'); eu.className = 'rt-eu'; caixa.appendChild(eu);
+    caixa.insertAdjacentHTML('beforeend', `<svg class="rt-svg" viewBox="0 0 100 56.25" preserveAspectRatio="none">
+        <rect class="rt-oeste" x="0" y="0" width="${cfg.oeste}" height="56.25"/>
+        ${cfg.pedras.map((pts) => `<polygon class="rt-pedra" points="${pts.map(([x, y]) => `${x},${y * AR}`).join(' ')}"/>`).join('')}
+        ${cfg.dunas.map((u) => `<ellipse class="rt-duna" cx="${u.x}" cy="${u.y * AR}" rx="${u.rx}" ry="${u.ry * AR}"/>`).join('')}
+        <polyline class="rt-linha" points=""/></svg>
+      ${cfg.fogos.map((f) => `<div class="rt-fogo ${f.id}" style="left:${f.x}%;top:${f.y}%"><i></i><span>${c.esc(tr(f.nome))}</span></div>`).join('')}
+      <div class="rt-oeste-rot" style="left:${cfg.oeste / 2}%;top:${cfg.oesteY}%">${c.esc(tr(cfg.oesteT))}</div>
+      <div class="rt-alcance"></div><div class="rt-carga"></div>`);
+    root.insertAdjacentHTML('beforeend', `<div class="rt-hud"><p class="rt-chips"><span>Tacets</span><i></i><i></i><i></i></p><p class="rt-msg"></p><div class="rt-bts"><button class="ghost rt-cantar">♪ ${c.esc(tr(cfg.cantarT))}</button><button class="cta rt-ir" disabled>${c.esc(tr(cfg.irT))}</button></div></div>`);
+    const $ = (s) => root.querySelector(s), linhaEl = $('.rt-linha'), alcance = $('.rt-alcance'), carga = $('.rt-carga'), msg = $('.rt-msg'), ir = $('.rt-ir'), cantarB = $('.rt-cantar');
+    const chips = [...root.querySelectorAll('.rt-chips i')];
+    const pira = cfg.fogos.find((f) => f.id === 'pira');
+    let cantando = false, cantou = false, fim = false, quebrou = false, perdeu = 0, avisoDuna = false, msgFixa = 0;
+    const luzes = [{ x: pira.x - 5, y: pira.y - 7, ini: true }];
     const ultima = () => luzes[luzes.length - 1];
+    const naDuna = (p) => cfg.dunas.some((u) => ((p.x - u.x) / u.rx) ** 2 + ((p.y - u.y) / u.ry) ** 2 <= 1);
+    const naPedra = (p) => cfg.pedras.some((pts) => dentroPoligono(p, pts));
+    const visao = () => R.visao + R.visaoLuz * st.luz + (cantando ? R.visaoCanto : 0);
+    const alc = () => (cantando ? R.passoCanto : R.passo) * (naDuna(ultima()) ? R.duna : 1);
+    const passoT = (tc) => (R.tacet + R.tacetCedo * cedo + R.tacetLuz * st.luz) * tc.vk * (cantando ? R.tacetCanto : 1);
+    // os três: um pouco mais lento, um no meio, um mais rápido (com o tempo se espalham, e a coleira aperta)
+    const tacets = [0, 1, 2].map((k) => {
+      const tc = { k, x: cfg.tacetsDe.x + (k - 1) * 3, y: cfg.tacetsDe.y + (k % 2) * 2, vk: R.vk[k], estado: 'chamado', fora: 0, fogo: pira };
+      tc.anel = document.createElement('div'); tc.anel.className = 'rt-visao'; caixa.appendChild(tc.anel);
+      tc.fant = document.createElement('div'); tc.fant.className = 'rt-fant'; caixa.appendChild(tc.fant);
+      tc.el = document.createElement('div'); tc.el.className = 'rt-tacet'; caixa.appendChild(tc.el);
+      return tc;
+    });
+    const eu = document.createElement('div'); eu.className = 'rt-eu'; caixa.appendChild(eu);
+    const avisa = (t, ms) => { msg.textContent = tr(t); if (ms) msgFixa = performance.now() + ms; };
+    // para onde cada um vai agora: a luz dele, se ainda enxerga (ou acabou de perder), senão o fogo
+    // (antes de enxergá-lo, vêm para a luz dele; só quem já o seguiu e perdeu a luz vira para um fogo)
+    const alvoDe = (tc) => (tc.estado === 'perdido' ? tc.fogo : ultima());
+    const passo = (tc, alvo) => { const dx = alvo.x - tc.x, dy = (alvo.y - tc.y) * AR, dd = Math.hypot(dx, dy), s = Math.min(dd, passoT(tc)); return dd < .01 ? { x: tc.x, y: tc.y } : { x: tc.x + dx / dd * s, y: tc.y + dy / dd * s / AR }; };
     const desenha = () => {
-      const u = ultima();
+      const u = ultima(), v = visao();
       linhaEl.setAttribute('points', luzes.map((l) => `${l.x},${l.y * AR}`).join(' '));
       alcance.style.left = u.x + '%'; alcance.style.top = u.y + '%'; alcance.style.width = (alc() * 2) + '%';
       eu.style.left = u.x + '%'; eu.style.top = u.y + '%';
-      const dist = d(u, cfg.pira);
-      distEl.innerHTML = `${c.esc(tr(cfg.distT))}: <b>${Math.round(dist)}</b> <small>/ ${c.esc(tr(cfg.minT))} ${minimo}</small>`;
-      const longe = dist >= minimo && luzes.length > 1;
-      ir.disabled = !longe; msg.textContent = longe ? tr(cfg.longeT) : (luzes.length > 1 ? tr(cfg.pertoT) : '');
-      root.classList.toggle('longe', longe);
+      tacets.forEach((tc, i) => {
+        tc.el.style.left = tc.x + '%'; tc.el.style.top = tc.y + '%';
+        tc.anel.style.left = tc.x + '%'; tc.anel.style.top = tc.y + '%'; tc.anel.style.width = (v * 2) + '%';
+        const fora = d(tc, u) > v;
+        tc.anel.classList.toggle('fora', fora && tc.estado !== 'chamado'); tc.anel.classList.toggle('perdido', tc.estado === 'perdido');
+        tc.el.classList.toggle('perdido', tc.estado === 'perdido');
+        const f = passo(tc, alvoDe(tc)); tc.fant.style.left = f.x + '%'; tc.fant.style.top = f.y + '%';
+        chips[i].className = tc.estado;
+      });
+      const noOeste = u.x <= cfg.oeste, todos = tacets.every((tc) => tc.estado === 'segue');
+      ir.disabled = !(noOeste && todos);
+      root.classList.toggle('longe', noOeste && todos);
+      if (performance.now() > msgFixa) msg.textContent = noOeste ? tr(todos ? cfg.prontoT : cfg.faltaT) : tr(cfg.objetivoT);
     };
     const acende = (p) => {
       luzes.push(p);
       const f = document.createElement('div'); f.className = 'rt-farol' + (cantando ? ' canto' : ''); f.style.left = p.x + '%'; f.style.top = p.y + '%'; caixa.appendChild(f);
-      c.mudaLuz(cantando ? 4 : 3); A.sfx('farol', .55, () => { A.tone(700, .8, 'sine', .05, 0, 1.3); A.tone(1050, 1, 'sine', .03, .08); });
+      // a luz custa: cada farol gasta um pouco da Luz (nunca abaixo do piso)
+      const custo = Math.min(R.custoFarol, Math.max(0, st.luz - R.luzPiso)); if (custo) c.mudaLuz(-custo);
+      A.sfx('farol', .55, () => { A.tone(700, .8, 'sine', .05, 0, 1.3); A.tone(1050, 1, 'sine', .03, .08); });
+      if (!avisoDuna && naDuna(p)) { avisoDuna = true; avisa(cfg.dunaT, 2600); }
       desenha();
     };
     // segurar para acender: um anel enche no lugar do dedo; soltar antes apaga
     const ponto = (e) => { const r = caixa.getBoundingClientRect(); return { x: (e.clientX - r.left) / r.width * 100, y: (e.clientY - r.top) / r.height * 100 }; };
     let alvo = null, t0 = 0;
     const DUR_CARGA = () => (cantando ? 380 : 560);
+    const recusa = (t) => { avisa(t, 2200); alcance.classList.remove('nao'); void alcance.offsetWidth; alcance.classList.add('nao'); A.tone(160, .25, 'square', .025); };
     const pz = pensar(root, {
       el: caixa, tecla: false,
       alvo: (e) => {
-        if (fim || !e || e.button > 0) return false;
+        if (fim || !e || e.button > 0 || window.__mgPausa) return false;
         const p = ponto(e);
-        if (p.x < 2 || p.x > 98 || p.y < 3 || p.y > 97) return false;
-        if (d(p, ultima()) > alc()) { msg.textContent = tr(cfg.alcanceT); alcance.classList.remove('nao'); void alcance.offsetWidth; alcance.classList.add('nao'); A.tone(160, .25, 'square', .025); return false; }
+        if (p.x < 1 || p.x > 99 || p.y < 3 || p.y > 97) return false;
+        if (d(p, ultima()) > alc()) { recusa(cfg.alcanceT); return false; }
+        if (naPedra(p)) { recusa(cfg.pedraT); return false; }
         alvo = p; return true;
       },
       down: () => { t0 = performance.now(); carga.style.left = alvo.x + '%'; carga.style.top = alvo.y + '%'; carga.classList.add('on'); A.tone(440, .5, 'sine', .025, 0, 1.6); },
@@ -657,53 +701,71 @@ function rastro(root, c) {
     };
     requestAnimationFrame(enche);
     c.gesto(root, 'segurar');
+    // cantar: o passo fica mais longo e eles enxergam de mais longe, mas escutam e apertam o passo
     cantarB.onclick = () => {
-      if (cantando) return; cantando = true; cantou = true; cantarB.classList.add('on'); root.classList.add('canta');
+      if (cantando || fim || window.__mgPausa) return; cantando = true; cantou = true; cantarB.classList.add('on'); root.classList.add('canta');
+      c.mudaLuz(R.luzCanto);
       A.once('assets/audio/hino/louvor.mp3', .9).then((dur) => {
         const D = dur || 18, L5 = cfg.letra || [];
-        // as estrofes do louvor do Cap. I, uma de cada vez, enquanto ele canta
         const caixaL = document.createElement('div'); caixaL.className = 'rt-letra'; root.appendChild(caixaL);
-        L5.forEach(([lm, tradu], k) => setTimeout(() => { if (!root.isConnected) return; caixaL.innerHTML = `<p>${c.esc(lm)}</p><small>${c.esc(tr(tradu))}</small>`; caixaL.classList.remove('on'); void caixaL.offsetWidth; caixaL.classList.add('on'); }, (k * D / L5.length) * 1000));
+        L5.forEach(([lm, tradu], k) => setTimeout(() => { if (!root.isConnected) return; caixaL.innerHTML = `<p>${c.esc(lm)}</p><small>${c.esc(tr(tradu))}</small>`; caixaL.classList.remove('on'); void caixaL.offsetWidth; caixaL.classList.add('on'); }, (k / L5.length) * D * 1000));
         setTimeout(() => { cantando = false; cantarB.classList.remove('on'); root.classList.remove('canta'); caixaL.remove(); desenha(); }, (D + .5) * 1000);
       });
       st.tom.ternura = (st.tom.ternura || 0) + 1; desenha();
     };
-    ir.onclick = () => {
+    const termina = () => {
       if (fim) return; fim = true; pz.fim();
-      const dist = Math.round(d(ultima(), cfg.pira));
+      const dist = Math.round(d(ultima(), pira));
       c.registrar('rastro', String(Math.min(99, dist)));
       root.classList.add('sai');
-      setTimeout(() => resolve({ distancia: dist, luzes: luzes.length - 1, cantou }), BOT() ? 100 : 1400);
+      setTimeout(() => resolve({ distancia: dist, luzes: luzes.length - 1, cantou, perdeu }), BOT() ? 100 : 1400);
     };
-    let last = performance.now();
-    const passo = setInterval(() => { if (!fim && A.ctx && A.on) A.sfx('compasso-tres', .25, () => A.hiss(.12, 220, .8, .06, 0, 'lowpass')); }, 900);
-    const loop = (now) => {
-      if (fim || !root.isConnected) { clearInterval(passo); return; }
-      const dt = Math.min(.05, (now - last) / 1000); last = now;
-      const destino = luzes.length > 1 ? ultima() : cfg.pira;
-      const vel = (luzes.length > 1 ? (cantou ? 5 : 4.2) + 1.6 * cedo : 1.6 + .8 * cedo) * (BOT() ? 4 : 1);
-      tacets.forEach((tc, k) => {
-        const ax = destino.x + (k - 1) * 2, ay = destino.y + (k % 2) * 2, dx = ax - tc.x, dy = (ay - tc.y) * AR, dd = Math.hypot(dx, dy);
-        if (dd > .8) { tc.x += dx / dd * vel * dt; tc.y += (dy / dd) * vel * dt / AR; }
-        tc.el.style.left = tc.x + '%'; tc.el.style.top = tc.y + '%';
-      });
-      // o compasso alcança: antes do primeiro farol, a Pira; depois, o Aheryn. Longe o bastante, é o que ele queria.
-      if (!BOT() || window.__RASTRO_FALHA) {
-        const u = ultima(), naPira = luzes.length <= 1 && tacets.some((tc) => d(tc, cfg.pira) < 3);
-        const pegou = luzes.length > 1 && tacets.some((tc) => d(tc, u) < 2.2);
-        if (window.__RASTRO_FALHA || naPira || (pegou && d(u, cfg.pira) < minimo)) {
-          fim = true; pz.fim(); clearInterval(passo); window.__RASTRO_FALHA = false; c.registrar('rastro_falhou', String(Math.round(d(u, cfg.pira))));
-          root.classList.add('sai');
-          setTimeout(() => derrota(root, c, cfg.falhaT, cfg.tentarT, () => rastro(root, c).then(resolve), luz0, 'rastro-falha'), BOT() ? 100 : 900);
-          return;
+    ir.onclick = () => { if (!ir.disabled) termina(); };
+    const perde = (linhas, voz, motivo) => {
+      fim = true; pz.fim(); c.registrar('rastro_falhou', motivo);
+      root.classList.add('sai');
+      setTimeout(() => derrota(root, c, linhas, cfg.tentarT, () => rastro(root, c).then(resolve), luz0, voz), BOT() ? 100 : 900);
+    };
+    // ---------- o compasso: um passo por batida
+    const batida = () => {
+      const u = ultima(), v = visao();
+      if (A.ctx && A.on) A.sfx('compasso-tres', .25, () => A.hiss(.12, 220, .8, .06, 0, 'lowpass'));
+      for (const tc of tacets) {
+        const ve = d(tc, u) <= v;
+        if (ve) { if (tc.estado === 'perdido') avisa(cfg.voltouT, 1800); tc.estado = 'segue'; tc.fora = 0; }
+        else if (tc.estado === 'segue') {
+          tc.fora++;
+          if (tc.fora >= R.graca) {
+            tc.estado = 'perdido'; perdeu++;
+            tc.fogo = cfg.fogos.slice().sort((a, b) => d(tc, a) - d(tc, b))[0];
+            avisa(cfg.perdeuT, 2600); A.tone(150, .6, 'sawtooth', .035);
+          }
         }
-        if (pegou) { ir.disabled = false; ir.click(); return; }
+        if (BOT()) { tc.estado = 'segue'; tc.fora = 0; }
+        const n = passo(tc, alvoDe(tc)); tc.x = n.x; tc.y = n.y;
       }
-      if (!quebrou && luzes.length > 1) { quebrou = true; root.classList.add('quatro'); const m = document.createElement('p'); m.className = 'rt-quatro'; m.textContent = tr(cfg.quatroT); root.appendChild(m); c.narrate('rastro-quatro', true); setTimeout(() => m.remove(), 4200); A.once('assets/audio/tacet_passos.mp3', .45); }
+      desenha();
+      if (BOT() && !window.__RASTRO_FALHA) return;
+      if (window.__RASTRO_FALHA) { window.__RASTRO_FALHA = false; return perde(cfg.falhaT, 'rastro-falha', 'teste'); }
+      // alcançado: ainda à vista da Pira, a fala dublada; longe dela, a outra
+      const pegou = tacets.find((tc) => d(tc, u) < R.pega);
+      if (pegou) return d(u, pira) < R.vistaPira ? perde(cfg.falhaT, 'rastro-falha', 'perto') : perde(cfg.falhaLongeT, null, 'meio');
+      // um que perdeu a luz chegou a um fogo
+      const chegou = tacets.find((tc) => tc.estado === 'perdido' && d(tc, tc.fogo) < R.noFogo);
+      if (chegou) return perde(chegou.fogo.id === 'pira' ? cfg.falhaPiraT : cfg.falhaHordaT, null, 'fogo');
+    };
+    let last = performance.now(), acc = 0;
+    const loop = (now) => {
+      if (fim || !root.isConnected) return;
+      if (window.__mgPausa) { last = now; return requestAnimationFrame(loop); }
+      const dt = Math.min(.1, (now - last) / 1000) * (window.__JOGO_RAPIDO || 1); last = now;
+      acc += dt; const T = R.batida * (BOT() ? .25 : 1);
+      while (acc >= T && !fim) { acc -= T; batida(); }
+      if (!quebrou && luzes.length > 1) { quebrou = true; root.classList.add('quatro'); const m = document.createElement('p'); m.className = 'rt-quatro'; m.textContent = tr(cfg.quatroT); root.appendChild(m); c.narrate('rastro-quatro', true); setTimeout(() => m.remove(), 4200); }
       requestAnimationFrame(loop);
     };
     desenha(); requestAnimationFrame(loop);
-    if (BOT()) { let k = 0; const pts = [[64, 58], [52, 48], [40, 40], [28, 34], [16, 30], [8, 22]]; const tk = setInterval(() => { const [x, y] = pts[k++]; acende({ x, y }); if (k >= pts.length) { clearInterval(tk); setTimeout(() => ir.click(), 300); } }, 250); }
+    if (BOT()) { let k = 0; const pts = cfg.botRota; const tk = setInterval(() => { if (fim) return clearInterval(tk); const [x, y] = pts[k++]; acende({ x, y }); if (k >= pts.length) { clearInterval(tk); setTimeout(() => { tacets.forEach((tc) => { tc.estado = 'segue'; }); desenha(); termina(); }, 300); } }, 260); }
   });
 }
 
@@ -718,13 +780,15 @@ const BC_SVG = {
     <path d="M18 44 Q22 98 70 100 Q118 98 122 44 Z" fill="url(#bcPil)" stroke="#201c18" stroke-width="2"/>
     <ellipse cx="70" cy="44" rx="52" ry="13" fill="#2a2622" stroke="#9c9386" stroke-width="2"/>
     <ellipse class="bc-dentro" cx="70" cy="46" rx="40" ry="8"/>
+    <g class="bc-graos"><g class="bc-pedacos"><path d="M48 44l7-5 6 4-3 6h-8z"/><path d="M66 41l9-3 5 5-6 5-8-2z"/><path d="M84 45l6-4 7 3-4 5h-7z"/><path d="M58 49l5-3 5 3-4 3z"/></g><g class="bc-grao"><circle cx="50" cy="45" r="1.6"/><circle cx="57" cy="48" r="1.3"/><circle cx="63" cy="43" r="1.5"/><circle cx="70" cy="47" r="1.7"/><circle cx="77" cy="44" r="1.4"/><circle cx="84" cy="47" r="1.6"/><circle cx="90" cy="44" r="1.3"/><circle cx="66" cy="50" r="1.2"/><circle cx="80" cy="50" r="1.3"/></g></g>
     <g class="bc-mao-pilao"><rect x="86" y="4" width="14" height="52" rx="7" transform="rotate(28 93 30)" fill="#a39a8c" stroke="#2a2622" stroke-width="2"/></g></svg>`,
   pote: `<svg class="bc-svg" viewBox="0 0 140 120" aria-hidden="true"><defs><linearGradient id="bcPot" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#b8653a"/><stop offset="1" stop-color="#5a2a14"/></linearGradient></defs>
     <g class="bc-vapor"><path d="M52 24c-6-8 6-12 0-20"/><path d="M70 22c-6-8 6-12 0-20"/><path d="M88 24c-6-8 6-12 0-20"/></g>
     <path d="M38 40 Q20 70 34 96 Q70 116 106 96 Q120 70 102 40 Z" fill="url(#bcPot)" stroke="#2a140a" stroke-width="2"/>
     <ellipse cx="70" cy="40" rx="34" ry="9" fill="#3a1c0d" stroke="#d48a5a" stroke-width="2"/>
     <ellipse class="bc-dentro" cx="70" cy="41" rx="28" ry="6"/>
-    <g class="bc-bolhas"><circle cx="60" cy="41" r="2.2"/><circle cx="76" cy="40" r="1.6"/><circle cx="68" cy="43" r="1.8"/></g></svg>`,
+    <ellipse class="bc-mancha" cx="74" cy="41" rx="13" ry="3.4"/>
+    <g class="bc-bolhas"><circle cx="60" cy="41" r="2.2"/><circle cx="76" cy="40" r="1.6"/><circle cx="68" cy="43" r="1.8"/><circle cx="84" cy="42" r="2"/><circle cx="52" cy="42" r="1.5"/></g></svg>`,
   brasa: `<svg class="bc-svg" viewBox="0 0 140 46" aria-hidden="true"><ellipse class="bc-brilho" cx="70" cy="26" rx="54" ry="14"/>
     <path d="M20 30 Q30 18 44 26 Q40 38 24 38 Z M96 26 Q110 16 122 30 Q118 40 102 38 Z M58 34 Q70 24 84 34 Q78 42 62 42 Z" fill="#4a4038" stroke="#1d1814" stroke-width="2"/>
     <g class="bc-coals"><circle cx="54" cy="28" r="5"/><circle cx="68" cy="24" r="6"/><circle cx="84" cy="28" r="5"/><circle cx="76" cy="31" r="4"/><circle cx="60" cy="32" r="4"/></g></svg>`,
@@ -737,32 +801,42 @@ const misturaCor = (cores) => {
   const m = [0, 1, 2].map((k) => Math.round(rgb.reduce((a, c) => a + c[k], 0) / rgb.length));
   return `rgb(${m[0]},${m[1]},${m[2]})`;
 };
-// comparar a mão com a receita: pôr vários no mesmo lugar em seguida vale em qualquer ordem
-const normaliza = (arr) => {
-  const out = []; let i = 0;
-  while (i < arr.length) {
-    const k = arr[i].split(':')[0];
-    if (k === 'pilao' || k === 'pote') { let j = i; while (j < arr.length && arr[j].split(':')[0] === k) j++; out.push(...arr.slice(i, j).sort()); i = j; }
-    else out.push(arr[i++]);
+// ---------- a avaliação: o que importa é o resultado, não a ordem dos gestos
+// Cada receita diz (alvo): o que vai no pote e no pilão, até onde moer, até onde esquentar antes e depois de verter o pilão,
+// e se precisa mexer. O jogador pode moer enquanto o pote esquenta, acender antes de pôr a resina etc.
+// Estados que o olho vê: moagem 0 pedaços · 1 grãos · 2 pó ; calor 0 frio · 1 vapor · 2 bolhas · 3 fervura.
+const avaliaReceita = (alvo, f) => {
+  const mot = []; let er = 0;
+  const soma = (n, k, x) => { if (n > 0) { er += n; mot.push([k, x]); } };
+  // ingredientes: no lugar certo, nenhum de fora (o que falta já decide 'perdido' lá fora)
+  (f.noPote || []).forEach((id) => { if (!(alvo.pote || []).includes(id)) soma(1, (alvo.pilao || []).includes(id) ? 'vaso' : 'extra', id); });
+  (f.noPilao || []).forEach((id) => { if (!(alvo.pilao || []).includes(id)) soma(1, (alvo.pote || []).includes(id) ? 'vaso' : 'extra', id); });
+  if (!alvo.pote && f.usouPote) soma(1, 'semPote');
+  // moagem
+  if (alvo.moer) {
+    const m = f.moagem == null ? 0 : f.moagem;
+    if (alvo.moer === 'fino') soma(m === 2 ? 0 : m === 1 ? 1 : 1.5, m === 1 ? 'grosso' : 'inteiro');
+    else soma(m === 1 ? 0 : m === 2 ? .5 : 1.5, m === 2 ? 'fino' : 'inteiro');
   }
-  return out;
-};
-const erros = (req, got) => {
-  const a = normaliza(req), b = normaliza(got), ch = (t) => (t.startsWith('fogo:') ? 'fogo' : t);
-  const n = a.length, m = b.length, D = Array.from({ length: n + 1 }, () => Array(m + 1).fill(0));
-  for (let i = n - 1; i >= 0; i--) for (let j = m - 1; j >= 0; j--) D[i][j] = ch(a[i]) === ch(b[j]) ? D[i + 1][j + 1] + 1 : Math.max(D[i + 1][j], D[i][j + 1]);
-  let e = (n - D[0][0]) + (m - D[0][0]), i = 0, j = 0;
-  while (i < n && j < m) {
-    if (ch(a[i]) === ch(b[j])) { if (a[i] !== b[j]) e += Math.min(1.5, Math.abs(+a[i].split(':')[1] - +b[j].split(':')[1]) * .5); i++; j++; }
-    else if (D[i + 1][j] >= D[i][j + 1]) i++; else j++;
-  }
-  return e;
+  // calor, antes e depois de verter o pilão
+  const calor = (quer, pico) => {
+    if (quer === 'vapor') return pico === 1 ? null : pico === 2 ? [.5, 'passou'] : pico === 3 ? [1.5, 'ferveu'] : [1, 'frio'];
+    if (quer === 'bolhas') return pico === 2 ? null : pico === 1 ? [1, 'fraco'] : pico === 3 ? [1, 'ferveu'] : [1.5, 'frio'];
+    if (quer === 'nada') return pico === 0 ? null : [[0, .5, 1, 1.5][pico], 'fogo'];
+    return pico === 3 ? [1, 'ferveu'] : null;
+  };
+  if (alvo.pote || f.usouPote) ['antes', 'depois'].forEach((fase) => { const r = calor(alvo[fase], f.pico[fase] || 0); if (r) soma(r[0], r[1]); });
+  if (alvo.mexer && !f.mexido) soma(1, 'mexer');
+  return { er, mot };
 };
 function bancada(root, c) {
   const { tr, A, st, p, L } = c, B = L.bancada, ses = p.bancada || {}, alf = L.alforje(st);
   const noite = ses.sessao === 'noite', turvo = st.turvo || 0;
   const ING = Object.fromEntries(B.ingredientes.map((x) => [x.id, x]));
   const e = c.esc;
+  // o vinho embaralha o olho: o que se vê no pote fica um pouco à frente ou atrás do que é
+  const desvio = turvo >= 2 ? (Math.random() < .5 ? -1 : 1) * (.05 + Math.random() * .05) : 0;
+  const T_MOER = turvo >= 2 ? 2.9 : 2.2;   // segundos de pilão para ir de pedaços a pó
   return new Promise((resolve) => {
     root.classList.add('bancada'); if (noite) root.classList.add('noite'); if (turvo >= 2) root.classList.add('turvo');
     const fundo = noite ? "url('assets/images/bancada-noite.jpg'), url('assets/images/laje-noite.jpg')" : "url('assets/images/bancada.jpg'), url('assets/images/laje.jpg')";
@@ -771,11 +845,10 @@ function bancada(root, c) {
         <header class="bc-top"><p class="bc-tit"><b>${e(tr(B.titulo))}</b><small>${e(tr(noite ? B.noiteT : B.manhaT))}</small></p><p class="bc-rec"></p><button class="ghost bc-abrir">${e(tr(B.abrir))}</button></header>
         <div class="bc-prat"></div>
         <div class="bc-est">
-          <button class="bc-st bc-pilao">${BC_SVG.pilao}<span class="bc-rot">${e(tr(B.pilaoT))}</span><span class="bc-cont"></span><i class="bc-anel"></i></button>
+          <button class="bc-st bc-pilao">${BC_SVG.pilao}<span class="bc-rot">${e(tr(B.pilaoT))}</span><span class="bc-cont"></span></button>
           <div class="bc-fogo">
-            <button class="bc-st bc-pote">${BC_SVG.pote}<span class="bc-rot">${e(tr(B.poteT))}</span><span class="bc-cont"></span><i class="bc-anel"></i></button>
+            <button class="bc-st bc-pote">${BC_SVG.pote}<span class="bc-rot">${e(tr(B.poteT))}</span><span class="bc-cont"></span></button>
             <button class="bc-brasa">${BC_SVG.brasa}<span class="bc-rot">${e(tr(B.brasaT))}</span></button>
-            <div class="bc-riscos" aria-live="polite"></div>
           </div>
           <button class="bc-st bc-guardar">${BC_SVG.guardar}<span class="bc-rot">${e(tr(B.guardarT))}</span></button>
         </div>
@@ -785,9 +858,12 @@ function bancada(root, c) {
       <div class="bc-couro"><div class="bc-pele"></div></div>
       <div class="bc-res"></div>`;
     const $ = (s) => root.querySelector(s);
-    const prat = $('.bc-prat'), pilEl = $('.bc-pilao'), poteEl = $('.bc-pote'), brasaEl = $('.bc-brasa'), riscosEl = $('.bc-riscos'), guardEl = $('.bc-guardar');
+    const prat = $('.bc-prat'), pilEl = $('.bc-pilao'), poteEl = $('.bc-pote'), brasaEl = $('.bc-brasa'), guardEl = $('.bc-guardar');
     const dica = $('.bc-dica'), alfEl = $('.bc-alf'), couro = $('.bc-couro'), pele = $('.bc-pele'), resEl = $('.bc-res'), recEl = $('.bc-rec');
-    let rec = null, mao = null, pilao = [], pote = [], log = [], fogo = false, riscos = 0, tRisco = 0, proxRisco = 0, fim = false, borrado = [], lembrou = 0;
+    // pilão: [{id, m}] (m de 0 a 1) · pote: ids, com o que veio do pilão marcado · calor do pote de 0 a ~1.2
+    let rec = null, mao = null, pilao = [], pote = [], mistura = 1, calor = 0, fogo = false, fim = false, borrado = [], lembrou = 0;
+    let ficha = null;   // o que a mão fez nesta receita (para a avaliação)
+    const novaFicha = () => ({ noPote: [], noPilao: [], usouPote: false, moagem: null, verteu: false, mexido: false, pico: { antes: 0, depois: 0 } });
     const feitos = [];
     const temIng = (id) => ING[id].sempre || (alf.ingr[id] || 0) > 0;
     const podeFazer = (r) => r.usa.every(temIng);
@@ -795,6 +871,9 @@ function bancada(root, c) {
     const avisa = (t, cls) => { dica.textContent = tr(t); dica.className = 'bc-dica on ' + (cls || ''); };
     const treme = (el) => { el.classList.remove('nao'); void el.offsetWidth; el.classList.add('nao'); A.tone(160, .25, 'square', .025); };
     const dicaPadrao = () => { if (!rec) return avisa(B.dEscolha); if (mao === 'pilao') return avisa(B.dPilaoMao, 'mao'); if (mao) return avisa(tr(B.naMao) + ': ' + tr(ING[mao].nome) + '. ' + tr(B.dMao), 'mao'); avisa(B.dLivre); };
+    const nivelMoagem = () => { if (!pilao.length) return null; const m = Math.min(...pilao.map((x) => x.m)); return m >= .75 ? 2 : m >= .35 ? 1 : 0; };
+    const nivelCalor = (v) => { const x = v + desvio; return x >= .8 ? 3 : x >= .5 ? 2 : x >= .25 ? 1 : 0; };
+    const nivelReal = (v) => (v >= .8 ? 3 : v >= .5 ? 2 : v >= .25 ? 1 : 0);
     // ---------- desenho
     const desenhaPrat = () => {
       prat.innerHTML = B.ingredientes.map((x) => { const n = x.sempre ? '∞' : (alf.ingr[x.id] || 0); return `<button class="bc-ing ${mao === x.id ? 'sel' : ''} ${!x.sempre && !n ? 'zero' : ''}" data-id="${x.id}" style="--c:${x.cor}">${ING_IC[x.id] || ''}<span>${e(tr(x.nome))}</span><em>${n}</em></button>`; }).join('');
@@ -803,19 +882,28 @@ function bancada(root, c) {
     const desenhaAlf = () => {
       alfEl.innerHTML = `<span>${e(tr(B.alforjeT))}</span>` + (alf.prontos.map((u) => { const r = B.receitas.find((x) => x.id === u.id); return `<i class="bc-pr q-${u.q}" title="${e(tr(r.nome))} · ${e(tr(B.qual[u.q]))}">${ICON[r.ic] || ''}</i>`; }).join('') || '<em>—</em>');
     };
+    // o que muda a cada quadro: a moagem, o calor, a mistura (só classes e variáveis de CSS)
+    const desenhaVivo = () => {
+      const nm = nivelMoagem();
+      pilEl.classList.toggle('m0', nm === 0); pilEl.classList.toggle('m1', nm === 1); pilEl.classList.toggle('m2', nm === 2);
+      const nc = pote.length ? nivelCalor(calor) : 0;
+      for (let k = 1; k <= 3; k++) poteEl.classList.toggle('q' + k, nc === k);
+      poteEl.style.setProperty('--mist', (1 - mistura).toFixed(2));
+    };
     const desenhaEst = () => {
-      const cp = misturaCor(pilao.map((x) => ING[x.id].cor)), cq = misturaCor(pote.map((id) => ING[id].cor));
-      pilEl.style.setProperty('--c', cp || 'transparent'); pilEl.classList.toggle('cheio', !!pilao.length); pilEl.classList.toggle('moido', pilao.length > 0 && pilao.every((x) => x.moido));
-      poteEl.style.setProperty('--c', cq || 'transparent'); poteEl.classList.toggle('cheio', !!pote.length);
+      const cp = misturaCor(pilao.map((x) => ING[x.id].cor)), cq = misturaCor(pote.filter((x) => !x.doPilao || mistura >= 1).map((x) => ING[x.id].cor)), cm = misturaCor(pote.filter((x) => x.doPilao).map((x) => ING[x.id].cor));
+      pilEl.style.setProperty('--c', cp || 'transparent'); pilEl.classList.toggle('cheio', !!pilao.length);
+      poteEl.style.setProperty('--c', (mistura >= 1 ? misturaCor(pote.map((x) => ING[x.id].cor)) : cq) || cm || 'transparent'); poteEl.style.setProperty('--c2', cm || 'transparent');
+      poteEl.classList.toggle('cheio', !!pote.length);
       pilEl.querySelector('.bc-cont').textContent = pilao.map((x) => tr(ING[x.id].nome)).join(' · ');
-      poteEl.querySelector('.bc-cont').textContent = pote.map((id) => tr(ING[id].nome)).join(' · ');
+      poteEl.querySelector('.bc-cont').textContent = pote.map((x) => tr(ING[x.id].nome)).join(' · ');
       pilEl.classList.toggle('alvo', !!mao && mao !== 'pilao'); poteEl.classList.toggle('alvo', !!mao);
       pilEl.classList.toggle('na-mao', mao === 'pilao');
       root.classList.toggle('fogo', fogo); brasaEl.classList.toggle('on', fogo);
       recEl.textContent = rec ? tr(rec.nome) : '';
       $('.bc-sair').classList.toggle('off', !!ocupado());
       $('.bc-fora').disabled = !ocupado();
-      desenhaPrat(); dicaPadrao();
+      desenhaPrat(); dicaPadrao(); desenhaVivo();
     };
     // ---------- as mãos
     const pega = (id, b) => {
@@ -826,77 +914,72 @@ function bancada(root, c) {
     };
     const gasta = (id) => { if (!ING[id].sempre) alf.ingr[id] = Math.max(0, (alf.ingr[id] || 0) - 1); };
     const poeNo = (onde, id) => {
-      gasta(id); log.push(onde + ':' + id);
-      if (onde === 'pilao') { pilao.push({ id, moido: false }); A.sfx('ingrediente-pilao', .5, () => A.hiss(.15, 1200, .8, .08)); }
-      else { pote.push(id); A.sfx('ingrediente-pote', .5, () => A.tone(300, .2, 'sine', .04, 0, .7)); }
+      gasta(id);
+      if (onde === 'pilao') { pilao.push({ id, m: 0 }); ficha.noPilao.push(id); A.sfx('ingrediente-pilao', .5, () => A.hiss(.15, 1200, .8, .08)); }
+      else { pote.push({ id }); ficha.noPote.push(id); ficha.usouPote = true; calor *= .6; A.sfx('ingrediente-pote', .5, () => A.tone(300, .2, 'sine', .04, 0, .7)); }
       mao = null; desenhaEst();
     };
-    const moer = () => { pilao.forEach((x) => { x.moido = true; }); log.push('moer'); desenhaEst(); };
-    const verter = () => { pote.push(...pilao.map((x) => x.id)); pilao = []; log.push('verter'); mao = null; A.sfx('despejar', .5, () => A.hiss(.5, 500, .6, .1, 0, 'lowpass')); desenhaEst(); };
-    const mexer = () => { log.push('mexer'); A.sfx('colher-mexe', .5, () => A.hiss(.6, 700, 1.2, .07)); desenhaEst(); };
-    const liga = () => { fogo = true; riscos = 0; tRisco = performance.now(); proxRisco = intervalo(); riscosEl.innerHTML = ''; A.sfx('brasa-acende', .5, () => A.hiss(.6, 1600, .5, .08)); desenhaEst(); };
-    const desliga = (registra = true) => { if (!fogo) return; fogo = false; if (registra) log.push('fogo:' + riscos); A.sfx('brasa-apaga', .45, () => A.hiss(.3, 400, .6, .06, 0, 'lowpass')); setTimeout(() => { if (!fogo) riscosEl.innerHTML = ''; }, 1600); desenhaEst(); };
-    const intervalo = () => (BOT() ? 40 : 2300 * (turvo >= 2 ? 1 + (Math.random() - .5) * .5 : 1));
-    const risco = () => {
-      riscos++; const r = document.createElement('i'); riscosEl.appendChild(r);
-      poteEl.classList.remove('borbulha'); void poteEl.offsetWidth; poteEl.classList.add('borbulha');
-      A.sfx('pote-borbulha', .5, () => { A.tone(180, .25, 'sine', .05, 0, 1.6); A.tone(240, .2, 'sine', .03, .12, 1.4); });
+    const verter = () => {
+      if (!pilao.length) return;
+      ficha.moagem = nivelMoagem(); ficha.verteu = true; ficha.usouPote = true;
+      pote.push(...pilao.map((x) => ({ id: x.id, doPilao: true }))); pilao = []; mistura = 0; calor *= .3; mao = null;
+      A.sfx('despejar', .5, () => A.hiss(.5, 500, .6, .1, 0, 'lowpass')); desenhaEst();
     };
-    // segurar (moer, mexer) e tocar (pôr, levar) no mesmo lugar
-    const segurar = (el, ms, pode, feito, toque, som) => {
-      let t0 = 0, raf = 0, ativo = false;
-      const para = () => { cancelAnimationFrame(raf); ativo = false; el.classList.remove('segura'); el.style.setProperty('--k', 0); };
+    const liga = () => { fogo = true; A.sfx('brasa-acende', .5, () => A.hiss(.6, 1600, .5, .08)); desenhaEst(); };
+    const desliga = () => { if (!fogo) return; fogo = false; A.sfx('brasa-apaga', .45, () => A.hiss(.3, 400, .6, .06, 0, 'lowpass')); desenhaEst(); };
+    // segurar: moer e mexer são contínuos (o olho decide quando parar); tocar: pôr e levar
+    const segurar = (el, pode, faz, toque, som) => {
+      let t0 = 0, ativo = false;
+      const para = () => { ativo = false; el.classList.remove('segura'); };
       el.addEventListener('pointerdown', (ev) => {
         if (fim || couro.classList.contains('on') || resEl.classList.contains('on')) return;
-        ev.preventDefault(); t0 = performance.now(); ativo = pode();
-        if (!ativo) return;
-        el.classList.add('segura'); som && som();
-        const passo = () => { const k = Math.min(1, (performance.now() - t0) / ms); el.style.setProperty('--k', k.toFixed(3)); if (k >= 1) { para(); t0 = -1; feito(); return; } raf = requestAnimationFrame(passo); };
-        raf = requestAnimationFrame(passo);
+        ev.preventDefault(); t0 = performance.now();
+        setTimeout(() => { if (t0 > 0 && pode()) { ativo = true; el.classList.add('segura'); som && som(); } }, 220);
       });
-      el.addEventListener('pointerup', () => { const dt = performance.now() - t0; if (t0 > 0 && dt < 260) toque(); para(); t0 = 0; });
+      el.addEventListener('pointerup', () => { const dt = performance.now() - t0; if (t0 > 0 && dt < 220) toque(); para(); t0 = 0; });
       el.addEventListener('pointerleave', () => { para(); t0 = 0; });
       el.addEventListener('pointercancel', () => { para(); t0 = 0; });
+      return { get ativo() { return ativo; }, faz };
     };
-    segurar(pilEl, turvo >= 2 ? 1700 : 1300,
-      () => !!rec && !mao && pilao.some((x) => !x.moido), moer,
+    const mPil = segurar(pilEl, () => !!rec && !mao && pilao.length > 0, (dt) => { pilao.forEach((x) => { x.m = Math.min(1, x.m + dt / T_MOER); }); },
       () => {
         if (!rec) return avisa(B.dEscolha);
         if (mao && mao !== 'pilao') return poeNo('pilao', mao);
         if (mao === 'pilao') { mao = null; return desenhaEst(); }
         if (!pilao.length) return avisa(B.dVazio);
-        if (pilao.some((x) => !x.moido)) return avisa(B.dSegMoer);
         mao = 'pilao'; desenhaEst();
       }, () => A.sfx('pilao-moer', .55, () => { for (let i = 0; i < 4; i++) A.hiss(.18, 900 + i * 120, .9, .07, i * .3); }));
-    segurar(poteEl, 1100,
-      () => !!rec && !mao && pote.length > 0, mexer,
+    const mPot = segurar(poteEl, () => !!rec && !mao && pote.length > 0, (dt) => { if (mistura < 1) { mistura = Math.min(1, mistura + dt / 1.1); if (mistura >= 1) { ficha.mexido = true; desenhaEst(); } } },
       () => {
         if (!rec) return avisa(B.dEscolha);
         if (mao === 'pilao') return verter();
         if (mao) return poeNo('pote', mao);
         avisa(pote.length ? B.dSegMexer : B.dVazio);
-      });
+      }, () => A.sfx('colher-mexe', .5, () => A.hiss(.6, 700, 1.2, .07)));
     brasaEl.onclick = () => { if (fim || !rec) return rec ? null : avisa(B.dEscolha); fogo ? desliga() : liga(); };
     guardEl.onclick = () => {
       if (fim) return; if (!rec) return avisa(B.dEscolha);
       if (!pilao.length && !pote.length) { treme(guardEl); return avisa(B.dVazio); }
       if (fogo) desliga();
-      log.push('guardar');
-      const mix = new Set(pote.concat(pilao.map((x) => x.id)));
-      const er = erros(rec.passos, log);
-      const q = !rec.usa.every((id) => mix.has(id)) ? 'falhou' : er === 0 ? 'bom' : er <= 1.5 ? 'medio' : er <= 3.5 ? 'ruim' : 'falhou';
+      if (pilao.length) ficha.moagem = nivelMoagem();   // o pó vai direto do pilão para a bolsa
+      const mix = new Set(pote.map((x) => x.id).concat(pilao.map((x) => x.id)));
+      const av = avaliaReceita(rec.alvo, ficha);
+      const q = !rec.usa.every((id) => mix.has(id)) ? 'falhou' : av.er === 0 ? 'bom' : av.er <= 1.5 ? 'medio' : av.er <= 3.5 ? 'ruim' : 'falhou';
       if (q !== 'falhou') alf.prontos.push({ uid: 'u' + (alf.seq = (alf.seq || 1) + 1), id: rec.id, q });
       alf.feitos.push({ id: rec.id, q, ses: ses.sessao }); feitos.push({ id: rec.id, q });
       c.registrar('bancada_' + rec.id, q); c.salvar();
       A.sfx(q === 'falhou' ? 'despejar' : 'guardar-pote', .55, () => (q === 'falhou' ? A.hiss(.6, 300, .5, .1, 0, 'lowpass') : A.tone(520, .5, 'sine', .04)));
-      const r = rec; pilao = []; pote = []; log = []; mao = null; rec = null; desenhaEst(); desenhaAlf();
-      resEl.innerHTML = `<div class="bc-card q-${q}">${ICON[r.ic] || ''}<p class="bc-rn">${e(tr(r.nome))}<small>${e(tr(r.sub))}</small></p><p class="bc-q">${e(tr(B.qual[q]))}</p><p class="bc-rl">${e(tr(B.resultado[q]))}</p><button class="cta bc-ok">${e(c.lang === 'en' ? 'Continue' : 'Continuar')}</button></div>`;
+      // o que saiu do ponto: no máximo duas coisas, na voz dele
+      const motivos = q === 'bom' ? [] : av.mot.slice(0, 2).map(([k, id]) => tr(B.motivo[k]).replace('{i}', id ? tr(ING[id].nome) : ''));
+      if (q === 'falhou' && !rec.usa.every((id) => mix.has(id))) motivos.unshift(tr(B.motivo.falta));
+      const r = rec; pilao = []; pote = []; mistura = 1; calor = 0; ficha = null; mao = null; rec = null; desenhaEst(); desenhaAlf();
+      resEl.innerHTML = `<div class="bc-card q-${q}">${ICON[r.ic] || ''}<p class="bc-rn">${e(tr(r.nome))}<small>${e(tr(r.sub))}</small></p><p class="bc-q">${e(tr(B.qual[q]))}</p><p class="bc-rl">${e(tr(B.resultado[q]))}</p>${motivos.length ? `<ul class="bc-mot">${motivos.slice(0, 2).map((m) => `<li>${e(m)}</li>`).join('')}</ul>` : ''}<button class="cta bc-ok">${e(c.lang === 'en' ? 'Continue' : 'Continuar')}</button></div>`;
       resEl.classList.add('on');
       resEl.querySelector('.bc-ok').onclick = () => { resEl.classList.remove('on'); abreCouro(); };
     };
     $('.bc-fora').onclick = () => {
       if (!ocupado()) return;
-      desliga(false); pilao = []; pote = []; log = []; mao = null;
+      desliga(); pilao = []; pote = []; mistura = 1; calor = 0; ficha = rec ? novaFicha() : null; mao = null;
       A.sfx('despejar', .5, () => A.hiss(.6, 300, .5, .1, 0, 'lowpass')); desenhaEst();
     };
     $('.bc-sair').onclick = () => {
@@ -905,7 +988,7 @@ function bancada(root, c) {
       A.sfx('passos-areia', .5, () => A.hiss(.3, 300, .6, .1, 0, 'lowpass'));
       setTimeout(() => resolve({ sessao: ses.sessao, feitos }), BOT() ? 50 : 300);
     };
-    // ---------- o couro (cobre a bancada; o fogo continua contando)
+    // ---------- o couro (cobre a bancada; o fogo continua aceso por baixo)
     const listaCouro = () => {
       pele.innerHTML = `<h3>${e(tr(B.couroT))}</h3><p class="bc-sub">${e(tr(B.couroSub))}</p>
         <div class="bc-lista">${B.receitas.map((r) => `<div class="bc-r ${podeFazer(r) ? '' : 'nao'}"><p class="bc-rn">${ICON[r.ic] || ''}<span>${e(tr(r.nome))}<small>${e(tr(r.sub))}</small></span></p>
@@ -920,7 +1003,7 @@ function bancada(root, c) {
         <ol class="bc-passos">${rec.linhas.map((l, i) => `<li class="${borrado.includes(i) ? 'bl' : ''}">${e(tr(l))}</li>`).join('')}</ol>
         ${borrado.length ? `<p class="bc-turvo">${e(tr(B.turvoT))}</p>` : ''}
         <div class="bc-cbts">${ocupado() ? '' : `<button class="ghost bc-outra">${e(tr(B.outra))}</button>`}<button class="cta bc-fecha">${e(tr(B.fechar))}</button></div>`;
-      const outra = pele.querySelector('.bc-outra'); if (outra) outra.onclick = () => { rec = null; mao = null; desenhaEst(); listaCouro(); };
+      const outra = pele.querySelector('.bc-outra'); if (outra) outra.onclick = () => { rec = null; ficha = null; mao = null; desenhaEst(); listaCouro(); };
       pele.querySelector('.bc-fecha').onclick = fechaCouro;
       // segurar sobre o couro: as linhas borradas voltam enquanto ele pensa (a Luz sobe)
       const ol = pele.querySelector('.bc-passos');
@@ -932,7 +1015,7 @@ function bancada(root, c) {
       }
     };
     const escolhe = (r) => {
-      rec = r; log = []; mao = null;
+      rec = r; ficha = novaFicha(); mao = null;
       const k = turvo >= 4 ? r.linhas.length - 1 : turvo >= 2 ? Math.ceil(r.linhas.length / 2) : turvo >= 1 ? 1 : 0;
       borrado = [...r.linhas.keys()].sort(() => Math.random() - .5).slice(0, k);
       A.sfx('receita-couro', .45, () => A.hiss(.4, 2400, .5, .05)); desenhaEst(); receitaCouro();
@@ -940,32 +1023,42 @@ function bancada(root, c) {
     const abreCouro = () => { if (fim) return; rec ? receitaCouro() : listaCouro(); couro.classList.add('on'); };
     const fechaCouro = () => { couro.classList.remove('on'); dicaPadrao(); };
     $('.bc-abrir').onclick = abreCouro;
-    // ---------- o relógio do fogo
+    // ---------- o relógio: moer, mexer, o calor do pote (sobe com fogo e com algo dentro; esfria devagar sem fogo)
+    let last = performance.now(), somBolha = 0;
     const loop = (now) => {
       if (fim || !root.isConnected) return;
-      if (fogo && now - tRisco >= proxRisco) { tRisco = now; proxRisco = intervalo(); risco(); }
+      const dt = Math.min(.1, (now - last) / 1000); last = now;
+      if (window.__mgPausa) return requestAnimationFrame(loop);
+      if (mPil.ativo) mPil.faz(dt);
+      if (mPot.ativo) mPot.faz(dt);
+      if (pote.length) {
+        calor = fogo ? Math.min(1.2, calor + .07 * dt) : Math.max(0, calor - .035 * dt);
+        if (ficha) { const fase = ficha.verteu ? 'depois' : 'antes'; ficha.pico[fase] = Math.max(ficha.pico[fase], nivelReal(calor)); }
+        const nc = nivelCalor(calor);
+        if (nc >= 2 && now > somBolha) { somBolha = now + (nc === 3 ? 380 : 900); A.sfx('pote-borbulha', nc === 3 ? .5 : .3, () => { A.tone(180, .25, 'sine', .05, 0, 1.6); A.tone(240, .2, 'sine', .03, .12, 1.4); }); }
+      } else calor = 0;
+      desenhaVivo();
       requestAnimationFrame(loop);
     };
     requestAnimationFrame(loop);
     desenhaAlf(); desenhaEst();
-    // primeiro o gesto, depois o couro (o couro é a primeira coisa que ele lê)
-    c.gesto(root, 'tocar', BOT() ? 50 : 2400);
-    setTimeout(abreCouro, BOT() ? 60 : 2700);
+    // primeiro o cartão de instrução, depois o couro (o couro é a primeira coisa que ele lê)
+    c.gesto(root, 'tocar');
+    { const ec = setInterval(() => { if (!window.__mgPausa) { clearInterval(ec); setTimeout(abreCouro, BOT() ? 20 : 300); } }, 80); }
     // ---------- testes automáticos: faz certo o que der, nesta ordem
     if (BOT()) {
       const ordem = noite ? ['po', 'unguento', 'tintura'] : ['antidoto', 'unguento', 'po'];
       const espera = (ms) => new Promise((r) => setTimeout(r, ms));
+      const PICO = { nada: 0, vapor: 1, bolhas: 2 };
       (async () => {
-        await espera(200);
+        await espera(300);
         for (const id of ordem) {
           const r = B.receitas.find((x) => x.id === id); if (!podeFazer(r)) continue;
-          escolhe(r); fechaCouro();
-          for (const t of r.passos) {
-            const [k, v] = t.split(':');
-            if (k === 'pilao' || k === 'pote') poeNo(k, v); else if (k === 'moer') moer(); else if (k === 'verter') verter(); else if (k === 'mexer') mexer();
-            else if (k === 'fogo') { liga(); riscos = +v; desliga(); } else if (k === 'guardar') guardEl.click();
-            await espera(30);
-          }
+          escolhe(r); fechaCouro(); const a = r.alvo;
+          (a.pote || []).forEach((i) => poeNo('pote', i)); ficha.pico.antes = PICO[a.antes] || 0;
+          (a.pilao || []).forEach((i) => poeNo('pilao', i)); pilao.forEach((x) => { x.m = a.moer === 'grosso' ? .5 : 1; });
+          if (a.pote) { verter(); ficha.pico.depois = PICO[a.depois] || 0; if (a.mexer) { mistura = 1; ficha.mexido = true; } }
+          calor = 0; await espera(30); guardEl.click();
           await espera(60); const ok = root.querySelector('.bc-ok'); ok && ok.click(); await espera(60);
         }
         fechaCouro(); $('.bc-sair').click();

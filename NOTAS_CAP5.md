@@ -209,3 +209,32 @@ Um risco a mais ou a menos de fogo vale meio erro. Ingrediente posto errado se p
 **O vinho passa com as páginas.** Cada virada que o texto marca tira 1 do turvo: o começo da batalha (b03), o fim do eclipse (c03) e a roda (d01). A noite de sono continua tirando 3. Quem bebeu cedo chega sóbrio ao parto; quem bebeu no eclipse ou tomou o último gole no d03 chega com a mão tremendo. A bebida não entra na conta do preparo.
 
 **Vozes (mesma data).** Aheryn: a ironia cai na roda; saíram o tique das mãos que pensam por ele, o “bicho” na narração e duas frases de enfeite no parto. Hessa: “os meus” no lugar de “o meu povo”. Guia de vozes do Cap. V e gestos-assinatura registrados no prompt mestre (tabela “quem tem direito a quê” e bloco `gestos cap05`).
+
+## Bancada lida pelo olho (27/10/2026, noite)
+
+- **Por que saía "mal feito" seguindo a receita:** a avaliação antiga comparava a ordem exata dos gestos. Moer enquanto o pote esquentava, ou deixar o fogo aceso até o fim, virava "mal feito" sem aviso.
+- **Agora conta o resultado, e a ordem é livre** (`avaliaReceita` em jogos5.js; `alvo` de cada receita em capitulo5.js): cada ingrediente no lugar certo, até onde moer, até onde esquentar antes e depois de verter o pilão, e se mexeu.
+- **Moer é contínuo** e se vê no pilão: pedaços → grãos → pó (≈0,8 s para grãos, ≈1,7 s para pó; bebido, mais devagar). A tintura pede grãos ("Moer pouco: a flor só precisa abrir").
+- **O fogo não tem mais riscos.** O pote mostra o calor: frio → vapor → bolhas → fervura (≈3,6 s, 7 s e 11 s de fogo; esfria devagar sem fogo). Bebido, o olho erra um pouco o ponto.
+- **Mexer:** ao verter, a cor do pilão fica numa mancha por cima; mexendo, as cores viram uma só.
+- **A carta do resultado** diz até duas coisas que saíram do ponto, na voz dele ("Ferveu.", "Ficou fibra no pilão.").
+
+## Rastro novo e Luz baixa (27/10/2026, noite)
+
+**O rastro é a coleira.** Dar aos Tacets só a luz necessária para seguirem.
+- Cada Tacet enxerga a luz do Aheryn até o anel dele (visão = 15 + 0,08 × Luz; cantando, +6). Andam um passo por batida do compasso (0,9 s), e o próximo passo aparece antes, num losango apagado.
+- Perto demais (3,2): alcançam (derrota; perto da Pira, a fala dublada `rastro-falha`; longe, "O compasso me alcançou no meio da areia.").
+- Longe demais por duas batidas: o Tacet vira para o fogo mais próximo, a Pira ou o fogo de uma horda (no caminho). Se chega lá, derrota.
+- Antes de enxergá-lo, vêm para a luz dele (não para a Pira).
+- Fim: a areia aberta, a oeste (x ≤ 8), com os três seguindo. "Seguir em frente" só acende assim.
+- Terreno tirado do mapa: pedra alta (não dá para acender em cima) e dunas (o passo encurta para 60%).
+- A Luz é o recurso: cada farol gasta 2 (piso 10). Luz alta: enxergam de longe e andam rápido; Luz baixa: lentos e com visão curta. Cantar: passo mais longo, eles aceleram 25% (escutam), +6 de Luz.
+- Calibrado por simulação (três jogadores modelados, 200 partidas por caso): sem Tacets cedo, o bom e o médio vencem quase sempre, com Luz baixa ou alta; com os Tacets saídos cedo, o médio cai para ~55% (Luz baixa) e o fraco para 10% a 45%.
+
+**Cinco momentos de Luz baixa.**
+1. Hessa (a09): a Luz é conferida quando ela começa a falar. Antes, a dica "O pulso estava quente, e ela estava perto." e um Continuar: dá para beber.
+2. Eclipse: os Tacets são conferidos no fim dos minutos (dá para beber no minijogo). A dica: "…a coisa mais clara do campo. E o norte tem olhos."
+3. A noite na Laje (a10): Luz alta ao sair acorda os Tacets uma noite antes (`tacets_noite`, +1 no `tacetsCedo`). A dica: "Debaixo do pano, o pulso brilhava. Na Laje, a única luz acesa era a minha, e o norte tem olhos."
+4. A duna (minutos): com Luz 60+, ouvir custa uma marca a mais ("o pulso brilha na duna"); muda na hora se ele beber no minijogo.
+5. O rastro: Luz baixa deixa os Tacets lentos.
+(Já existia: Luz 30 ou menos dá uma marca a mais nos minutos.)

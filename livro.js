@@ -222,6 +222,7 @@ function abrirCodex(id) {
 document.addEventListener('click', (e) => { const g = e.target.closest('.gloss'); if (g) { e.preventDefault(); abrirCodex(g.dataset.codex); } });
 $('#cxClose').onclick = () => $('#codex').classList.remove('show');
 
+window.LIVRO_TOAST = (t) => later(() => toast(tr(t)), 600);
 function toast(t) { const el = document.createElement('div'); el.className = 'toast'; el.textContent = t; $('#toasts').appendChild(el); A.aviso(); setTimeout(() => el.classList.add('out'), 3800); setTimeout(() => el.remove(), 4600); }
 
 // ---------------------------------------------------------------- a Luz (Cap. I): o quanto Aheryn está aceso
@@ -314,12 +315,24 @@ const GESTO = {
 };
 // o cartão do gesto aparece no centro na primeira vez e some no primeiro toque
 function gesto(root, icone, titulo, sub, ms) {
+  // o cartão de instrução PAUSA o minijogo: nada corre até o leitor tocar (ou apertar uma tecla).
+  // O toque que fecha o cartão não chega ao jogo (não começa a segurar, não acende nada).
+  const veu = document.createElement('div'); veu.className = 'gesto-veu';
   const g = document.createElement('div'); g.className = 'gesto ' + icone;
-  g.innerHTML = `${GESTO[icone] || ''}<p>${esc(titulo)}</p>${sub ? `<small>${esc(sub)}</small>` : ''}`;
-  root.appendChild(g); requestAnimationFrame(() => g.classList.add('on'));
-  const some = () => { g.classList.remove('on'); setTimeout(() => g.remove(), 500); root.removeEventListener('pointerdown', some, true); removeEventListener('keydown', some, true); };
+  g.innerHTML = `${GESTO[icone] || ''}<p>${esc(titulo)}</p>${sub ? `<small>${esc(sub)}</small>` : ''}<em class="gesto-ir">${esc(U('comecar') || '')}</em>`;
+  root.appendChild(veu); root.appendChild(g); requestAnimationFrame(() => { g.classList.add('on'); veu.classList.add('on'); });
+  window.__mgPausa = true;
+  let feito = false;
+  const some = (e) => {
+    if (feito) return;
+    if (e) { if (e.cancelable) e.preventDefault(); e.stopPropagation(); }
+    feito = true; window.__mgPausa = false;
+    g.classList.remove('on'); veu.classList.remove('on'); setTimeout(() => { g.remove(); veu.remove(); }, 500);
+    root.removeEventListener('pointerdown', some, true); removeEventListener('keydown', some, true);
+  };
+  root.addEventListener('pointerdown', (e) => { if (!feito) { e.stopPropagation(); if (e.cancelable) e.preventDefault(); } }, true);   // antes de armar: engole o toque
   setTimeout(() => { root.addEventListener('pointerdown', some, true); addEventListener('keydown', some, true); }, 350);
-  if (ms) setTimeout(some, ms);
+  if (window.__JOGO_BOT) setTimeout(some, 50);
   return some;
 }
 // o "coach" do odre: uma seta e um ícone colados ao HUD
@@ -700,6 +713,14 @@ function renderDialogo(p) {
     });
   };
   d.rodadas.forEach((r) => { r._dito = (st.dialogo[p.id] || []).some(([rid]) => rid === r.id); });
+  // continuar: a conversa espera o leitor (dá tempo de agir antes que o outro fale; ex.: beber antes de Hessa olhar)
+  if (d.continuar && !(st.dialogo[p.id] || []).length && !st.feitos['dlgc:' + p.id]) {
+    box.innerHTML = '';
+    const b = document.createElement('button'); b.className = 'cta portao-btn'; b.type = 'button'; b.textContent = LANG === 'en' ? 'Continue' : 'Continuar';
+    const w = document.createElement('div'); w.className = 'portao'; w.appendChild(b); box.appendChild(w);
+    b.onclick = () => { st.feitos['dlgc:' + p.id] = 1; box.innerHTML = ''; next(); };
+    return false;
+  }
   next();
   return (st.dialogo[p.id] || []).length >= rodadasVis().length;
 }

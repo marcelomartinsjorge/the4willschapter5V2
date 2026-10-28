@@ -136,15 +136,15 @@ window.LIVRO_UI = {
       ressaca: 'Os pensamentos sobem da areia, um de cada vez. Segure para deixar um subir até o alto: Aheryn lembra. Solte, e a areia o cobre.',
       laje: 'Toque em cada coisa debaixo da Laje antes de descer.',
       troca: 'Toque no que brilha para ler o corpo do Grakh. Depois ponha no couro o que ele precisa. Bem feito, basta; se não for, ele vai querer mais alguma coisa junto. Tocar no que está no couro traz de volta.',
-      bancada: (st) => 'Leia a receita no couro e feche-o: o couro cobre a bancada. Depois faça de memória: toque num ingrediente e no pilão ou no pote, segure o pilão para moer e o pote para mexer, toque na brasa para pôr e tirar do fogo e conte os riscos. Sem erro, sai bem feito.' + ((st.turvo || 0) >= 2 ? ' O vinho vai embaralhar o couro.' : ''),
+      bancada: (st) => 'Leia a receita no couro e feche-o: o couro cobre a bancada. Depois faça de memória: toque num ingrediente e no pilão ou no pote, segure o pilão para moer e o pote para mexer, toque na brasa para pôr e tirar do fogo. Olhe o pilão e o pote: a receita diz até onde moer e esquentar. A ordem é sua.' + ((st.turvo || 0) >= 2 ? ' O vinho vai embaralhar o couro.' : ''),
       minutos: 'O anel é o sol voltando. Cada ação gasta tempo. Não vai dar para tudo. Quem ouve antes, pisa melhor.',
       parto: (st) => 'Segure para pensar: a luz sobe. Solte: ela cai. Mantenha dentro da faixa dourada.' + ((st.turvo || 0) >= 2 ? ' O vinho vai fazer a mão tremer.' : '') + (parto(st) === 'dois' ? (nivelDois(st).runas ? ' As dores dela aparecem com uma letra: aperte a letra, ou toque nela, sem largar a luz.' : '') + ' Com os dois, a barra de baixo é o coração de Shaa: ele cai sozinho, e só a luz dentro da faixa o sustenta.' : window.LIVRO.parto.preparo(st) < 5 ? ' As dores dela aparecem com uma letra: aperte a letra, ou toque nela, sem largar a luz.' : ''),
-      rastro: 'Segure no deserto para acender uma luz. Cada luz puxa os Tacets atrás de você. Leve-os para longe da Pira.',
+      rastro: 'Segure no deserto para acender um ponto: Aheryn anda até ele. Os Tacets seguem a sua luz enquanto a enxergam: é o anel em volta de cada um. Perto demais, eles o alcançam. Longe demais, o que perdeu a luz volta para o fogo mais próximo. Leve os três para oeste, até a areia aberta.',
     },
     // a instrução no centro da tela, na primeira vez de cada jogo
     gesto: { ressaca: 'Segure para lembrar', parto: 'Segure para pensar', rastro: 'Segure para acender', laje: 'Toque no que brilha', troca: 'Toque no que brilha', bancada: 'Leia, depois faça', minutos: 'Cada ação gasta sol' },
-    gestoSub: { ressaca: 'solte, e a areia cobre', parto: 'mantenha a luz na faixa', rastro: 'dentro do círculo', laje: 'cada coisa conta uma história', troca: 'leia o corpo, depois a mão', bancada: 'o couro cobre a bancada', minutos: 'não vai dar para tudo' },
-    teclaSeg: 'ou segure espaço',
+    gestoSub: { ressaca: 'solte, e a areia cobre', parto: 'mantenha a luz na faixa', rastro: 'nem perto, nem longe demais', laje: 'cada coisa conta uma história', troca: 'leia o corpo, depois a mão', bancada: 'o couro cobre a bancada', minutos: 'não vai dar para tudo' },
+    teclaSeg: 'ou segure espaço', comecar: 'Toque para começar',
     abBeber: 'Beba', abBeberSub: 'toque no odre ou aperte B', abLuzC1: 'A Luz com que Aheryn deixou a Borda do Mundo', abLuz: 'A Luz de Aheryn',
     odreTut: 'O odre', odreTutSub: 'aqui dá para beber · B',
     coverEye: 'As Quatro Vontades · Livro I · Capítulo V', coverLede: 'Trinta anos na areia sem fazer um som. Hoje o dia escurece.', coverGo: 'Entrar no deserto', coverCont: 'Continuar de onde parei', coverRestart: 'Começar do início', coverHint: 'Use fones. Avance com o botão, com a seta → ou deslizando para o lado.',
@@ -165,14 +165,14 @@ window.LIVRO_UI = {
       ressaca: 'Thoughts rise from the sand, one at a time. Hold to let one rise to the top: Aheryn remembers. Let go, and the sand covers it.',
       laje: 'Touch everything under the slab before going down.',
       troca: 'Touch what glows to read the Grakh’s body. Then put on the hide what he needs. Well made, it is enough; if not, he will want something more on top. Touch what is on the hide to take it back.',
-      bancada: (st) => 'Read the recipe on the hide and close it: the hide covers the bench. Then make it from memory: touch an ingredient and then the mortar or the pot, hold the mortar to grind and the pot to stir, touch the embers to put on and take off the fire, and count the marks. No mistakes, and it comes out well made.' + ((st.turvo || 0) >= 2 ? ' The wine will scramble the hide.' : ''),
+      bancada: (st) => 'Read the recipe on the hide and close it: the hide covers the bench. Then make it from memory: touch an ingredient and then the mortar or the pot, hold the mortar to grind and the pot to stir, touch the embers to put on and take off the fire. Watch the mortar and the pot: the recipe says how far to grind and to heat. The order is up to you.' + ((st.turvo || 0) >= 2 ? ' The wine will scramble the hide.' : ''),
       minutos: 'The ring is the sun coming back. Every action costs time. You will not have enough. Whoever listens first steps better.',
       parto: (st) => 'Hold to think: the light rises. Let go: it falls. Keep it inside the golden band.' + ((st.turvo || 0) >= 2 ? ' The wine will make the hand shake.' : '') + (parto(st) === 'dois' ? (nivelDois(st).runas ? ' Her pains appear with a letter: press it, or tap it, without letting go of the light.' : '') + ' With both, the lower bar is Shaa’s heart: it falls on its own, and only the light inside the band holds it up.' : window.LIVRO.parto.preparo(st) < 5 ? ' Her pains appear with a letter: press it, or tap it, without letting go of the light.' : ''),
-      rastro: 'Hold on the desert to light a point. Each light pulls the Tacets after you. Lead them far from the Pyre.',
+      rastro: 'Hold on the desert to light a point: Aheryn walks to it. The Tacets follow your light while they can see it: that is the ring around each one. Too close, and they catch you. Too far, and the one that lost the light turns back to the nearest fire. Lead all three west, to the open sand.',
     },
     gesto: { ressaca: 'Hold to remember', parto: 'Hold to think', rastro: 'Hold to light', laje: 'Touch what glows', troca: 'Touch what glows', bancada: 'Read, then make', minutos: 'Every action spends sun' },
-    gestoSub: { ressaca: 'let go, and the sand covers it', parto: 'keep the light in the band', rastro: 'inside the circle', laje: 'every thing tells a story', troca: 'read the body, then the hand', bancada: 'the hide covers the bench', minutos: 'you will not have enough' },
-    teclaSeg: 'or hold space',
+    gestoSub: { ressaca: 'let go, and the sand covers it', parto: 'keep the light in the band', rastro: 'not too close, not too far', laje: 'every thing tells a story', troca: 'read the body, then the hand', bancada: 'the hide covers the bench', minutos: 'you will not have enough' },
+    teclaSeg: 'or hold space', comecar: 'Tap to begin',
     abBeber: 'Drink', abBeberSub: 'tap the skin or press B', abLuzC1: 'The Light Aheryn carried away from the Edge of the World', abLuz: 'Aheryn’s Light',
     odreTut: 'The skin', odreTutSub: 'you can drink here · B',
     coverEye: 'The Four Wills · Book I · Chapter V', coverLede: 'Thirty years in the sand without making a sound. Today the day goes dark.', coverGo: 'Walk into the desert', coverCont: 'Continue where I left off', coverRestart: 'Start from the beginning', coverHint: 'Wear headphones. Move on with the button, the → key, or a swipe.',
@@ -291,18 +291,20 @@ window.LIVRO = {
       { id: 'cinza', nome: T('Cinza', 'Ash'), cor: '#6e6a66', sempre: true },
     ],
     receitas: [
+      // alvo: o que vai em cada lugar, até onde moer (fino = pó, grosso = grãos), até onde esquentar antes e depois de verter o pilão
+      //   (vapor, bolhas, nada; sem valor = qualquer coisa menos ferver) e se precisa mexer. A ordem dos gestos é livre.
       { id: 'unguento', nome: T('Unguento', 'Ointment'), sub: T('a graxa cinza', 'the grey grease'), ic: 'pote', usa: ['resina', 'raiz', 'argila'],
-        passos: ['pote:resina', 'fogo:2', 'pilao:argila', 'pilao:raiz', 'moer', 'verter', 'mexer', 'guardar'],
-        linhas: [T('Resina no pote.', 'Resin in the pot.'), T('Fogo até o segundo risco. A resina tem de derreter, não ferver.', 'Fire to the second mark. The resin has to melt, not boil.'), T('Raiz e argila no pilão. Moer até não sobrar fibra.', 'Root and clay in the mortar. Grind until no fibre is left.'), T('O pilão no pote. Mexer.', 'The mortar into the pot. Stir.'), T('Guardar.', 'Store it.')] },
+        alvo: { pote: ['resina'], pilao: ['argila', 'raiz'], moer: 'fino', antes: 'vapor', mexer: true },
+        linhas: [T('Resina no pote, no fogo até subir o vapor. A resina tem de derreter, não ferver.', 'Resin in the pot, on the fire until the steam rises. The resin has to melt, not boil.'), T('Raiz e argila no pilão. Moer até não sobrar fibra.', 'Root and clay in the mortar. Grind until no fibre is left.'), T('O pilão no pote. Mexer até a cor ficar uma só.', 'The mortar into the pot. Stir until it is one colour.'), T('Guardar.', 'Store it.')] },
       { id: 'tintura', nome: T('Tintura', 'Tincture'), sub: T('para febre e dor', 'for fever and pain'), ic: 'frasco', usa: ['seiva', 'flor'],
-        passos: ['pote:seiva', 'fogo:3', 'pilao:flor', 'moer', 'verter', 'fogo:1', 'guardar'],
-        linhas: [T('Seiva no pote. Fogo até o terceiro risco.', 'Sap in the pot. Fire to the third mark.'), T('A flor no pilão. Moer.', 'The flower in the mortar. Grind.'), T('O pilão no pote. Mais um risco de fogo.', 'The mortar into the pot. One more mark of fire.'), T('Guardar no frasco.', 'Into the flask.')] },
+        alvo: { pote: ['seiva'], pilao: ['flor'], moer: 'grosso', antes: 'bolhas', depois: 'vapor' },
+        linhas: [T('Seiva no pote, no fogo até borbulhar.', 'Sap in the pot, on the fire until it bubbles.'), T('A flor no pilão. Moer pouco: a flor só precisa abrir.', 'The flower in the mortar. Grind a little: the flower only needs to open.'), T('O pilão no pote. Mais fogo, só até subir o vapor.', 'The mortar into the pot. More fire, only until the steam rises.'), T('Guardar no frasco.', 'Into the flask.')] },
       { id: 'antidoto', nome: T('Antídoto', 'Antidote'), sub: T('para picada de ferrão', 'for stings'), ic: 'gota', usa: ['ferrao', 'raiz', 'seiva'],
-        passos: ['pilao:ferrao', 'pilao:raiz', 'moer', 'pote:seiva', 'verter', 'mexer', 'guardar'],
-        linhas: [T('Ferrão e raiz no pilão. Moer.', 'Sting and root in the mortar. Grind.'), T('Seiva no pote. Sem fogo.', 'Sap in the pot. No fire.'), T('O pilão no pote. Mexer.', 'The mortar into the pot. Stir.'), T('Guardar no frasco.', 'Into the flask.')] },
+        alvo: { pote: ['seiva'], pilao: ['ferrao', 'raiz'], moer: 'fino', antes: 'nada', depois: 'nada', mexer: true },
+        linhas: [T('Ferrão e raiz no pilão. Moer até virar pó.', 'Sting and root in the mortar. Grind to powder.'), T('Seiva no pote. Sem fogo.', 'Sap in the pot. No fire.'), T('O pilão no pote. Mexer até a cor ficar uma só.', 'The mortar into the pot. Stir until it is one colour.'), T('Guardar no frasco.', 'Into the flask.')] },
       { id: 'po', nome: T('Pó de esconder cheiro', 'Scent-masking powder'), sub: T('para caçador', 'for hunters'), ic: 'bolsa', usa: ['creosoto', 'cinza'],
-        passos: ['pilao:creosoto', 'moer', 'pilao:cinza', 'moer', 'guardar'],
-        linhas: [T('Creosoto no pilão. Moer.', 'Creosote in the mortar. Grind.'), T('Cinza por cima. Moer de novo.', 'Ash on top. Grind again.'), T('Direto para a bolsa. O pote não entra.', 'Straight into the pouch. The pot stays out of it.')] },
+        alvo: { pilao: ['creosoto', 'cinza'], moer: 'fino' },
+        linhas: [T('Creosoto no pilão. Moer até virar pó.', 'Creosote in the mortar. Grind to powder.'), T('Cinza por cima. Moer de novo.', 'Ash on top. Grind again.'), T('Direto para a bolsa. O pote não entra.', 'Straight into the pouch. The pot stays out of it.')] },
     ],
     qual: { bom: T('bem feito', 'well made'), medio: T('médio', 'fair'), ruim: T('mal feito', 'poorly made'), falhou: T('perdido', 'ruined') },
     resultado: {
@@ -325,6 +327,15 @@ window.LIVRO = {
     turvoT: T('O vinho embaralha o couro. Segure sobre ele para lembrar.', 'The wine scrambles the hide. Hold on it to remember.'),
     fogoT: T('no fogo', 'on the fire'),
     titulo: T('A bancada', 'The bench'), manhaT: T('De manhã', 'Morning'), noiteT: T('À noite', 'Night'),
+    // o que saiu do ponto (na carta do resultado, no máximo duas coisas)
+    motivo: {
+      vaso: T('{i} foi para o lugar errado.', '{i} went in the wrong place.'), extra: T('{i} não era desta receita.', '{i} did not belong in this one.'),
+      semPote: T('O pó não leva pote.', 'The powder takes no pot.'), falta: T('Faltou ingrediente.', 'Something was missing.'),
+      grosso: T('Ficou fibra no pilão.', 'There was fibre left in the mortar.'), inteiro: T('Quase não moí.', 'I hardly ground it at all.'), fino: T('Moí demais.', 'I ground it too fine.'),
+      frio: T('O pote mal esquentou.', 'The pot barely warmed.'), fraco: T('Tirei do fogo antes de borbulhar.', 'I took it off the fire before it bubbled.'),
+      passou: T('Deixei borbulhar, e era só até o vapor.', 'I let it bubble, and it only needed to steam.'), ferveu: T('Ferveu.', 'It boiled.'),
+      fogo: T('Pus fogo onde a receita não pedia.', 'I put it on the fire, and the recipe asked for none.'), mexer: T('A cor não ficou uma só: faltou mexer.', 'It never became one colour: it needed more stirring.'),
+    },
     dSegMoer: T('Segure o pilão para moer.', 'Hold the mortar to grind.'), dSegMexer: T('Segure o pote para mexer.', 'Hold the pot to stir.'),
   },
 
@@ -395,6 +406,7 @@ window.LIVRO = {
     // custo em marcas do anel (o anel tem 5); o tempo também corre sozinho
     acoes: [
       { id: 'ouvir', custo: 2, x: 15, y: 20, rotulo: T('Subir a duna e ouvir', 'Climb the dune and listen'), trava: (st) => !sobrio(st), motivo: T('ouvido turvo de vinho', 'ears dulled by wine'),
+        custoExtra: (st) => (st.luz >= 60 ? 1 : 0), extraT: T('o pulso brilha na duna', 'the wrist glows on the dune'),
         texto: [
           T('Do alto da duna deixei os ouvidos descerem pelo barulho, passando pelos urros, pelos cavalos, até achar dois homens de Redom agachados atrás de um escudo, falando alto demais.', 'From the top of the dune I let my ears go down into the noise, past the roaring, past the horses, until I found two men of Redom crouched behind a shield, talking too loud.'),
           T('— Eles não ficam no chão, capitão. A gente corta no primeiro dia e no terceiro estão de volta na linha, fedendo àquela graxa cinza.', '— They don’t stay down, Captain. We cut them on the first day and they’re back in the line by the third, stinking of that grey grease.'),
@@ -457,8 +469,29 @@ window.LIVRO = {
   },
 
   rastro: {
-    pira: { x: 77, y: 76 },
-    tacetsDe: { x: 62, y: 10 },
+    // o mapa (mapa-rastro.jpg) em % da largura e da altura: a Pira embaixo à direita, a areia sobe em diagonal até a borda oeste
+    fogos: [
+      { id: 'pira', x: 77, y: 76, nome: T('A Pira', 'The Pyre') },
+      { id: 'horda', x: 22, y: 54, nome: T('Fogo de uma horda', 'A horde’s fire') },
+    ],
+    tacetsDe: { x: 58, y: 24 },
+    oeste: 8, oesteY: 52,   // a areia aberta: a faixa à esquerda de x = 8
+    // pedra alta (não dá para acender em cima) e dunas (o passo encurta)
+    pedras: [
+      [[59, 45], [66, 38], [80, 34], [100, 30], [100, 63], [92, 61], [84, 58], [76, 56], [68, 53], [62, 50]],
+      [[0, 61], [10, 61], [20, 58], [29, 56], [36, 58], [41, 64], [47, 74], [48, 100], [0, 100]],
+      [[0, 29], [11, 28], [16, 33], [17, 40], [11, 45], [0, 46]],
+      [[25, 27], [45, 25], [48, 33], [41, 38], [30, 37], [24, 33]],
+    ],
+    dunas: [{ x: 50, y: 47, rx: 15, ry: 6 }, { x: 30, y: 45, rx: 8, ry: 4 }],
+    // as regras, calibradas na simulação (ver NOTAS_CAP5): visão = visao + visaoLuz × Luz; passo do Tacet por batida = (tacet + tacetCedo × cedo + tacetLuz × Luz) × vk
+    // Simulação (três jogadores, 200 partidas cada): com os Tacets na hora, o bom e o médio vencem quase sempre, com Luz baixa ou alta;
+    // o fraco, quase sempre também. Com os Tacets saídos cedo (cedo 3), o médio cai para ~55% com Luz baixa e o fraco para ~10% a 45%.
+    // Luz baixa: Tacets lentos e visão curta (partida ~35 s). Luz alta: rápidos e visão longa (~15 s). Nenhum lado é melhor.
+    regras: { batida: .9, visao: 15, visaoLuz: .08, visaoCanto: 6, passo: 18, passoCanto: 24, duna: .6,
+      tacet: 1, tacetCedo: .3, tacetLuz: .02, tacetCanto: 1.25, vk: [.86, 1, 1.14],
+      pega: 3.2, noFogo: 3, vistaPira: 35, graca: 2, custoFarol: 2, luzPiso: 10, luzCanto: 6 },
+    botRota: [[66, 66], [56, 61], [46, 57], [36, 53], [26, 50], [16, 51], [6, 52]],
     cantarT: T('Cantar', 'Sing'),
     // o louvor do Cap. I: as estrofes aparecem enquanto Aheryn canta (a língua morta e a tradução)
     letra: [
@@ -470,13 +503,20 @@ window.LIVRO = {
       ['Vael-korei sæl’aeth, mor’ilenne vorunda', T('a névoa é luz, o inteiro é distância', 'the mist is light, the whole is distance')],
     ],
     irT: T('Seguir em frente', 'Walk on'),
-    distT: T('Distância da Pira', 'Distance from the Pyre'),
-    minT: T('mínimo', 'minimum'),
-    longeT: T('Longe o bastante. Pode seguir.', 'Far enough. You can walk on.'),
-    pertoT: T('Ainda perto demais da Pira.', 'Still too close to the Pyre.'),
+    oesteT: T('Areia aberta', 'Open sand'),
+    objetivoT: T('Leve os três para oeste, até a areia aberta.', 'Lead all three west, to the open sand.'),
+    faltaT: T('Falta um: ele não vê você.', 'One is missing: it cannot see you.'),
+    prontoT: T('Os três atrás de você. Pode seguir.', 'All three behind you. You can walk on.'),
+    perdeuT: T('Um deles parou de ver você e virou para o fogo.', 'One of them lost sight of you and turned toward the fire.'),
+    voltouT: T('Ele voltou a seguir.', 'It is following again.'),
+    pedraT: T('Pedra alta. No escuro, não dá para subir.', 'High rock. You cannot climb it in the dark.'),
+    dunaT: T('Na duna, o passo encurta.', 'On the dune, the stride shortens.'),
     alcanceT: T('Longe demais para um passo. Acenda mais perto.', 'Too far for one stride. Light closer.'),
     quatroT: T('O compasso quebrou de três para quatro.', 'The count broke from three to four.'),
     falhaT: [T('Perto demais.', 'Too close.'), T('O compasso me alcançou ainda à vista da Pira, e não parou em mim.', 'The count caught me still in sight of the Pyre, and it did not stop at me.')],
+    falhaLongeT: [T('Perto demais.', 'Too close.'), T('O compasso me alcançou no meio da areia.', 'The count caught me out in the open sand.')],
+    falhaPiraT: [T('Longe demais.', 'Too far.'), T('Um deles perdeu a minha luz e desceu para a Pira.', 'One of them lost my light and went down to the Pyre.')],
+    falhaHordaT: [T('Longe demais.', 'Too far.'), T('Um deles perdeu a minha luz e achou o fogo de uma horda.', 'One of them lost my light and found a horde’s fire.')],
     tentarT: T('Voltar ao começo do rastro', 'Back to the start of the trail'),
   },
 
@@ -705,11 +745,15 @@ window.LIVRO = {
         T('Mandou Tukk embora com duas palavras, do jeito Grakh, sem dobra nenhuma nos verbos. Então se virou para mim e mudou.', 'She sent Tukk off with two words, in the Grakh way, with no bend in the verbs at all. Then she turned to me, and changed.'),
         T('Comigo Hessa fala a língua dos homens, inteira, cada verbo no lugar, com as vogais compridas e abertas dos Queimados. No ombro esquerdo ela tem uma velha marca deles, das que eles queimam nos cativos, e por cima dela alguém depois cortou três linhas a faca, fundas, como quem risca uma palavra.', 'With me Hessa speaks the language of men, all of it, every verb in its place, with the long open vowels of the Burned. On her left shoulder there is an old brand of theirs, the kind they burn into captives, and across it someone later cut three lines with a knife, deep, as if crossing out a word.'),
         (T('Estendi o odre de vinho. Ela pegou, arrancou a tampa com os dentes, cheirou e despejou um gole comprido na areia entre nós, devagar, olhando para mim o tempo todo. Depois me devolveu o odre.', 'I held out the skin of wine. She took it, pulled the stopper with her teeth, smelled it, and poured a long swallow of it out on the sand between us, slowly, looking at me the whole time. Then she handed the skin back.')),
-        se((st) => !!st.f.hessa_viu_luz, T('Os olhos dela desceram para o pano do meu pulso e para o que passava por baixo dele. A mão dela voltou para o cabo da maça.', 'Her eyes went down to the cloth at my wrist, and to what was moving under it. Her hand went back to the haft of the mace.')),
+        // a dica vem antes da conversa: dá tempo de beber (o odre está à mão nesta página)
+        se((st) => st.luz >= 60 && !st.f.mostrou_luz && !st.f.hessa_viu_luz, T('O pulso estava quente, e ela estava perto.', 'My wrist was warm, and she was close.')),
       ],
-      aoEntrar: (st, k) => { if (st.luz >= 60 && !st.f.mostrou_luz && !st.f.hessa_viu_luz) { st.f.hessa_viu_luz = true; st.hessa -= 1; k.toast(T('Hessa viu a luz.', 'Hessa saw the light.')); } st.cantil = Math.max(0, st.cantil - 1); },
-      dialogo: { interlocutor: 'Hessa', rodadas: [
-        { id: 'hessa1', antes: [T('— Você fica porque os potes mantêm os meus de pé. Homens que deviam cair não caem. É o único motivo de você ainda estar naquela pedra. Não confunda com outro.', '— You stay because the pots keep my own standing. Men who should fall, don’t. That is the only reason you are still on that stone. Do not mistake it for another.')],
+      aoEntrar: (st) => { st.cantil = Math.max(0, st.cantil - 1); },
+      dialogo: { interlocutor: 'Hessa', continuar: true, rodadas: [
+        // a Luz é conferida quando ela começa a falar, e não quando ele chega
+        { id: 'hessa1', antes: (st) => {
+          if (!st.f._hessaConferiu) { st.f._hessaConferiu = true; if (st.luz >= 60 && !st.f.mostrou_luz && !st.f.hessa_viu_luz) { st.f.hessa_viu_luz = true; st.hessa -= 1; if (window.LIVRO_TOAST) window.LIVRO_TOAST(T('Hessa viu a luz.', 'Hessa saw the light.')); } }
+          return (st.f.hessa_viu_luz && !st.f.mostrou_luz ? [T('Os olhos dela desceram para o pano do meu pulso e para o que passava por baixo dele. A mão dela voltou para o cabo da maça.', 'Her eyes went down to the cloth at my wrist, and to what was moving under it. Her hand went back to the haft of the mace.')] : []).concat([T('— Você fica porque os potes mantêm os meus de pé. Homens que deviam cair não caem. É o único motivo de você ainda estar naquela pedra. Não confunda com outro.', '— You stay because the pots keep my own standing. Men who should fall, don’t. That is the only reason you are still on that stone. Do not mistake it for another.')]); },
           pergunta: T('Responder a Hessa:', 'Answer Hessa:'), opcoes: [
             { id: 'uteis', tom: 'ironia', txt: T('“Então somos úteis um ao outro.”', '“Then we are useful to each other.”'),
               resposta: [T('Ela não respondeu. Olhou os meus potes, depois para mim, e cuspiu na areia.', 'She did not answer. She looked at my pots, then at me, and spat on the sand.')] },
@@ -737,6 +781,7 @@ window.LIVRO = {
       sons: [{ voz: 'a10-sem-lua', p: -1 }],
       texto: [
         T('Naquela noite sentei na beira da Laje com o odre de vinho de cacto e fiquei olhando as hordas chegarem. As fogueiras foram acendendo uma a uma pelo escuro, até a planície lá embaixo ficar mais acesa que o céu.', 'That night I sat at the edge of the slab with the skin of cactus wine and watched the hordes come in. Their fires went on one by one across the dark, until the plain below was brighter than the sky.'),
+        se(aceso, T('Debaixo do pano, o pulso brilhava. Na Laje, a única luz acesa era a minha, e o norte tem olhos.', 'Under the cloth, my wrist was glowing. On the slab the only light burning was mine, and the north has eyes.')),
         T('Sem lua. Na noite anterior também não houvera. O meu povo costumava esperar por noites assim, por motivos que eu tinha bebido para fora da cabeça havia muito tempo.', 'No moon. There had been none the night before, either. My people used to watch for nights like these, for reasons I had drunk out of my head a long time ago.'),
       ],
       pensa: [{ id: 'semlua', voz: 'p-lua', atraso: 9000, luz: 4, tomSeguir: 'curiosidade', t: T('Duas noites sem lua.', 'Two nights without a moon.'),
@@ -751,7 +796,7 @@ window.LIVRO = {
         { id: 'contar', luzMin: 60, tom: 'curiosidade', luz: 2, txt: T('Contar as fogueiras.', 'Count the fires.'),
           resultado: (st) => [T('Contei as fogueiras de cem em cem. Passei de três mil e parei. Cada fogueira era uma família.', 'I counted the fires, a hundred at a time. I passed three thousand and stopped. Every fire was a family.')].concat(marcha(st)) },
       ] },
-      aoSair: (st) => { st.f.sentiuMarcha = st.escolhas.noite !== 'beber' && (st.turvo || 0) <= 2; if (st.escolhas.noite === 'beber') st.turvo = (st.turvo || 0) + 2; } },
+      aoSair: (st) => { st.f.sentiuMarcha = st.escolhas.noite !== 'beber' && (st.turvo || 0) <= 2; if (st.escolhas.noite === 'beber') st.turvo = (st.turvo || 0) + 2; if (st.luz >= 60) st.f.tacets_noite = true; } },
 
     // a bancada, à noite: o que se juntou no caminho; quem bebeu prepara bêbado
     { id: 'a11', zona: 'noite', fundo: { img: IMG('bancada-noite'), kb: 'in', dim: .45, foco: '50% 60%', clima: 'estrelas' }, bebe: true,
@@ -853,7 +898,6 @@ window.LIVRO = {
         T('O Tinido. Não olhou para cima nem uma vez. A essa altura eu também tinha parado de olhar. Éramos os dois únicos naquele campo que sabiam que o escuro ia passar. Eu tinha dito isso baixinho, para mim mesmo. Ele gritava para a linha inteira.', 'The Tinn. He never once looked up. By then I had stopped looking too. We were the only two on that field who knew the dark would pass. I had said it under my breath, to myself. He was shouting it to his whole line.'),
         se(temPedra, T('No bolso, a pedra tinha ficado violeta, a cor que ela não tem em nenhuma outra luz, e fechei a mão em volta dela.', 'In my pocket the stone had gone violet, a colour it has in no other light, and I closed my hand over it.')),
       ],
-      aoSair: (st) => { if (st.luz >= 60) st.f.tacets_eclipse = true; },
       fimDeParte: true },
 
     // ===================================================== III · O DIA COMIDO
@@ -866,7 +910,7 @@ window.LIVRO = {
         T('Eu tinha, pelas contas mais velhas que conheço, cinco minutos. Talvez seis.', 'I had, by the oldest arithmetic I know, five minutes. Perhaps six.'),
         (st) => (quieto(st) ? T('No escuro, eu era só mais uma sombra entre milhares.', 'In the dark I was just one more shadow among thousands.')
           : medido(st) ? T('Debaixo do pano do pulso corria um fio de luz. Mantive o braço junto do corpo.', 'Under the cloth at my wrist ran a thread of light. I kept the arm against my body.')
-          : T('No escuro, a luz debaixo da minha pele era a coisa mais clara do campo.', 'In the dark, the light under my skin was the brightest thing on the field.')),
+          : T('No escuro, a luz debaixo da minha pele era a coisa mais clara do campo. E o norte tem olhos.', 'In the dark, the light under my skin was the brightest thing on the field. And the north has eyes.')),
       ],
       minijogo: 'minutos',
       aoTerminar: (st, r, k) => {
@@ -879,6 +923,8 @@ window.LIVRO = {
         st.tom.ternura = (st.tom.ternura || 0) + (f.includes('shaa') ? 1 : 0) + (f.includes('tukk') ? 1 : 0);
         st.tom.curiosidade = (st.tom.curiosidade || 0) + (f.includes('ouvir') ? 1 : 0);
         st.tom.frieza = (st.tom.frieza || 0) + (f.includes('esconder') ? 1 : 0);
+        // a luz alta no escuro chama os Tacets: conferida no fim dos minutos, depois de quem bebeu no minijogo
+        if (st.luz >= 60) st.f.tacets_eclipse = true;
       },
       depois: [T('Eu tinha gastado os meus minutos. O escuro tinha talvez mais um.', 'I had spent my minutes. The dark had perhaps one left.')] },
 
@@ -1007,7 +1053,7 @@ window.LIVRO = {
       minijogo: 'parto',
       aoTerminar: (st, r) => {
         const fl = (r && r.flares) || 0;
-        st.tacetsCedo = (parto(st) === 'dois' ? 1 : 0) + (fl >= 3 ? 1 : 0) + (st.f.tacets_eclipse ? 1 : 0);
+        st.tacetsCedo = (parto(st) === 'dois' ? 1 : 0) + (fl >= 3 ? 1 : 0) + (st.f.tacets_eclipse ? 1 : 0) + (st.f.tacets_noite ? 1 : 0);
         st.f.shaa_viva = parto(st) === 'dois' && !!(r && r.shaa);
       },
       depois: [
@@ -1059,7 +1105,7 @@ window.LIVRO = {
           : T('Sentei na areia e comecei a apagar a luz, uma linha de cada vez, como faço todo dia há mais de um século. A testa apagou. A garganta apagou. O peito apagou, devagar. Os braços não quiseram.', 'I sat in the sand and began to put the light out, one line at a time, as I have done every day for more than a century. The forehead went. The throat went. The chest went, slowly. The arms would not.')),
         T('Então, através da areia e para dentro das minhas mãos, de muito longe, veio um ritmo que eu não sentia desde a Borda do Mundo. Metal e pedra em chão duro. Um, dois, três. Um, dois, três.', 'Then, through the sand and into my hands, from very far away, came a rhythm I had not felt since the Edge of the World. Metal and stone on hard ground. One, two, three. One, two, three.'),
         T('Claro. Claro que estavam escutando, todo esse tempo, à espera exatamente disto.', 'Of course. Of course they had been listening, all this time, for exactly this.'),
-        se((st) => !!st.f.tacets_eclipse, T('Longe, mas não tão longe quanto deviam estar. Tinham começado a andar antes, em algum momento do escuro.', 'Far off, but not as far off as they should have been. They had started walking sooner, somewhere in the dark.')),
+        se((st) => !!(st.f.tacets_eclipse || st.f.tacets_noite), T('Longe, mas não tão longe quanto deviam estar. Tinham começado a andar antes, em algum momento do escuro.', 'Far off, but not as far off as they should have been. They had started walking sooner, somewhere in the dark.')),
       ],
       fimDeParte: true },
 
@@ -1073,7 +1119,7 @@ window.LIVRO = {
         T('No norte, quando vieram atrás de mim, eu fugi. É o que eu faço. Sou o melhor fugitivo que o meu povo já produziu, e o único que ainda foge.', 'In the north, when they came for me, I ran. It is what I do. I am the finest fugitive my people ever produced, and the only one still running.'),
         T('Os Tacets seguem a luz. Não importa no acampamento de quem ela esteja. Se eu ficasse, eles entrariam na Pira no compasso de três, e a Pira os receberia com lanças, e bronze não se incomoda muito com lanças.', 'The Tacets follow the light. Whose camp it is standing in makes no difference. If I stayed, they would walk into the Pyre in their count of three, and the Pyre would meet them with spears, and bronze does not much mind spears.'),
         T('Então eu iria. Desta vez não para longe deles. À frente deles. Aceso.', 'So I would go. Not away from them, this time. Ahead of them. Lit.'),
-        se((st) => (st.tacetsCedo || 0) - (st.f.tacets_eclipse ? 1 : 0) >= 1, T('Com o tanto que eu tinha arrancado de mim por Shaa e pela cria, eles viriam depressa, e eu teria de levá-los longe.', 'With as much as I had pulled out of myself for Shaa and the child, they would be coming fast, and I would have to take them far.')),
+        se((st) => (st.tacetsCedo || 0) - (st.f.tacets_eclipse ? 1 : 0) - (st.f.tacets_noite ? 1 : 0) >= 1, T('Com o tanto que eu tinha arrancado de mim por Shaa e pela cria, eles viriam depressa, e eu teria de levá-los longe.', 'With as much as I had pulled out of myself for Shaa and the child, they would be coming fast, and I would have to take them far.')),
       ] },
 
     // antes de ir: os feridos nos poços. A graxa que sobrou decide Tukk e o braço de Hessa
@@ -1271,7 +1317,8 @@ window.LIVRO = {
         : t(T('A graxa cinza: você nunca soube por que Redom veio com tanta força este ano.', 'The grey grease: you never learned why Redom came in such force this year.')));
     n.push({ inteiro: t(T('Tukk: vivo, com duas pontas de lança para mostrar.', 'Tukk: alive, with two spearheads to show for it.')), sem_braco: t(T('Tukk: vivo, sem o braço da lança.', 'Tukk: alive, without his spear arm.')), morto: t(T('Tukk: não voltou da linha.', 'Tukk: he did not come back from the line.')) }[tukkFim(st)]);
     const r = st.jogos.rastro || {};
-    if (st.f.tacets_eclipse) n.push(t(T('Os Tacets: começaram a andar durante o eclipse, puxados pela sua luz.', 'The Tacets: they began to walk during the eclipse, drawn by your light.')));
+    if (st.f.tacets_noite) n.push(t(T('Os Tacets: começaram a andar na noite antes dos poços, puxados pela sua luz.', 'The Tacets: they began to walk the night before the wells, drawn by your light.')));
+    else if (st.f.tacets_eclipse) n.push(t(T('Os Tacets: começaram a andar durante o eclipse, puxados pela sua luz.', 'The Tacets: they began to walk during the eclipse, drawn by your light.')));
     if (r.distancia != null) n.push(t(T('Os Tacets: levados para longe da Pira, até onde a luz alcançou.', 'The Tacets: led away from the Pyre, as far as the light would reach.')));
     if (st.f.disse_nome) n.push(t(T('O seu nome: Hessa sabe.', 'Your name: Hessa knows it.')));
     if (st.f.estalou) n.push(t(T('As crianças da Pira deram um nome a você: um estalo de língua.', 'The children of the Pyre gave you a name: a click of the tongue.')));

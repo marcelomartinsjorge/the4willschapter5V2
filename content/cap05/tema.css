@@ -419,8 +419,8 @@ body.impacto #bg { animation: impacto 1.8s ease-out; }
 .bc-fogo .bc-pote { margin-bottom: -26px; z-index: 2; }
 .bc-vapor path { fill: none; stroke: rgba(240,230,215,.5); stroke-width: 2.4; stroke-linecap: round; opacity: 0; }
 .bc-bolhas circle { fill: rgba(255,240,210,.7); opacity: 0; }
-#mg.bancada.fogo .bc-vapor path { animation: vapor 2.2s ease-in-out infinite; }
-#mg.bancada.fogo .bc-vapor path:nth-child(2) { animation-delay: .7s; } #mg.bancada.fogo .bc-vapor path:nth-child(3) { animation-delay: 1.4s; }
+/* (o vapor agora segue o calor do pote: classes q1, q2, q3) */
+
 @keyframes vapor { 0% { opacity: 0; transform: translateY(8px); } 40% { opacity: .8; } 100% { opacity: 0; transform: translateY(-12px); } }
 .bc-pote.borbulha .bc-bolhas circle { animation: bolha .9s ease-out; }
 .bc-pote.borbulha .bc-bolhas circle:nth-child(2) { animation-delay: .15s; } .bc-pote.borbulha .bc-bolhas circle:nth-child(3) { animation-delay: .3s; }
@@ -522,3 +522,71 @@ body.impacto #bg { animation: impacto 1.8s ease-out; }
 .pt-vida.pt-vida-s i { background: #d9825b; box-shadow: 0 0 10px rgba(217,130,91,.7); transition: width .2s linear; }
 .pt-vida.pt-vida-s.parou { opacity: .25; transition: opacity 1.2s; }
 .pt-c.parou { animation: none !important; filter: grayscale(1); }
+/* o cartão de instrução pausa o minijogo: véu atrás dele e o convite para começar */
+.gesto-veu { position: absolute; inset: 0; z-index: 29; background: rgba(4,5,7,.55); opacity: 0; transition: opacity .4s; cursor: pointer; }
+.gesto-veu.on { opacity: 1; }
+.gesto { cursor: pointer; }
+.gesto .gesto-ir { margin-top: 10px; font-style: normal; font-family: var(--sans); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--gold-hot); animation: gestoIr 1.6s ease-in-out infinite; }
+@keyframes gestoIr { 50% { opacity: .45; } }
+/* bancada: o estado escrito embaixo (moído / mexido) e a palavra que sobe quando o anel fecha */
+.bc-st.pronto .bc-rot { color: var(--gold-hot); }
+.bc-pop { position: absolute; left: 50%; top: 30%; transform: translate(-50%, 0); font-family: var(--serif-d); font-size: 18px; color: #fff3dc; text-shadow: 0 0 12px rgba(255,190,90,.9); pointer-events: none; animation: bcPop 1.3s ease-out forwards; z-index: 5; }
+@keyframes bcPop { 0% { opacity: 0; transform: translate(-50%, 6px); } 20% { opacity: 1; } 100% { opacity: 0; transform: translate(-50%, -28px); } }
+
+/* ---------- bancada lida pelo olho (v2): pilão em pedaços, grãos ou pó; pote frio, com vapor, com bolhas ou fervendo */
+.bc-graos { opacity: 0; transition: opacity .35s; }
+.bc-st.cheio .bc-graos { opacity: 1; }
+.bc-pedacos path { fill: var(--c, #777); stroke: rgba(0,0,0,.45); stroke-width: 1; filter: brightness(.82); transition: opacity .4s; }
+.bc-grao circle { fill: var(--c, #777); stroke: rgba(0,0,0,.35); stroke-width: .6; filter: brightness(.9); opacity: 0; transition: opacity .4s; }
+.bc-pilao.m1 .bc-pedacos path { opacity: 0; }
+.bc-pilao.m1 .bc-grao circle { opacity: 1; }
+.bc-pilao.m2 .bc-pedacos path { opacity: 0; }
+.bc-pilao.m2 .bc-dentro { filter: brightness(1.28) saturate(.65); }
+.bc-pilao.segura .bc-graos { animation: graosTremem .18s linear infinite; }
+@keyframes graosTremem { 50% { transform: translate(.6px, .4px); } }
+.bc-mancha { fill: var(--c2, transparent); opacity: 0; transition: opacity .3s; }
+.bc-pote.cheio .bc-mancha { opacity: calc(var(--mist, 0) * .95); }
+.bc-pote.q1 .bc-vapor path { animation: vapor 3s ease-in-out infinite; }
+.bc-pote.q2 .bc-vapor path, .bc-pote.q3 .bc-vapor path { animation: vapor 1.8s ease-in-out infinite; }
+.bc-pote.q3 .bc-vapor path { stroke-width: 3.4; animation-duration: 1.1s; }
+.bc-pote .bc-vapor path:nth-child(2) { animation-delay: .6s; } .bc-pote .bc-vapor path:nth-child(3) { animation-delay: 1.2s; }
+.bc-pote.q2 .bc-bolhas circle { animation: bolha 1.3s ease-out infinite; }
+.bc-pote.q3 .bc-bolhas circle { animation: bolha .55s ease-out infinite; transform-box: fill-box; }
+.bc-pote.q2 .bc-bolhas circle:nth-child(2), .bc-pote.q3 .bc-bolhas circle:nth-child(2) { animation-delay: .25s; }
+.bc-pote.q2 .bc-bolhas circle:nth-child(3), .bc-pote.q3 .bc-bolhas circle:nth-child(3) { animation-delay: .5s; }
+.bc-pote.q2 .bc-bolhas circle:nth-child(4), .bc-pote.q3 .bc-bolhas circle:nth-child(4) { animation-delay: .75s; }
+.bc-pote.q2 .bc-bolhas circle:nth-child(5), .bc-pote.q3 .bc-bolhas circle:nth-child(5) { animation-delay: .4s; }
+.bc-pote.q3 .bc-svg { animation: ferve .16s linear infinite; }
+@keyframes ferve { 50% { transform: translate(.8px, -.5px); } }
+.bc-card .bc-mot { list-style: none; margin: 10px 0 0; padding: 0; font-family: var(--serif); font-style: italic; font-size: 15px; color: #e9d2ad; }
+.bc-card .bc-mot li { margin: 3px 0; }
+/* vapor e bolhas legíveis de longe: cada estado um pouco mais forte que o anterior */
+.bc-pote.q1 .bc-vapor path { stroke: rgba(240,230,215,.6); }
+.bc-pote.q2 .bc-vapor path { stroke: rgba(245,235,220,.8); stroke-width: 3; }
+.bc-pote.q3 .bc-vapor path { stroke: rgba(255,245,230,.95); }
+.bc-pote.q2 .bc-bolhas circle, .bc-pote.q3 .bc-bolhas circle { fill: rgba(255,244,220,.95); }
+/* ---------- rastro (a coleira): fogos, terreno, anel de visão e próximo passo de cada Tacet */
+.rt-fogo { position: absolute; transform: translate(-50%, -50%); pointer-events: none; z-index: 2; display: flex; flex-direction: column; align-items: center; }
+.rt-fogo i { display: block; width: 26px; height: 26px; border-radius: 50%; background: radial-gradient(circle, #ffe2a0 0%, #ff8a2a 45%, rgba(255,90,20,0) 72%); box-shadow: 0 0 34px 16px rgba(255,120,40,.5); animation: fogoPulsa 1.8s ease-in-out infinite; }
+.rt-fogo.pira i { width: 40px; height: 40px; box-shadow: 0 0 60px 26px rgba(255,120,40,.55), 0 0 0 2px rgba(255,170,90,.0); }
+.rt-fogo.pira::before { content: ''; position: absolute; left: 50%; top: 20px; width: 11.5vw; max-width: 170px; aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%; border: 1.5px dashed rgba(255,130,70,.55); }
+.rt-fogo span { margin-top: 6px; font-family: var(--sans); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: #ffd7a8; text-shadow: 0 1px 6px #000, 0 0 10px rgba(255,140,60,.7); white-space: nowrap; }
+.rt-fogo.pira span { font-size: 13px; color: #ffe1b8; }
+.rt-fogo.horda i { width: 18px; height: 18px; box-shadow: 0 0 24px 10px rgba(255,120,40,.45); }
+@keyframes fogoPulsa { 50% { transform: scale(1.12); filter: brightness(1.15); } }
+.rt-oeste { fill: rgba(255,226,173,.07); stroke: rgba(255,226,173,.35); stroke-width: .25; stroke-dasharray: 1 1; }
+#mg.rastro.longe .rt-oeste { fill: rgba(255,226,173,.16); }
+.rt-oeste-rot { position: absolute; transform: translate(-50%, -50%) rotate(-90deg); font-family: var(--sans); font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: rgba(255,232,190,.85); text-shadow: 0 1px 6px #000; pointer-events: none; white-space: nowrap; }
+.rt-pedra { fill: rgba(0,0,0,.18); stroke: rgba(200,190,175,.28); stroke-width: .22; stroke-dasharray: .6 .6; }
+.rt-duna { fill: rgba(255,240,210,.04); stroke: rgba(255,240,210,.22); stroke-width: .2; stroke-dasharray: .25 .7; }
+.rt-visao { position: absolute; aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%; border: 1px dashed rgba(220,160,90,.38); background: radial-gradient(circle, rgba(220,150,80,.06), rgba(220,150,80,0) 70%); pointer-events: none; transition: left .35s ease, top .35s ease, width .4s, border-color .3s; z-index: 2; }
+.rt-visao.fora { border-color: rgba(255,90,70,.85); border-style: solid; box-shadow: 0 0 14px rgba(255,80,60,.35) inset; }
+.rt-visao.perdido { border-color: rgba(255,90,70,.35); }
+.rt-fant { position: absolute; width: 7px; height: 7px; transform: translate(-50%, -50%) rotate(45deg); border: 1px solid rgba(220,150,80,.6); pointer-events: none; z-index: 2; transition: left .35s ease, top .35s ease; }
+.rt-tacet { transition: left .35s ease, top .35s ease; z-index: 3; }
+.rt-tacet.perdido { background: #d2553f; box-shadow: 0 0 10px 3px rgba(230,80,60,.85); }
+.rt-eu { z-index: 3; }
+.rt-chips { margin: 0; display: flex; align-items: center; gap: 7px; font-family: var(--sans); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--mist); }
+.rt-chips i { width: 10px; height: 10px; transform: rotate(45deg); background: rgba(200,190,175,.35); }
+.rt-chips i.segue { background: #e3a54f; box-shadow: 0 0 8px rgba(227,165,79,.8); }
+.rt-chips i.perdido { background: #d2553f; box-shadow: 0 0 8px rgba(230,80,60,.8); animation: alvoPulsa 1s ease-in-out infinite; }
