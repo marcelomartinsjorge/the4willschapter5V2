@@ -254,3 +254,10 @@ Um risco a mais ou a menos de fogo vale meio erro. Ingrediente posto errado se p
 **A luz para a Shaa (a07).** A opção é só "Puxar o pano do pulso."; o resultado depende da Luz de antes da escolha: baixa (≤30) a chuva sobe um fio, ela segura o pulso com as duas mãos, "— A cria gostar. Shaa gostar." (+2 com ela, Hessa não vê); média, como antes (+1); alta (60+), a luz salta até o pescoço e ela recua, "— Muito. Luz muito." (0). A segunda opção virou recusa direta, "“Não. Isso não se mostra.”" (−1). Saiu a opção de ficar calado. Dá para beber no a07. O preparo da Shaa no parto acompanha (de 0 a 3).
 
 **Outros.** Tela de derrota (a animação de saída apagava tudo) consertada. Som `sfx/guerra-comeca` (do Marcelo) quando as linhas se encontram, no b03. O cartão do parto avisa "e aperte as letras que aparecerem" quando elas vão aparecer.
+
+## Rastro (tabuleiro): correção após o vídeo do playtest
+- Bug: os Tacets desciam para a Pira antes de ver o Aheryn, e a Pira contava como caminho de perseguição. Resultado: "Longe demais." sem causa visível.
+- Agora: estados `chamado` / `segue` / `perdido`. Só quem já seguia e ficou a mais de 4 casas desce para a Pira. A Pira não é caminho para quem persegue (`distS`/`proxS`).
+- Cada Tacet anda antes de a visão ser conferida.
+- Teste no navegador (jogadas ingênuas): andar para oeste vence com Luz 25 e 45; correr sempre perde "Longe demais." com Luz 45 e 80; andar sem olhar com Luz 80 perde "Perto demais." (passo duplo).
+- Decisão do autor: Luz alta ser mais difícil é aceito. Dá para vencer, mas não é fácil.

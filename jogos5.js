@@ -618,6 +618,9 @@ function rastro(root, c) {
     const dist = ids.map((_, s) => { const d = Array(n).fill(99); d[s] = 0; const q = [s]; while (q.length) { const u = q.shift(); for (const v of adj[u]) if (d[v] > d[u] + 1) { d[v] = d[u] + 1; q.push(v); } } return d; });
     const prox = (de, para) => (de === para ? de : adj[de].reduce((m, v) => (dist[v][para] < dist[m][para] ? v : m), adj[de][0]));
     const PIRA = ix[cfg.pira], META = ix[cfg.meta];
+    // perseguindo, a Pira não é caminho (ela só é destino de quem se perdeu): distâncias e passos sem ela
+    const distS = ids.map((_, s0) => { const d = Array(n).fill(99); if (s0 === PIRA) return d; d[s0] = 0; const q = [s0]; while (q.length) { const u = q.shift(); for (const v of adj[u]) if (v !== PIRA && d[v] > d[u] + 1) { d[v] = d[u] + 1; q.push(v); } } return d; });
+    const proxS = (de, para) => { if (de === para) return de; const viz = adj[de].filter((v) => v !== PIRA); return viz.reduce((m, v) => (distS[v][para] < distS[m][para] ? v : m), viz[0]); };
     // ---- o desenho
     caixa.insertAdjacentHTML('beforeend', `<svg class="tb-svg" viewBox="0 0 100 56.25" preserveAspectRatio="none">
         ${cfg.ligacoes.map(([a, b]) => `<line class="tb-lig" x1="${pos[ix[a]].x}" y1="${pos[ix[a]].y * AR}" x2="${pos[ix[b]].x}" y2="${pos[ix[b]].y * AR}"/>`).join('')}
@@ -639,11 +642,17 @@ function rastro(root, c) {
     const chips = [...root.querySelectorAll('.rt-chips i')];
     // ---- o estado
     let eu = ix[cfg.inicio], vez = 0, fim = false, ocupado = false, cantoArmado = false, cantoResta = 0, cantou = false, perdeu = 0, corridas = 0, viuPrimeiro = false;
-    const tacets = cfg.tacetsDe[cedo].map((k, i) => ({ i, at: ix[k], el: peca('tacet', 'assets/images/rosto-tacet.png') }));
+    const tacets = cfg.tacetsDe[cedo].map((k, i) => ({ i, at: ix[k], estado: 'chamado', el: peca('tacet', 'assets/images/rosto-tacet.png') }));
     const dobraDe = () => Math.min(R.dobra[cedo] || 999, st.luz >= 60 ? R.dobraAlta : 999);
     const passosNa = (v) => (v % dobraDe() === 0 ? 2 : 1);
-    const ve = (tc, onde, cantando) => cantando || dist[tc.at][onde] <= R.visao;
-    const alvoDe = (tc, onde, cantando) => (ve(tc, onde, cantando) ? onde : PIRA);
+    const ve = (tc, onde, cantando) => cantando || distS[tc.at][onde] <= R.visao;
+    // o próximo passo: quem se perdeu desce para a Pira; os outros (chamados pela luz, ou seguindo) vêm até ele
+    const proximo = (tc, onde, cantando) => (tc.estado === 'perdido' && !ve(tc, onde, cantando) ? prox(tc.at, PIRA) : proxS(tc.at, onde));
+    const anda = (tc, onde, cantando) => {
+      if (tc.estado === 'perdido' && ve(tc, onde, cantando)) tc.estado = 'segue';   // ele voltou para perto (ou cantou)
+      tc.at = proximo(tc, onde, cantando);
+      if (tc.estado !== 'perdido') { if (ve(tc, onde, cantando)) tc.estado = 'segue'; else if (tc.estado === 'segue') { tc.estado = 'perdido'; perdeu++; } }
+    };
     const avisa = (t) => { msg.textContent = tr(t); };
     // casas para onde ele pode ir: vizinhas (andar) e a duas casas (correr, se tem Luz), sem Tacet e sem a Pira
     const opcoes = () => {
@@ -663,17 +672,17 @@ function rastro(root, c) {
         const q = pos[tc.at]; tc.el.style.left = q.x + '%'; tc.el.style.top = q.y + '%';
         // dois ou três na mesma casa: lado a lado, para os rostos e os números não se cobrirem
         const juntos = tacets.filter((o) => o.at === tc.at), kk = juntos.indexOf(tc); tc.el.style.marginLeft = ((kk - (juntos.length - 1) / 2) * 26) + 'px';
-        const d = dist[tc.at][eu], segue = ve(tc, eu, cantando);
-        tc.el.classList.toggle('perdido', !segue); tc.el.querySelector('b').textContent = d;
-        chips[k].className = segue ? 'segue' : 'perdido';
-        // a seta: o próximo passo (dois, se o compasso aperta)
-        let de = tc.at; const alvo = alvoDe(tc, eu, cantando);
-        for (let s = 0; s < (duplo ? 2 : 1); s++) { const pr = prox(de, alvo); if (pr === de) break; setas += `<line class="tb-seta ${segue ? '' : 'pira'}" x1="${pos[de].x}" y1="${pos[de].y * AR}" x2="${pos[pr].x}" y2="${pos[pr].y * AR}" marker-end="url(#tbPonta)"/>`; de = pr; }
+        const d = distS[tc.at][eu], perdido = tc.estado === 'perdido' && !ve(tc, eu, cantando);
+        tc.el.classList.toggle('perdido', perdido); tc.el.querySelector('b').textContent = d;
+        chips[k].className = perdido ? 'perdido' : 'segue';
+        // a seta: o próximo passo (dois, se o compasso aperta), numa cópia que não mexe no estado
+        const sombra = { at: tc.at, estado: tc.estado };
+        for (let s = 0; s < (duplo ? 2 : 1); s++) { const de = sombra.at; const pr = proximo(sombra, eu, cantando); if (pr === de) break; setas += `<line class="tb-seta ${perdido ? 'pira' : ''}" x1="${pos[de].x}" y1="${pos[de].y * AR}" x2="${pos[pr].x}" y2="${pos[pr].y * AR}" marker-end="url(#tbPonta)"/>`; sombra.at = pr; }
       });
       setasG.innerHTML = `<defs><marker id="tbPonta" viewBox="0 0 6 6" refX="5" refY="3" markerWidth="3" markerHeight="3" orient="auto"><path d="M0 0L6 3L0 6z" fill="currentColor"/></marker></defs>` + setas;
       cantarB.disabled = cantou || fim; cantarB.classList.toggle('on', cantoArmado || cantoResta > 0);
       esperarB.disabled = fim || ocupado;
-      const fora = tacets.filter((tc) => !ve(tc, eu, cantando)).length;
+      const fora = tacets.filter((tc) => tc.estado === 'perdido' && !ve(tc, eu, cantando)).length;
       avisa(fora ? cfg.perdeuT : duplo ? cfg.duploT : cfg.objetivoT);
     };
     const termina = (ok) => {
@@ -698,20 +707,16 @@ function rastro(root, c) {
       setTimeout(() => {
         const passos = passosNa(vez);
         for (let s = 0; s < passos && !fim; s++) {
-          for (const tc of tacets) {
-            const antes = ve(tc, eu, cantando);
-            tc.at = prox(tc.at, alvoDe(tc, eu, cantando));
-            if (antes && !ve(tc, eu, cantando)) perdeu++;
-          }
+          for (const tc of tacets) anda(tc, eu, cantando);
         }
         if (A.ctx && A.on) A.sfx('compasso-tres', .3, () => A.hiss(.12, 220, .8, .06, 0, 'lowpass'));
-        if (!viuPrimeiro && tacets.some((tc) => ve(tc, eu, cantando))) { viuPrimeiro = true; root.classList.add('quatro'); const m = document.createElement('p'); m.className = 'rt-quatro'; m.textContent = tr(cfg.quatroT); root.appendChild(m); c.narrate('rastro-quatro', true); setTimeout(() => m.remove(), 4200); }
+        if (!viuPrimeiro && tacets.some((tc) => tc.estado === 'segue')) { viuPrimeiro = true; root.classList.add('quatro'); const m = document.createElement('p'); m.className = 'rt-quatro'; m.textContent = tr(cfg.quatroT); root.appendChild(m); c.narrate('rastro-quatro', true); setTimeout(() => m.remove(), 4200); }
         if (cantoResta > 0 && !cantoArmado && cantando) cantoResta--;
         ocupado = false;
         if (window.__RASTRO_FALHA) { window.__RASTRO_FALHA = false; return perde(cfg.falhaT, 'rastro-falha', 'teste'); }
         if (tacets.some((tc) => tc.at === eu)) return dist[PIRA][eu] <= R.vistaPira ? perde(cfg.falhaT, 'rastro-falha', 'perto') : perde(cfg.falhaLongeT, null, 'meio');
         if (tacets.some((tc) => tc.at === PIRA)) return perde(cfg.falhaPiraT, null, 'pira');
-        if (eu === META && tacets.every((tc) => dist[tc.at][eu] <= R.visao)) return termina(true);
+        if (eu === META && tacets.every((tc) => distS[tc.at][eu] <= R.visao)) return termina(true);
         desenha();
       }, BOT() ? 30 : 450);
     };
@@ -731,7 +736,7 @@ function rastro(root, c) {
     cantarB.onclick = () => { if (cantou || fim || window.__mgPausa) return; cantoArmado = !cantoArmado; desenha(); };
     c.gesto(root, 'tocar');
     desenha();
-    if (BOT()) setTimeout(() => { eu = META; tacets.forEach((tc) => { tc.at = adj[META][0]; }); desenha(); termina(true); }, 300);
+    if (BOT()) setTimeout(() => { eu = META; tacets.forEach((tc) => { tc.at = adj[META][0]; tc.estado = 'segue'; }); desenha(); termina(true); }, 300);
   });
 }
 
