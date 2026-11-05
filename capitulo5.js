@@ -197,7 +197,8 @@ window.LIVRO = {
   luzInicial: 10,
   cantil: 6,
   alforje: alf,
-  proximo: { titulo: 'Um ano depois · Capítulo IV, Laus', tituloEn: 'A year later · Chapter IV, Laus', url: 'https://marcelomartinsjorge.github.io/the4willschapter4V2/' },
+  proximo: { titulo: 'Capítulo VI · Kronk', tituloEn: 'Chapter VI · Kronk', url: 'https://marcelomartinsjorge.github.io/the4willschapter6/' },
+  revelaUrl: 'https://marcelomartinsjorge.github.io/the4willschapter4V2/', // o cartão de Kassian na tela final leva ao Cap. IV
 
   // o Cap. I: o que o leitor deixou na Borda do Mundo (copiado uma vez, no início)
   inicio: (st) => {
@@ -744,7 +745,9 @@ window.LIVRO = {
       texto: [
         T('Hessa estivera olhando o tempo todo, da distância de sempre, uma lança e um pouco mais, com uma das mãos pousada no cabo da maça às costas. O nome dela é o som que a água faz numa pedra quente.', 'Hessa had been watching the whole time, from the usual distance, a spear’s length and a little more, one hand resting on the haft of the mace across her back. Her name is the sound water makes on a hot stone.'),
         T('Entre os guerreiros da Pira, Hessa é a que os outros usam de medida. Os mais novos copiam o passo dela; os mais velhos param de falar quando ela passa. Os Grakh a chamam de Quebra-Lanças: quando ela caça, a lança entra com tanta força que a haste estala dentro do animal.', 'Among the warriors of the Pyre, Hessa is the one the others measure themselves by. The young ones copy her stride; the old ones stop talking when she goes by. The Grakh call her Spear-Breaker: when she hunts, the spear goes in so hard that the shaft snaps inside the animal.'),
-        T('Mandou Tukk embora com duas palavras, do jeito Grakh, sem dobra nenhuma nos verbos. Então se virou para mim e mudou.', 'She sent Tukk off with two words, in the Grakh way, with no bend in the verbs at all. Then she turned to me, and changed.'),
+        T('Mandou Tukk embora com duas palavras, do jeito Grakh, sem dobra nenhuma nos verbos.', 'She sent Tukk off with two words, in the Grakh way, with no bend in the verbs at all.'),
+        T('— Tukk. Ir.', '“Tukk. Go.”'),
+        T('Então se virou para mim e mudou.', 'Then she turned to me, and changed.'),
         T('Comigo Hessa fala a língua dos homens, inteira, cada verbo no lugar, com as vogais compridas e abertas dos Queimados. No ombro esquerdo ela tem uma velha marca deles, das que eles queimam nos cativos, e por cima dela alguém depois cortou três linhas a faca, fundas, como quem risca uma palavra.', 'With me Hessa speaks the language of men, all of it, every verb in its place, with the long open vowels of the Burned. On her left shoulder there is an old brand of theirs, the kind they burn into captives, and across it someone later cut three lines with a knife, deep, as if crossing out a word.'),
         (T('Estendi o odre de vinho. Ela pegou, arrancou a tampa com os dentes, cheirou e despejou um gole comprido na areia entre nós, devagar, olhando para mim o tempo todo. Depois me devolveu o odre.', 'I held out the skin of wine. She took it, pulled the stopper with her teeth, smelled it, and poured a long swallow of it out on the sand between us, slowly, looking at me the whole time. Then she handed the skin back.')),
         // a dica vem antes da conversa: dá tempo de beber (o odre está à mão nesta página)

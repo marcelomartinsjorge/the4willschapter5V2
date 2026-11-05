@@ -867,7 +867,7 @@ async function resumo() {
   $('#rsFrase').textContent = R.frase;
   const rv = R.revela;
   $('#rsRevela').innerHTML = !rv ? '' : typeof rv === 'string' ? `<p>${esc(rv)}</p>`
-    : `<div class="kcard"><div class="kimg" style="background-image:url('${rv.img}')"></div><div class="ktx"><p class="eyebrow">${esc(rv.olho)}</p><h3>${esc(rv.nome)}</h3><p class="ksub">${esc(rv.titulo)}</p><p class="ktexto">${esc(rv.texto)}</p>${L.proximo.url && rv.link ? `<a class="klink" href="${L.proximo.url}">${esc(rv.link)} →</a>` : ''}</div></div>`;
+    : `<div class="kcard"><div class="kimg" style="background-image:url('${rv.img}')"></div><div class="ktx"><p class="eyebrow">${esc(rv.olho)}</p><h3>${esc(rv.nome)}</h3><p class="ksub">${esc(rv.titulo)}</p><p class="ktexto">${esc(rv.texto)}</p>${L.proximo.url && rv.link ? `<a class="klink" href="${L.revelaUrl || L.proximo.url}">${esc(rv.link)} →</a>` : ''}</div></div>`;
   $('#rsRevela').classList.toggle('card', !!rv && typeof rv !== 'string');
   registrar('goles_total', String(Math.min(6, st.bebidos || 0)));
   $('#rsPerfil').innerHTML = R.perfil ? `<p class="eyebrow">${U('perfilT')}</p><p class="rs-perfil">${esc(R.perfil)}</p>` : '';
@@ -927,7 +927,7 @@ function intertitulo(frase, depois) {
   if (!el) { el = document.createElement('section'); el.id = 'intertitulo'; el.setAttribute('aria-live', 'polite'); document.body.appendChild(el); }
   el.innerHTML = `<p>${esc(frase)}</p>`; el.classList.remove('sai'); el.classList.add('show');
   let feito = false;
-  const fim = () => { if (feito) return; feito = true; clearTimeout(t); el.classList.add('sai'); setTimeout(() => { el.classList.remove('show', 'sai'); }, 1200); setTimeout(depois, 500); };
+  const fim = () => { if (feito) return; feito = true; clearTimeout(t); document.removeEventListener('keydown', tecla, true); el.classList.add('sai'); setTimeout(() => { el.classList.remove('show', 'sai'); }, 1200); setTimeout(depois, 500); };
   const t = setTimeout(fim, 5200);
   el.onclick = fim; const tecla = (e) => { if (e.key === ' ' || e.key === 'Enter' || e.key === 'ArrowRight') { document.removeEventListener('keydown', tecla, true); e.preventDefault(); e.stopPropagation(); fim(); } };
   document.addEventListener('keydown', tecla, true);

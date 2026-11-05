@@ -261,3 +261,10 @@ Um risco a mais ou a menos de fogo vale meio erro. Ingrediente posto errado se p
 - Cada Tacet anda antes de a visão ser conferida.
 - Teste no navegador (jogadas ingênuas): andar para oeste vence com Luz 25 e 45; correr sempre perde "Longe demais." com Luz 45 e 80; andar sem olhar com Luz 80 perde "Perto demais." (passo duplo).
 - Decisão do autor: Luz alta ser mais difícil é aceito. Dá para vencer, mas não é fácil.
+
+## Intertítulo e ligação com o Cap. VI (28/10)
+- Defeito: fechar o intertítulo com um clique (ou pelo tempo) deixava o ouvinte de teclado do intertítulo ativo, que engolia a primeira tecla (→, espaço, Enter). Agora `fim()` remove o ouvinte em qualquer caminho. Testado: antes a tecla não chegava ao resto da página, agora chega.
+- O botão final leva ao Cap. VI (https://marcelomartinsjorge.github.io/the4willschapter6/). O cartão de Kassian na tela final continua levando ao Cap. IV (`revelaUrl` em `capitulo5.js`).
+
+## Hessa em Grakh (05/11)
+- a09: a fala dela a Tukk agora aparece ("— Tukk. Ir."), em linha própria. O leitor ouve o infinitivo Grakh antes de ela mudar para a língua inteira com Aheryn. Liga o Cap. V ao Cap. VI, onde ela fala só em infinitivo. A página não é dublada.
