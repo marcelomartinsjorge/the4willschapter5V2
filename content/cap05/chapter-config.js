@@ -94,7 +94,7 @@ window.CHAPTER_CONFIG = {
       image: 'assets/images/codex-eclipse.jpg',
       aliasesEn: ['eaten day', 'day being eaten', 'day be eaten'], aliasesPt: ['dia comido', 'dia ser comido'],
       en: { title: 'The Eaten Day', eyebrow: 'What the Grakh call it', pages: [
-        ['The Grakh call a day that goes dark while the sun is up an eaten day. An old saying holds that the greatest of the Grakh is born under one. The elders repeat it whenever the moon fails to appear for two nights in a row.'],
+        ['The Grakh call a day that goes dark while the sun is up an eaten day. An old saying holds that the Biggest of the Grakh is born under one. The elders repeat it whenever the moon fails to appear for two nights in a row.'],
         ['The Lúmae recorded these events in tables. They knew that the moon’s path crosses the sun’s, and calculated, generations in advance and to the minute, where and when the shadow would fall. Total darkness does not last more than a few minutes.', 'The tables were lost in the Dimming of the Lights.'],
       ] },
       pt: { title: 'O Dia Comido', eyebrow: 'Como os Grakh o chamam', pages: [

@@ -99,6 +99,17 @@ const usaPronto = (st, id) => { const a = alf(st); let k = -1; a.prontos.forEach
 
 // a roda diz o nome: as quatro gravações sobrepostas, de dentro para fora, e o nome
 // aparecendo pela tela como eco (cada voz é um Grakh diferente na roda)
+// S1 · d06: o fundo some de "Depois, nada" até "Depois respirou", nos tempos da narração d06-som (16,4 s e 27,5 s)
+const silencioNoParto = (A) => {
+  const t0 = Date.now();
+  const espera = () => {
+    if (!A.narr) { if (Date.now() - t0 < 4000) setTimeout(espera, 100); return; }
+    const n = A.narr;
+    setTimeout(() => { if (A.narr === n) A.abafa(true); }, 16400);
+    setTimeout(() => { if (A.abafado) { A.abafa(false); A.duck(!!A.narr); } }, 27500);
+  };
+  espera();
+};
 const rodaDizONome = (A) => {
   const vozes = ['roda-nome1', 'roda-nome3', 'roda-nome2', 'roda-nome4', 'roda-nome1', 'roda-nome4'];
   const quando = [0, 380, 820, 1150, 1900, 2300], vol = [.62, .5, .52, .44, .3, .26];
@@ -665,6 +676,7 @@ window.LIVRO = {
     { id: 'a07', zona: 'acampamento', estado: 'companhia', fundo: { img: IMG('shaa'), kb: 'in', dim: .4, foco: '78% 40%', clima: 'poeira' }, capitular: true, bebe: true,
       texto: [
         T('Só Shaa veio. Atravessou a areia devagar, uma mão embaixo da barriga, e já vinha rindo antes de chegar, as tranças batendo nas costas. Os dentes de baixo eram grandes demais para a boca, e quando ela ria apareciam todos. A maioria dos Grakh não se aproxima de mim. Shaa sentou tão perto que nossos joelhos quase se tocaram.', 'Only Shaa came. She crossed the sand slowly, one hand under her belly, and she was laughing before she reached me, her braids slapping against her back. Her lower teeth were too big for her mouth, and when she laughed they all showed. Most of the Grakh do not come near me. Shaa sat down so close our knees almost touched.'),
+        T('Shaa vinha à minha pedra desde menina, e desde menina tentava me fazer rir. Palavra de troca não vira nome: os Grakh esperam o som que escapa sem querer, um riso, um espirro, e ela queria ser a primeira a ouvir o meu. Em todos esses anos eu nunca tinha deixado escapar nenhum.', 'Shaa had been coming to my stone since she was a girl, and since she was a girl she had been trying to make me laugh. Trading words do not become a name: the Grakh wait for the sound that gets out on its own, a laugh, a sneeze, and she wanted to be the first to hear mine. In all those years I had never let one out.'),
         se(quieto, T('Não me afastei.', 'I did not move away.')),
         se(medido, T('Com ela ali, a minha cabeça ficou quieta.', 'With her there, my head went quiet.')),
         se(aceso, T('Com ela tão perto, a cabeça parou de fazer contas.', 'With her that close, my head stopped doing sums.')),
@@ -715,7 +727,7 @@ window.LIVRO = {
         T('Tinido é como os Grakh chamam o comandante de Redom: o som que a armadura dele faz quando ele anda.', 'The Tinn is what the Grakh call the commander of Redom: the sound his armour makes when he walks.'),
         T('— E lua sumir. Duas noite já. Lua sumir, velhos dizer: talvez dia ser comido.', '— And moon gone. Two nights now. Moon gone, old ones say: maybe day be eaten.'),
         T('Riu com os ombros.', 'He laughed with his shoulders.'),
-        T('— Dia ser comido, nascer o maior. Mãe de Ghru dizer isso. Mãe da mãe dizer. Toda lua sumida, velhos dizer. Dia nunca ser comido.', '— Day be eaten, greatest be born. Ghru mother say that. Her mother say that. Every moon gone, old ones say it. Day never eaten.'),
+        T('— Dia ser comido, nascer o maior. Mãe de Ghru dizer isso. Mãe da mãe dizer. Toda lua sumida, velhos dizer. Dia nunca ser comido.', '— Day be eaten, Biggest be born. Ghru mother say that. Her mother say that. Every moon gone, old ones say it. Day never eaten.'),
       ],
       dialogo: { interlocutor: 'Ghru', rodadas: [
         { id: 'ghru1', pergunta: T('Perguntar a Ghru:', 'Ask Ghru:'), opcoes: [
@@ -731,7 +743,7 @@ window.LIVRO = {
         { id: 'ghru2', pergunta: T('E então:', 'And then:'), opcoes: [
           { id: 'nome', tom: 'curiosidade', flag: 'sabeNome', txt: T('“Quem te deu o nome?”', '“Who gave you your name?”'),
             resposta: [T('— Mãe. Ghru nascer com areia na garganta. Primeiro som: ghrrru. Então: Ghru.', '— Mother. Ghru born with sand in throat. First sound: ghrrru. So: Ghru.'), T('Fez o som para mim, duas vezes, do fundo da garganta, muito satisfeito.', 'He made the sound for me, twice, from the back of his throat, very pleased with it.')] },
-          { id: 'maior', tom: 'curiosidade', txt: T('“Quem foi o maior, da última vez?”', '“Who was the greatest, the last time?”'),
+          { id: 'maior', tom: 'curiosidade', txt: T('“Quem foi o maior, da última vez?”', '“Who was the Biggest, the last time?”'),
             resposta: [T('— Ninguém saber. Ele vir quando o dia ser comido, ele ir. Não morrer. Só ir. Talvez voltar. Talvez Ghru comer esta raiz e morrer. Quem saber.', '— Nobody know. He come when the day be eaten, he go. Not die. Just go. Maybe come back. Maybe Ghru eat this root and die. Who know.')] },
           { id: 'deixar', tom: 'frieza', txt: T('Deixá-lo com a raiz.', 'Leave him to his root.'),
             resposta: [T('Ele não levantou os olhos. Quando olhei para trás, ainda falava da raiz, para o vento.', 'He did not look up. When I looked back, he was still talking about the root, to the wind.')] },
@@ -985,6 +997,7 @@ window.LIVRO = {
         T('Vieram sem serem chamados. Os sobreviventes dos poços, os feridos e os ilesos, atravessaram a areia de um em um, de dois em dois, e ficaram em volta de nós, de Shaa e de mim, até virarem uma parede, cem de fundura, e nenhuma luz passava por ela além da que vinha de cima.', 'They came without being called. The survivors of the wells, the wounded and the unhurt, came across the sand in ones and twos and stood around us, around Shaa and me, until there was a wall of them, a hundred deep, and no light came through it but what came from above.'),
         T('Ninguém falou. Eu nunca tinha ouvido cem Grakh juntos sem fazer som nenhum.', 'Nobody spoke. I had never heard a hundred Grakh together make no sound at all.'),
         T('O dia tinha sido comido. Todos tinham ouvido isso cem vezes, da boca dos velhos, com uma risada. Agora estavam em roda em volta de uma mulher morrendo cuja barriga ainda se mexia, e ninguém ria.', 'The day had been eaten. They had all heard it said a hundred times, by the old, with a laugh. Now they stood in a ring around a dying woman whose belly was still moving, and nobody was laughing.'),
+        T('Shaa abriu os olhos e me achou na roda. Tentou rir, e saiu só o ar entre os dentes grandes.', 'Shaa opened her eyes and found me in the ring. She tried to laugh, and only air came out between the big teeth.'),
         se((st) => !!st.f.mostrou_luz, T('Shaa achou o meu pulso na areia e o puxou, fraca, para o mesmo lugar onde o tinha puxado na véspera.', 'Shaa found my wrist on the sand and pulled it, weakly, to the same place she had pulled it the day before.')),
       ] },
 
@@ -1001,6 +1014,7 @@ window.LIVRO = {
             : T('— Seja lá o que você for. Agora.', '— Whatever it is you are. Now.')),
         T('Ela não terminou o que vinha depois disso. A boca ficou aberta um instante, e fechou.', 'She did not finish whatever came after that. Her mouth stayed open a moment, and closed.'),
         T('Os Grakh não pedem. Pegam, trocam ou morrem sem.', 'The Grakh do not ask. They take, they trade, or they die without.'),
+        T('Os meus pés já tinham virado para a Laje, por cem anos de costume. Enterrei os dois na areia até o tornozelo e fiquei.', 'My feet had already turned toward the slab, from a hundred years of habit. I buried them both in the sand to the ankle, and stayed.'),
       ],
       escolha: { id: 'pedido', pergunta: T('Responder a Hessa:', 'Answer Hessa:'), opcoes: [
         { id: 'parte', tom: 'ironia', hessa: 1, txt: T('“Você já pôs a sua parte no couro.”', '“You have already put your part on the hide.”'),
@@ -1072,7 +1086,7 @@ window.LIVRO = {
 
     { id: 'd06', zona: 'roda', fundo: { img: IMG('maos-hessa'), kb: 'in', dim: .38, foco: '55% 50%', lado: 'dir', clima: 'brasas' },
       narracao: 'assets/audio/voz/d06-som.mp3', narracaoLang: 'en',
-      sons: [{ fn: (A) => { A.kronk(); document.body.classList.remove('impacto'); void document.body.offsetWidth; document.body.classList.add('impacto'); }, p: 1, fim: true }, { p: 4, fim: true, fn: (A) => A.sfx('choro-cria', .8, () => { A.tone(220, .9, 'sawtooth', .05, 0, .7); A.tone(180, 1.2, 'sawtooth', .04, .5, .6); }) }],
+      sons: [{ p: 0, fn: silencioNoParto }, { fn: (A) => { A.kronk(); document.body.classList.remove('impacto'); void document.body.offsetWidth; document.body.classList.add('impacto'); }, p: 1, fim: true }, { p: 4, fim: true, fn: (A) => A.sfx('choro-cria', .8, () => { A.tone(220, .9, 'sawtooth', .05, 0, .7); A.tone(180, 1.2, 'sawtooth', .04, .5, .6); }) }],
       texto: [
         T('Vou contar uma vez, do jeito que foi.', 'I will tell it once, as it was.'),
         T('Houve um som. Primeiro um estalo, seco e curto, como madeira verde, como cartilagem cedendo. Depois um baque, grave e molhado, de alguma coisa pesada se soltando para dentro de mãos que estavam prontas para ela.', 'There was a sound. First a crack, dry and short, like green wood, like cartilage giving way. Then a thud, low and wet, of something heavy coming free into hands that were ready for it.'),
@@ -1083,9 +1097,8 @@ window.LIVRO = {
       ] },
 
     { id: 'd07', zona: 'roda',
-      pensa: [{ id: 'maior', voz: 'p-maior', luzMin: 60, atraso: 24000, luz: 3, tomSeguir: 'ternura', t: T('Maior.', 'Greatest.'),
-        mais: T('Uma vez me deram uma palavra assim, e uma canção para carregá-la. Que sirva melhor nele.', 'Once they gave me a word like that, and a song to carry it. May it fit him better.') }], fundo: { img: IMG('recem-nascido'), kb: 'out', dim: .4, foco: '60% 50%', lado: 'dir', clima: 'brasas' },
-      sons: [{ p: 4, fim: true, fn: rodaDizONome, se: (st) => !shaaViva(st) }, { p: 5, fim: true, fn: rodaDizONome, se: shaaViva }, { voz: 'd07-pergunta', p: -1 }],
+      fundo: { img: IMG('recem-nascido'), kb: 'out', dim: .4, foco: '60% 50%', lado: 'dir', clima: 'brasas' },
+      sons: [{ p: 3, se: (st) => !shaaViva(st), fn: (A) => { A.abafa(true); setTimeout(() => { A.abafa(false); A.duck(!!A.narr); }, 3800); } }, { p: 4, fim: true, fn: rodaDizONome, se: (st) => !shaaViva(st) }, { p: 5, fim: true, fn: rodaDizONome, se: shaaViva }, { voz: 'd07-pergunta', p: -1 }],
       texto: [
         (st) => (shaaViva(st) ? T('Shaa ainda estava ali. O coração lento batia debaixo da minha outra mão, fraco, mas no mesmo lugar. Hessa deitou a cria na dobra do braço dela, e Shaa olhou para ela, de cima a baixo, sem pressa.', 'Shaa was still there. The slow heart was beating under my other hand, weak, but in the same place. Hessa laid the child in the crook of her arm, and Shaa looked it over from top to bottom, taking her time.')
           : parto(st) === 'dois' ? T('Shaa ainda estava ali. Eu a tinha segurado até ali. Ela estendeu a mão, e Hessa deitou a cria na dobra do braço dela, e Shaa olhou para ela, de cima a baixo, sem pressa.', 'Shaa was still there. I had held her that long. She put out a hand, and Hessa laid the child in the crook of her arm, and Shaa looked it over from top to bottom, taking her time.')
@@ -1098,7 +1111,8 @@ window.LIVRO = {
         se((st) => armadilha(st) === 'frio' && !shaaViva(st), T('Contei a respiração dela até não haver mais nenhuma, como uma vez contei na beira de uma cova na neve. É a única reza que sei.', 'I counted her breaths until there were none, as I once counted at the edge of a pit in the snow. It is the only prayer I know.')),
         T('A roda disse o nome. Um por um, baixo, de dentro para fora. Kronk. Kronk. Kronk.', 'The ring said the name. One by one, low, from the inside out. Kronk. Kronk. Kronk.'),
         T('E Ghru, junto do meu ombro, sem riso nenhum:', 'And Ghru, at my shoulder, with no laugh anywhere in him:'),
-        T('— Dia ser comido. Maior nascer.', '— Day be eaten. Greatest be born.'),
+        T('— Dia ser comido. Maior nascer.', '— Day be eaten. Biggest be born.'),
+        T('Uma vez me deram uma palavra assim, e uma canção para carregá-la. Que sirva melhor nele.', 'Once they gave me a word like that, and a song to carry it. May it fit him better.'),   // era a pensa (Luz ≥ 60): agora para todos
         T('Eu sabia o que tinha comido o dia. Uma pedra no céu passando na frente de um fogo no céu, como faz desde antes de existirem Grakh para dar nome a isso. Eu sabia tudo isso. O que eu não sabia era o que aquilo significava, e eu era o único naquela roda que achava que essas eram duas perguntas diferentes.', 'I knew what had eaten the day. A stone in the sky crossing in front of a fire in the sky, as it has done since before there were Grakh to name it. I knew all of that. What I did not know was what it meant, and I was the only one in that circle who thought those were two different questions.'),
       ] },
 
@@ -1127,6 +1141,7 @@ window.LIVRO = {
         T('Os Tacets seguem a luz. Não importa no acampamento de quem ela esteja. Se eu ficasse, eles entrariam na Pira no compasso de três, e a Pira os receberia com lanças, e bronze não se incomoda muito com lanças.', 'The Tacets follow the light. Whose camp it is standing in makes no difference. If I stayed, they would walk into the Pyre in their count of three, and the Pyre would meet them with spears, and bronze does not much mind spears.'),
         T('Então eu iria. Desta vez não para longe deles. À frente deles. Aceso.', 'So I would go. Not away from them, this time. Ahead of them. Lit.'),
         se((st) => (st.tacetsCedo || 0) - (st.f.tacets_eclipse ? 1 : 0) - (st.f.tacets_noite ? 1 : 0) >= 1, T('Com o tanto que eu tinha arrancado de mim por Shaa e pela cria, eles viriam depressa, e eu teria de levá-los longe.', 'With as much as I had pulled out of myself for Shaa and the child, they would be coming fast, and I would have to take them far.')),
+        T('Eu sempre soube fugir. Nunca tinha deixado atrás de mim nada que valesse a fuga. Agora havia, e ainda não tinha parado de urrar.', 'I have always known how to run. I had never left anything behind me worth the running. Now there was, and it had not stopped roaring yet.'),
       ] },
 
     // antes de ir: os feridos nos poços. A graxa que sobrou decide Tukk e o braço de Hessa
@@ -1231,7 +1246,7 @@ window.LIVRO = {
         { id: 'escrever', tom: 'curiosidade', flag: 'escreveu', voz: 'e04-diario', vozAtraso: 1200, txt: T('Escrever o dia.', 'Write the day down.'),
           resultado: [
             T('Escrevi de pé, com a luz ainda nas mãos, o que fazia a tinta parecer ouro:', 'I wrote it standing up, with the light still in my hands, which made the ink look like gold:'),
-            T('“Décima segunda página. O dia foi comido e devolvido poucos minutos depois, como os dias costumam ser. Uma criança nasceu no escuro dele e recebeu o nome do seu primeiro som. Vão dizer que o maior chegou. Eu só sei que um coração pequeno batia rápido debaixo das minhas mãos e que deixei que ele fizesse barulho. Parto esta noite. Pela primeira vez, parto antes.”', '“Twelfth page. The day was eaten and given back a few minutes later, as days usually are. A child was born in the dark of it and named for his first sound. They will say the greatest has come. I only know that a small heart beat fast under my hands, and that I let it be loud. I leave tonight. For once, I leave first.”'),
+            T('“Décima segunda página. O dia foi comido e devolvido poucos minutos depois, como os dias costumam ser. Uma criança nasceu no escuro dele e recebeu o nome do seu primeiro som. Vão dizer que o maior chegou. Eu só sei que um coração pequeno batia rápido debaixo das minhas mãos e que deixei que ele fizesse barulho. Parto esta noite. Pela primeira vez, parto antes.”', '“Twelfth page. The day was eaten and given back a few minutes later, as days usually are. A child was born in the dark of it and named for his first sound. They will say the Biggest has come. I only know that a small heart beat fast under my hands, and that I let it be loud. I leave tonight. For once, I leave first.”'),
           ] },
         { id: 'branco', tom: 'frieza', txt: T('Deixar a página em branco.', 'Leave the page blank.'),
           resultado: [T('Deixei a página em branco. Há dias que não precisam de ajuda para serem lembrados.', 'I left the page blank. Some days need no help being remembered.')] },
