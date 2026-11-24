@@ -489,12 +489,12 @@ window.LIVRO = {
     cantarT: T('Cantar', 'Sing'),
     // o louvor do Cap. I: as estrofes aparecem enquanto Aheryn canta (a língua morta e a tradução)
     letra: [
-      ['Sæl’orin vethas, dumael corvethune', T('luz que caminha, sob o peso do silêncio', 'light that walks beneath the weight of silence')],
-      ['Yr’onai selu, tharennis vael-korei', T('nós fomos o nome, agora somos a névoa', 'we were the name, now we are the mist')],
-      ['Aeth-vorunda, sæl’aeth mor’ilenne', T('ele viu mais longe, ele voltou inteiro', 'he saw farther, he came back whole')],
-      ['Dumael, dumael, corvethune sæl’orin', T('silêncio, silêncio, sob o peso da luz', 'silence, silence, beneath the weight of light')],
-      ['Yr’onai selu, thariel, thariel', T('nós fomos o nome, chorai, chorai', 'we were the name, weep, weep')],
-      ['Vael-korei sæl’aeth, mor’ilenne vorunda', T('a névoa é luz, o inteiro é distância', 'the mist is light, the whole is distance')],
+      ['Sæl’orin vethas, dumael corvethune', T('a luz do saber brilha sob o escuro', 'the light of knowing shines beneath the dark')],
+      ['Yr’onai selu, tharennis vael-korei', T('nós, os perdidos, achamos o caminho', 'we, the lost, have found the way')],
+      ['Aeth-vorunda, sæl’aeth mor’ilenne', T('ele viu mais longe, e a luz dele subiu', 'he saw farther, and his light rose')],
+      ['Dumael, dumael, corvethune sæl’orin', T('escuro, escuro, e sob ele a luz do saber', 'dark, dark, and beneath it the light of knowing')],
+      ['Yr’onai selu, thariel, thariel', T('nós, os perdidos: brilhai, brilhai', 'we, the lost: shine, shine')],
+      ['Vael-korei sæl’aeth, mor’ilenne vorunda', T('o caminho é a luz dele, que subiu até o longe', 'the way is his light, risen to the far place')],
     ],
     irT: T('Seguir em frente', 'Walk on'),
     oesteT: T('Areia aberta', 'Open sand'),
@@ -667,7 +667,8 @@ window.LIVRO = {
         T('Só Shaa veio. Atravessou a areia devagar, uma mão embaixo da barriga, e já vinha rindo antes de chegar, as tranças batendo nas costas. Os dentes de baixo eram grandes demais para a boca, e quando ela ria apareciam todos. A maioria dos Grakh não se aproxima de mim. Shaa sentou tão perto que nossos joelhos quase se tocaram.', 'Only Shaa came. She crossed the sand slowly, one hand under her belly, and she was laughing before she reached me, her braids slapping against her back. Her lower teeth were too big for her mouth, and when she laughed they all showed. Most of the Grakh do not come near me. Shaa sat down so close our knees almost touched.'),
         se(quieto, T('Não me afastei.', 'I did not move away.')),
         se(medido, T('Com ela ali, a minha cabeça ficou quieta.', 'With her there, my head went quiet.')),
-        se(aceso, T('Com ela tão perto, a cabeça parou de fazer contas. Os Grakh não ligam para o que eu sou, e isso me descansa mais do que o vinho.', 'With her that close, my head stopped doing sums. The Grakh do not care what I am, and that rests me more than the wine does.')),
+        se(aceso, T('Com ela tão perto, a cabeça parou de fazer contas.', 'With her that close, my head stopped doing sums.')),
+        T('Os Grakh não ligam para o que eu sou, e isso me descansa mais do que o vinho.', 'The Grakh do not care what I am, and that rests me more than the wine does.'), // eco da p03 do Cap. I (v37): para todos
         T('— Shaa ter dor. Aqui. E aqui. Cria chutar costas. Chutar, chutar, chutar.', '— Shaa have pain. Here. And here. Baby kick the back. Kick, kick, kick.'),
         T('Não trazia nada nas mãos. Olhou para elas como se isso a surpreendesse e então tirou do pescoço o cordão: um único dente, maior que o meu dedo.', 'She had nothing in her hands. She looked at them as if this surprised her, and then took the cord from around her neck: a single tooth, longer than my finger.'),
         T('— Shaa matar sozinha. Primeira caçada. Dente grande.', '— Shaa kill alone. First hunt. Big tooth.'),
@@ -764,8 +765,8 @@ window.LIVRO = {
               resposta: [T('Ela não respondeu. Olhou os meus potes, depois para mim, e cuspiu na areia.', 'She did not answer. She looked at my pots, then at me, and spat on the sand.')] },
             { id: 'ervas', luzMax: 45, travaAcesaTxt: T('As mãos estão acesas demais para mentir.', 'My hands are too lit to lie.'), tom: 'frieza', hessa: -1, aviso: T('Hessa vai lembrar disso.', 'Hessa will remember that.'), flag: 'mentiuErvas', txt: T('“São só ervas.”', '“It is only herbs.”'),
               resposta: [T('— Os Queimados passavam unguento nas minhas costas depois do chicote. Também diziam que era só erva.', '— The Burned rubbed ointment into my back after the whip. They also said it was only herbs.')] },
-            { id: 'sinal', se: (st) => (c1(st).aug || 0) >= 1, tom: 'curiosidade', hessa: 1, aviso: T('Hessa vai lembrar disso.', 'Hessa will remember that.'), txt: T('Fazer o sinal de troca que os Aug me ensinaram.', 'Make the sign of exchange the Aug taught me.'),
-              resposta: [T('Os olhos dela foram para a minha mão e ficaram ali um instante a mais do que precisavam. A mão na maça desceu para junto do corpo.', 'Her eyes went to my hand and stayed there a moment longer than they needed to. The hand on the mace came down to her side.')] },
+            { id: 'sinal', se: (st) => (c1(st).aug || 0) >= 1, tom: 'curiosidade', hessa: 1, aviso: T('Hessa vai lembrar disso.', 'Hessa will remember that.'), txt: T('Pôr um pote de graxa na areia entre nós e esperar.', 'Set a pot of grease on the sand between us and wait.'),
+              resposta: [T('Era assim que eu trocava com os Aug: uma coisa no chão, e a espera. Hessa olhou o pote um instante a mais do que precisava. A mão na maça desceu para junto do corpo.', 'It was how I traded with the Aug: a thing on the ground, and the wait. Hessa looked at the pot a moment longer than she needed to. The hand on the mace came down to her side.')] },
             { id: 'lingua', luzMin: 60, tom: 'curiosidade', txt: T('“Quem te ensinou a língua inteira também te ensinou a desconfiar dela.”', '“Whoever taught you the whole language also taught you to distrust it.”'),
               resposta: [T('Ela passou o polegar pelas três linhas do ombro e não respondeu.', 'She ran her thumb along the three lines on her shoulder and did not answer.')] },
             { id: 'baixar', tom: 'frieza', hessa: 1, txt: T('Baixar os olhos e ir embora.', 'Lower my eyes and go.'),
@@ -992,7 +993,7 @@ window.LIVRO = {
       texto: [
         T('A parede se abriu, e Hessa passou por ela.', 'The wall opened, and Hessa came through it.'),
         T('Ela parou onde sempre parava. Então deu o último passo, o que nunca tinha dado, e deixou a maça escorregar das costas para a areia, aos meus pés.', 'She stopped where she always stopped. Then she took the last step, the one she had never taken, and let the mace slide off her back onto the sand at my feet.'),
-        se((st) => (c1(st).aug || 0) >= 1, T('O último que me acompanhou além da distância de sempre era do tamanho de uma pedra, e também não disse nada.', 'The last one who walked with me past the usual distance was the size of a boulder, and he did not say anything either.')),
+        se((st) => (c1(st).aug || 0) >= 1, T('O último que me acompanhou além da distância de sempre era do tamanho de uma pedra, e me pediu que voltasse.', 'The last one who walked with me past the usual distance was the size of a boulder, and he asked me to come back.')),
         se((st) => !st.f.cuidou_hessa, T('O braço ainda sangrava. Ela não tinha amarrado.', 'Her arm was still bleeding. She had not tied it.')),
         T('Era a mão que sempre estivera pousada naquele cabo. Agora, vazia, fechou, e abriu.', 'It was the hand that had always rested on that haft. Now, empty, it closed, and opened.'),
         (st) => (st.hessa >= 1 ? T('— O que você guarda debaixo do pano. Use. Estou pedindo.', '— What you keep under the cloth. Use it. I am asking.')
@@ -1180,7 +1181,9 @@ window.LIVRO = {
           { id: 'cuide', tom: 'ternura', txt: T('“Cuide dele.”', '“Look after him.”'),
             resposta: [T('Ela olhou para a cria, depois para mim, e ajeitou a pele em volta dele.', 'She looked at the child, then at me, and tucked the hide closer around him.')] },
           { id: 'nome', tom: ['ternura', 'curiosidade'], flag: 'disse_nome', txt: T('“Meu nome é Aheryn.”', '“My name is Aheryn.”'),
-            resposta: [T('— Aheryn.', '— Aheryn.'), T('Ela disse devagar, as duas sílabas separadas. Ninguém dizia esse nome em voz alta desde a Borda do Mundo, nem eu.', 'She said it slowly, the two syllables apart. No one had said that name aloud since the Edge of the World, not even me.')] },
+            resposta: (st) => [T('— Aheryn.', '— Aheryn.'), c1(st).viuGromm
+              ? T('Ela o disse separando as duas sílabas. A última voz que o tinha dito foi a de Gromm, do fundo dos ossos, na Borda do Mundo.', 'She said it with the two syllables apart. The last voice to say it was Gromm’s, from deep in the bones, at the Edge of the World.')
+              : T('Ela o disse separando as duas sílabas. Ninguém dizia esse nome em voz alta desde a Borda do Mundo, nem eu.', 'She said it with the two syllables apart. No one had said that name aloud since the Edge of the World, not even me.')] },
           { id: 'lua', tom: ['ironia', 'curiosidade'], txt: T('“O que comeu o dia foi a lua. O sol sempre volta.”', '“What ate the day was the moon. The sun always comes back.”'),
             resposta: [T('— A lua. Vou contar ao Ghru. Ele não vai acreditar.', '— The moon. I will tell Ghru. He will not believe it.'), T('Ela não sorriu, mas quase.', 'She did not smile, but nearly.')] },
           { id: 'cala', silencio: true, tom: 'frieza',
@@ -1348,7 +1351,7 @@ window.LIVRO = {
     const ADEUS = { cuide: T('“Cuide dele.”', '“Look after him.”'), nome: T('“Meu nome é Aheryn.”', '“My name is Aheryn.”'), lua: T('“O que comeu o dia foi a lua.”', '“What ate the day was the moon.”'), cala: T('Silêncio', 'Silence') };
     const MENINO = { deixar: T('Deixou que ele seguisse', 'Let him follow'), estalar: T('Estalou a língua', 'Clicked your tongue'), encarar: T('Encarou até ele ir', 'Stared until he left') };
     const VERLUZ = { mostrar: T('Mostrou a luz a Shaa', 'Showed Shaa the light'), recusa: T('Recusou', 'Refused') };
-    const HESSA1 = { uteis: T('“Então somos úteis um ao outro.”', '“Then we are useful to each other.”'), ervas: T('“São só ervas.”', '“It is only herbs.”'), sinal: T('O sinal de troca do gelo', 'The exchange sign of the ice'), baixar: T('Baixou os olhos e foi embora', 'Lowered your eyes and went') };
+    const HESSA1 = { uteis: T('“Então somos úteis um ao outro.”', '“Then we are useful to each other.”'), ervas: T('“São só ervas.”', '“It is only herbs.”'), sinal: T('Pôs um pote na areia entre os dois, e esperou', 'Set a pot on the sand between you, and waited'), baixar: T('Baixou os olhos e foi embora', 'Lowered your eyes and went') };
     const OLHAR = { bandeira: T('A bandeira', 'The banner'), homem: T('O homem da frente', 'The man in front'), contar: T('Contou os estandartes', 'Counted the standards') };
     const CRIA = { tocar: T('Tocou o punho dele', 'Touched his fist'), naoTocar: T('Não tocou', 'Did not touch him'), pedra: T('Deixou a pedra na pele', 'Left the stone in the hide') };
     const linhas = [];
