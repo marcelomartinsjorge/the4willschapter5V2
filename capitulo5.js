@@ -671,6 +671,7 @@ window.LIVRO = {
       texto: [
         T('Meu ponto de troca é uma pedra chata na borda do acampamento e um couro que estendo em cima dela. Os Grakh não comerciam; me disseram isso no meu primeiro ano, com uma lança encostada no meu peito. Eles põem uma coisa ao lado de outra, olham para as duas e decidem.', 'My place of trade is a flat stone at the edge of the camp, and a hide I spread over it. The Grakh do not trade; they told me so in my first year, with a spear against my chest. They put one thing down beside another, look at both, and decide.'),
         T('Naquele dia o couro ficou vazio. O que os Grakh tinham, guardavam para os poços.', 'That day the hide stayed empty. Whatever the Grakh had, they were keeping for the wells.'),
+        T('Uma mulher passou pela borda do acampamento e virou o rosto para longe da minha pedra. Faz isso desde a menina da febre.', 'A woman passed the edge of the camp and turned her face away from my stone. She has done it since the girl with the fever.'),
       ] },
 
     { id: 'a07', zona: 'acampamento', estado: 'companhia', fundo: { img: IMG('shaa'), kb: 'in', dim: .4, foco: '78% 40%', clima: 'poeira' }, capitular: true, bebe: true,
@@ -1032,6 +1033,7 @@ window.LIVRO = {
       sons: [{ voz: 'd03-pensar', p: 0 }],
       texto: [
         T('Para fazer o que ela pedia eu teria de pensar. Não os pensamentos pequenos que deixo passar em dia de chuva: tudo, de uma vez, como eu pensava antes, como fez o meu povo ser visto. E para pensar eu teria de parar de beber.', 'To do what she was asking I would have to think. Not the small thoughts I let through on rainy days: all of it, all at once, the way I used to think, the way that got my people seen. And to think, I would have to stop drinking.'),
+        T('Em algum lugar do fundo do mundo, três Tacets andavam cegos desde a Borda. Nunca precisaram de olhos para achar uma luz.', 'Somewhere at the bottom of the world, three Tacets had been walking blind since the Edge. They had never needed eyes to find a light.'),
         (st) => (st.cantil > 0 ? T('O odre de vinho de cacto pendia do meu quadril, como sempre. Ainda havia um pouco.', 'The skin of cactus wine hung at my hip, as always. There was some left.')
           : T('O odre de vinho de cacto pendia do meu quadril, vazio. Eu tinha cuidado disso mais cedo, um gole de cada vez.', 'The skin of cactus wine hung at my hip, empty. I had seen to that earlier, one swallow at a time.')),
       ],
