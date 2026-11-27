@@ -505,7 +505,8 @@ function parto(root, c) {
     };
     const novaRuna = () => {
       const k = TECLAS[Math.floor(Math.random() * TECLAS.length)];
-      const el = document.createElement('button'); el.type = 'button'; el.className = 'pt-runa'; el.textContent = k;
+      const el = document.createElement('button'); el.type = 'button'; el.className = 'pt-runa glifo'; el.setAttribute('aria-label', k);
+      el.innerHTML = `<img src="assets/images/glifos/glifo-${TECLAS.indexOf(k) + 1}.png" alt=""><small>${k}</small>`;   // v2611: um sinal Lúmae por tecla (a letra fica pequena, embaixo)
       el.style.left = (26 + Math.random() * 40) + '%'; el.style.top = (24 + Math.random() * 44) + '%'; el.style.setProperty('--v', vidaRuna + 's');
       const r = { k, el, t: t, fim: false };
       el.addEventListener('pointerdown', (ev) => { ev.stopPropagation(); ev.preventDefault(); acerta(r); }, true);
@@ -606,7 +607,7 @@ function parto(root, c) {
 function rastro(root, c) {
   const { tr, A, st, L } = c, cfg = L.rastro, R = cfg.regras;
   const luz0 = st.luz;
-  const cedo = Math.min(3, st.tacetsCedo || 0);
+  const cedo = Math.max(0, Math.min(3, (st.tacetsCedo || 0) + (st.tacetsEscuta || 0)));   // v2611: a escuta (O19) aproxima ou afasta os três
   return new Promise((resolve) => {
     root.classList.add('explorar', 'tabuleiro');
     const { caixa } = palco(root, 'assets/images/mapa-rastro.jpg', 1920 / 1080);
@@ -1038,5 +1039,69 @@ function bancada(root, c) {
   });
 }
 
-window.JOGOS5 = { ressaca, laje, bancada, troca, minutos, parto, rastro };
+
+// ================================================================== ESCUTA (Pensamento · ouvir pelo frio, onde não há frio) · v2611 (O19)
+// Segurar é se concentrar: a luz desce até os pés e o barulho em volta (os tambores dos mortos) baixa.
+// Só depois de concentrado ele ouve as batidas secas dos Tacets. Sem frio, a concentração demora; a pedra do Cap. I esfria o ar
+// e deixa tudo como no gelo. Quem contou o compasso no Cap. I lembra com o corpo (um pouco mais rápido); o vinho atrasa.
+function escuta(root, c) {
+  const { tr, A, st, L } = c, cfg = L.escuta;
+  const pedra = !!(st.c1 && st.c1.pedra), lembra = !!(st.c1 && st.c1.escolhas && st.c1.escolhas.escuta === 'contou');
+  let precisa = (pedra ? .5 : 2.6) - (lembra ? .5 : 0) + Math.min(1.5, (st.turvo || 0) * .35);
+  precisa = Math.max(.35, precisa);
+  return new Promise((resolve) => {
+    root.classList.add('escuta'); if (pedra) root.classList.add('pedra');
+    root.innerHTML = `<div class="es-geada"></div><div class="es-wrap"><p class="es-instr">${c.esc(tr(pedra ? cfg.instrucaoPedra : cfg.instrucao))}</p>
+      <button class="es-orb" aria-label="${c.esc(tr(cfg.botao))}"><i></i><span>${c.esc(tr(cfg.botao))}</span></button>
+      <p class="es-conta" aria-live="polite"></p><div class="es-res"></div></div>`;
+    const orb = root.querySelector('.es-orb'), conta = root.querySelector('.es-conta'), res = root.querySelector('.es-res');
+    const vei = document.getElementById('veias');
+    let segura = false, tocou = false, foco = 0, ouvidos = 0, fim = false, last = performance.now(), raf = 0, tambor = null;
+    const meus = []; const later = (fn, ms) => meus.push(setTimeout(fn, BOT() ? ms / 20 : ms));
+    if (A.ctx && A.on) A.loop('assets/audio/sfx/tambores-funebres.mp3', .55, 1.2).then((h) => { if (fim) A.stop(h, .3); else tambor = h; });
+    if (pedra && A.ctx && A.on) A.sfx('pedra-esfria', .6, () => A.geadaSom && A.geadaSom());
+    const set = (v) => { segura = v; root.classList.toggle('ouvindo', v); if (v) tocou = true; };
+    const passo = (forte) => {   // o passo seco de um Tacet, longe, debaixo da areia
+      if (!A.ctx || !A.on) return; const v = forte ? .07 : .006;
+      A.tone(118, .14, 'square', v * .5, 0, -.3); A.hiss(.09, 1700, 3, v, 0); A.tone(62, .25, 'sine', v * 1.2, 0, .4);
+    };
+    const anda = (now) => {
+      const dt = Math.min(.1, (now - last) / 1000); last = now;
+      foco = segura ? Math.min(1, foco + dt / precisa) : Math.max(0, foco - dt * 2.2);
+      orb.style.setProperty('--foco', foco.toFixed(3));
+      if (vei) vei.style.setProperty('--luz', Math.min(1, st.luz / 100 + foco * .35).toFixed(3));
+      if (foco >= 1 && !anda.ouviu && A.ctx && A.on) { anda.ouviu = true; A.sfx('tacets-areia', pedra ? .45 : .3); }   // o chão, de longe, quando ele chega à concentração
+      if (tambor && A.ctx) tambor.g.gain.setTargetAtTime(.55 * (1 - foco * (pedra ? .85 : .6)), A.ctx.currentTime, .15);
+      if (!fim) raf = requestAnimationFrame(anda);
+    };
+    raf = requestAnimationFrame(anda);
+    orb.addEventListener('pointerdown', (ev) => { if (fim) return; ev.preventDefault(); set(true); A.ctx && A.on && A.tone(330, .8, 'sine', .02, 0, -.5); });
+    ['pointerup', 'pointerleave', 'pointercancel'].forEach((ev) => orb.addEventListener(ev, () => set(false)));
+    orb.addEventListener('contextmenu', (ev) => ev.preventDefault());
+    orb.addEventListener('keydown', (ev) => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); set(!segura); } });
+    if (BOT()) set(true);
+    // quatro grupos de três, com pausa: ouvir seis batidas concentrado é contar
+    let t = 4200;
+    for (let g = 0; g < 4; g++) {
+      for (let k = 0; k < 3; k++) {
+        later(() => { const ouve = segura && foco >= 1; passo(ouve);
+          if (ouve) { ouvidos++; conta.textContent = '●'.repeat(((ouvidos - 1) % 3) + 1); root.classList.remove('pulso'); void root.offsetWidth; root.classList.add('pulso'); } }, t);
+        t += 540;
+      }
+      t += 1400 - 540;
+    }
+    later(() => {
+      fim = true; set(false); cancelAnimationFrame(raf); orb.disabled = true; root.classList.add('fim');
+      if (tambor) A.stop(tambor, 2); if (vei) vei.style.removeProperty('--luz');
+      const r = !tocou ? 'nada' : ouvidos >= 6 ? 'contou' : 'cedo';
+      c.registrar('escuta5', r);
+      conta.textContent = '';
+      res.innerHTML = `<p>${c.esc(tr(cfg.fim[r]))}</p><button class="cta">${c.esc(tr(cfg.fechaBtn))}</button>`;
+      const btn = res.querySelector('button'); btn.onclick = () => { meus.forEach(clearTimeout); resolve({ r }); };
+      if (BOT()) btn.click();
+    }, t + 700);
+  });
+}
+
+window.JOGOS5 = { ressaca, laje, bancada, troca, minutos, parto, rastro, escuta };
 })();

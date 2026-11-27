@@ -616,3 +616,79 @@ body.impacto #bg { animation: impacto 1.8s ease-out; }
 .tb-peca.tacet.perdido b { background: #e0553f; color: #fff; }
 #mg.tabuleiro.canta .tb-peca.tacet img { border-color: #ffe2a0; }
 @media (max-width: 820px) { .tb-peca { width: 34px; height: 34px; } .tb-peca.tacet { width: 28px; height: 28px; } .tb-casa { width: 14px; height: 14px; } .tb-casa.pira { width: 26px; height: 26px; } .tb-casa.meta { width: 22px; height: 22px; } }
+
+/* ================================================================ v2611 · efeitos de tela (portados do Cap. I v38 e próprios do V) */
+/* geada: no Cap. V só aparece pela pedra (escuta) ou começa e desmancha (d04: não há frio a quem pedir) */
+#geada { position: fixed; inset: 0; pointer-events: none; z-index: 3; opacity: 0; transition: opacity 1.6s ease;
+  background:
+    radial-gradient(ellipse 115% 85% at 50% 50%, rgba(210,230,255,0) 48%, rgba(215,233,255,.5) 74%, rgba(245,250,255,.88) 100%),
+    radial-gradient(circle at 8% 12%, rgba(255,255,255,.35) 0 1.5%, transparent 9%), radial-gradient(circle at 93% 20%, rgba(255,255,255,.3) 0 1%, transparent 8%),
+    radial-gradient(circle at 12% 88%, rgba(255,255,255,.3) 0 1.2%, transparent 10%), radial-gradient(circle at 90% 85%, rgba(255,255,255,.35) 0 1.5%, transparent 9%);
+  -webkit-mask: radial-gradient(ellipse 115% 85% at 50% 50%, transparent 44%, #000 80%); mask: radial-gradient(ellipse 115% 85% at 50% 50%, transparent 44%, #000 80%); }
+body.geada #geada { opacity: 1; }
+body.geada-some #geada { opacity: 0; transition: opacity .5s ease; }
+body.geada-desmancha #geada { animation: geadaDesmancha 2.4s ease-out both; }
+@keyframes geadaDesmancha { 0% { opacity: 0; filter: none; } 30% { opacity: .55; filter: none; } 100% { opacity: 0; filter: sepia(1) saturate(2) hue-rotate(-12deg) blur(6px); } }
+
+/* golpe: impacto curto */
+body.golpe #page, body.golpe .bgl { animation: golpeT .4s cubic-bezier(.3,.7,.4,1); }
+@keyframes golpeT { 0%,100% { translate: 0 0; } 15% { translate: -5px 3px; } 35% { translate: 4px -2px; } 60% { translate: -2px 1px; } }
+
+/* o odre derramado: a tela fica nítida de uma vez */
+body.clareia #turvo { transition: opacity .25s ease, backdrop-filter .25s ease, -webkit-backdrop-filter .25s ease; }
+body.clareia #bg { animation: clareia 1.3s ease-out; }
+@keyframes clareia { 0% { filter: brightness(1.25) contrast(1.15); } 100% { filter: none; } }
+
+/* o dia comido: a imagem esfria e escurece; só as veias continuam claras */
+#bg { transition: filter 6s ease; }
+body[data-zona="eclipse"] #bg { filter: saturate(.25) brightness(.55) hue-rotate(-10deg) contrast(1.15); }
+body[data-zona="eclipse"]::before { content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 1; background: radial-gradient(ellipse at 50% 40%, transparent 30%, rgba(0,0,8,.65) 100%); animation: escurece 6s ease both; }
+@keyframes escurece { from { opacity: 0; } to { opacity: 1; } }
+body[data-zona="eclipse"] #veias { filter: brightness(1.7) saturate(1.2); }
+body.sol-volta::after { content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 4; background: linear-gradient(100deg, rgba(255,255,255,0) 0%, rgba(255,250,235,.85) 48%, rgba(255,255,255,0) 60%); animation: lamina 1.6s ease-out both; }
+@keyframes lamina { 0% { transform: translateX(-80%); opacity: 1; } 100% { transform: translateX(80%); opacity: 0; } }
+
+/* o hino no deserto: sem frestas, o dourado sobe de baixo */
+body.dourado::after { content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 1; mix-blend-mode: screen;
+  background: linear-gradient(0deg, rgba(255,196,100,.55) 0%, rgba(255,205,120,.18) 45%, rgba(255,200,110,0) 80%); animation: dourado 4s ease-out both, douradoV 9s 4s ease-in-out infinite alternate; }
+@keyframes dourado { from { opacity: 0; transform: translateY(30%); } to { opacity: 1; transform: none; } }
+@keyframes douradoV { 0% { opacity: 1; } 100% { opacity: .7; } }
+
+/* opção que se escolhe segurando (a mão que sobe) */
+.opt.segurar { position: relative; overflow: hidden; touch-action: none; user-select: none; -webkit-user-select: none; }
+.opt.segurar::before { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(255,205,120,.35), rgba(255,205,120,.12)); transform-origin: left; transform: scaleX(var(--k, 0)); pointer-events: none; }
+.opt.segurar.passou::before { background: linear-gradient(90deg, rgba(255,225,160,.6), rgba(255,215,140,.3)); }
+.opt.segurar.com-marca::after { content: ''; position: absolute; top: 0; bottom: 0; left: calc(var(--marca, 0) * 100%); width: 1px; background: rgba(255,212,138,.45); pointer-events: none; }
+.opt .seg-dica { display: block; font-size: .72em; opacity: .55; letter-spacing: .12em; text-transform: uppercase; margin-top: .2em; }
+
+/* minijogo: ouvir pelo frio, no deserto */
+#mg.escuta { background: radial-gradient(ellipse at 50% 60%, #120d08 0%, #040302 80%); display: flex; align-items: center; justify-content: center; }
+#mg.escuta.pedra { background: radial-gradient(ellipse at 50% 60%, #0b0f16 0%, #030407 80%); }
+#mg.escuta .es-wrap { text-align: center; max-width: 34rem; padding: 2rem 1.4rem; }
+#mg.escuta .es-instr { opacity: .7; font-style: italic; margin-bottom: 2.2rem; }
+#mg.escuta .es-orb { width: 9.5rem; height: 9.5rem; border-radius: 50%; border: 1px solid rgba(255,212,138,.35); background: radial-gradient(circle, rgba(255,212,138,.08), rgba(0,0,0,0) 70%);
+  color: #e9dcc4; display: inline-flex; align-items: center; justify-content: center; position: relative; touch-action: none; user-select: none; -webkit-user-select: none; cursor: pointer; transition: box-shadow .6s, border-color .6s; font: inherit; }
+#mg.escuta .es-orb i { position: absolute; inset: -1px; border-radius: 50%; border: 2px solid rgba(255,212,138,.8); clip-path: inset(calc((1 - var(--foco, 0)) * 100%) 0 0 0); transition: clip-path .15s linear; }
+#mg.escuta.ouvindo .es-orb { border-color: rgba(255,212,138,.9); box-shadow: 0 0 60px rgba(255,200,110,.3) inset, 0 0 40px rgba(255,200,110,.2); }
+#mg.escuta.pedra.ouvindo .es-orb { border-color: rgba(200,225,255,.9); box-shadow: 0 0 60px rgba(170,200,255,.3) inset, 0 0 40px rgba(170,200,255,.2); }
+#mg.escuta .es-conta { min-height: 1.6em; margin-top: 1.4rem; letter-spacing: .6em; color: #ffd48a; font-size: 1.1rem; }
+#mg.escuta .es-res p { margin: 1rem 0 1.4rem; line-height: 1.55; }
+#mg.escuta.pulso::before { content: ''; position: fixed; inset: 0; pointer-events: none; box-shadow: inset 0 0 90px rgba(255,212,138,.35); animation: esPulso .45s ease-out both; }
+#mg.escuta.pedra.pulso::before { box-shadow: inset 0 0 120px rgba(190,215,255,.4); }
+@keyframes esPulso { from { opacity: 1; } to { opacity: 0; } }
+#mg.escuta.fim .es-orb { opacity: .25; }
+#mg.escuta .es-geada { position: fixed; inset: 0; pointer-events: none; opacity: 0; transition: opacity 1.8s ease;
+  background: radial-gradient(ellipse 115% 85% at 50% 50%, rgba(210,230,255,0) 50%, rgba(215,233,255,.4) 76%, rgba(245,250,255,.8) 100%); }
+#mg.escuta.pedra .es-geada { opacity: 1; }
+
+/* as dores do parto: sinais Lúmae no lugar das letras (a tecla fica pequena embaixo) */
+.pt-runa.glifo { padding: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 0; }
+.pt-runa.glifo img { width: 46px; height: 46px; object-fit: contain; filter: drop-shadow(0 0 8px rgba(255,200,110,.7)); pointer-events: none; }
+.pt-runa.glifo small { position: absolute; bottom: -1.3rem; font-size: .7rem; color: #f1d9a8; opacity: .6; letter-spacing: .1em; margin-top: .1rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  body.golpe #page, body.golpe .bgl { animation: none; }
+  body.dourado::after, body.sol-volta::after, body[data-zona="eclipse"]::before { animation: none; }
+  body.geada-desmancha #geada { animation-duration: .01s; }
+  #bg { transition: none; }
+}

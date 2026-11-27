@@ -126,6 +126,8 @@ const A = {
   // os dois corações do parto (se os arquivos não vierem, sintetizados)
   batida(forca = .5, grave = false) { if (!this.ctx) return; const v = .1 + forca * .3, f = grave ? 46 : 70; this.tone(f, .22, 'sine', v, 0, .6); this.hiss(.16, grave ? 80 : 120, .7, v * .5, 0, 'lowpass'); this.tone(f * .9, .2, 'sine', v * .7, .16, .6); },
   // o som do nome: estalo seco + baque molhado
+  geadaSom(curta) { [2637, 3136, 3951].forEach((f, k) => this.tone(f, curta ? .5 : 1.6, 'sine', .008, k * (curta ? .08 : .18), 0)); this.hiss(curta ? .6 : 1.8, 5200, 2, .05, 0); },
+  golpeSom(v = 1) { this.tone(46, .9, 'sine', .12 * v, 0, .6); this.hiss(.4, 300, .8, .5 * v, 0, 'lowpass'); },
   kronk() { this.sfx('kronk', .95, () => { this.hiss(.09, 2600, 2.2, .55); this.hiss(.07, 1400, 1.5, .4, .03); this.tone(62, .55, 'sine', .55, .2, .55); this.hiss(.4, 220, .8, .35, .2, 'lowpass'); }); },
 };
 
@@ -524,7 +526,7 @@ function agendaItens(itens, els, base = 0) {
 function agendaPortoes(itens, els, aoAcabar) {
   const n = els.length, idx = (it) => (it.p < 0 ? Math.max(0, n + it.p) : Math.min(n - 1, it.p));
   const lista = (itens || []).filter((it) => !(it.se && !it.se(st)));
-  const meio = lista.filter((it) => !it.fim && it.p != null && idx(it) > 0);
+  const meio = lista.filter((it) => !it.fim && !it.semPorta && it.p != null && idx(it) > 0);
   agendaItens(lista.filter((it) => !meio.includes(it)), els);
   const gates = [...new Set(meio.map(idx))].sort((x, y) => x - y);
   if (!gates.length) return false;
@@ -546,6 +548,22 @@ function agendaPortoes(itens, els, aoAcabar) {
   return true;
 }
 
+// ---------------------------------------------------------------- efeitos de tela (v2611, portados do Cap. I v38)
+// geada: o frio nas bordas (vem, some, desmancha: no deserto ela começa e não fecha) · golpe: impacto curto · flash: uma classe por um instante
+function geada(modo, ms) {
+  const cl = document.body.classList; clearTimeout(geada.t);
+  if (modo === 'vem') { cl.remove('geada-some', 'geada-desmancha'); cl.add('geada'); A.ctx && A.on && A.geadaSom(); if (ms) geada.t = setTimeout(() => geada('some'), ms); }
+  else if (modo === 'desmancha') { cl.remove('geada', 'geada-some'); void document.body.offsetWidth; cl.add('geada-desmancha'); A.ctx && A.on && A.geadaSom(true); geada.t = setTimeout(() => cl.remove('geada-desmancha'), 2600); }
+  else { if (!cl.contains('geada')) return; cl.add('geada-some'); geada.t = setTimeout(() => cl.remove('geada', 'geada-some'), 700); }
+}
+function golpe(v = 1) {
+  const cl = document.body.classList; cl.remove('golpe'); void document.body.offsetWidth; cl.add('golpe');
+  A.ctx && A.on && A.golpeSom(v); if (navigator.vibrate) try { navigator.vibrate(50); } catch (e) {}
+  setTimeout(() => cl.remove('golpe'), 420);
+}
+function flash(cls, ms = 1600) { const cl = document.body.classList; cl.remove(cls); void document.body.offsetWidth; cl.add(cls); setTimeout(() => cl.remove(cls), ms); }
+window.FX = { geada, golpe, flash, clareia: () => { st.turvo = 0; drawLuz(); flash('clareia', 1400); }, turvo: (n) => { st.turvo = Math.max(0, n); drawLuz(); } };
+
 function render(dir = 1) {
   clearTimers(); cuesPend = []; A.stopNarr(); linkUsados.clear();
   const p = P[st.i]; if (!p) return;
@@ -553,6 +571,8 @@ function render(dir = 1) {
   setFundo(resolveFundo(p));
   if (A.ctx) { A.setZone(p.zona); if (p.som && dir > 0) A.once(p.som, .55); }
   document.body.dataset.zona = p.zona;
+  document.body.classList.toggle('dourado', !!(p.dourado && p.dourado(st)));
+  if (!p.manterGeada) geada('some');
   { let k = st.i; while (k > 0 && !P[k].parte) k--; $('#parte').textContent = P[k].parte ? U('parte') + ' ' + P[k].parte : (U('prologo') || U('parte') + ' I'); }
   document.body.classList.remove('na-abertura'); escondeCoach(); { const hc = $('#hudCap'); if (hc) hc.hidden = true; }
   const vis = P.filter(visivel), n = vis.indexOf(p) + 1; $('#pnum').textContent = `${n}`;
@@ -643,6 +663,7 @@ function abreEscolha(p) {
   const livres = ops.filter((o) => !riscada(o)), presas = ops.filter(riscada);
   box.innerHTML = `<p class="eyebrow">${e.pergunta ? esc(tr(e.pergunta)) : U('oque')}</p>` + livres.map(optHTML).join('') + presas.map((o) => optHTML(o, 0)).join('');
   box.querySelectorAll('.opt:not(.riscada):not(.travada)').forEach((b) => b.onclick = () => escolher(p, b.dataset.id));
+  ops.filter((o) => o.segurar).forEach((o) => { const b = box.querySelector(`.opt[data-id="${o.id}"]`); if (b && !b.disabled) seguraOpcao(p, o, b); });
   // escolha com tempo (como o proibido do Cap. I): se ninguém decide, vale o padrão
   if (e.janela) {
     box.classList.add('urgente', 'sobPressao');
@@ -650,6 +671,24 @@ function abreEscolha(p) {
     A.tone(220, .6, 'triangle', .04); A.tone(165, .9, 'sine', .04, .2);
     later(() => { if (!st.escolhas[e.id]) escolher(p, e.padrao); }, e.janela * 1000 * (window.__LEITURA_K ? .05 : 1));
   }
+}
+// v2611: uma opção que só se escolhe segurando: a luz sobe enquanto o dedo fica. Soltar no meio é hesitar (e.aoHesitar, uma vez).
+// o.segurar.marca: o ponto em que a mão parou no Cap. I; passar dele toca um som e muda a cor da barra
+function seguraOpcao(p, o, b) {
+  const e = p.escolha;
+  b.onclick = null; b.classList.add('segurar'); b.insertAdjacentHTML('beforeend', `<small class="seg-dica">${esc(U('segure') || 'segure')}</small>`);
+  const vei = document.getElementById('veias'); let raf = 0, t0 = 0, passou = false; const DUR = o.segurar.ms || 1600, marca = (typeof o.segurar.marca === 'function' ? o.segurar.marca(st) : o.segurar.marca) || 0;
+  if (marca) { b.style.setProperty('--marca', marca); b.classList.add('com-marca'); }
+  const larga = () => { cancelAnimationFrame(raf); const k = parseFloat(b.style.getPropertyValue('--k') || '0'); b.style.setProperty('--k', '0'); b.classList.remove('passou'); passou = false; if (vei) vei.style.removeProperty('--luz');
+    if (k > .2 && e.aoHesitar && !st.f['_hesitou_' + e.id]) { st.f['_hesitou_' + e.id] = true; e.aoHesitar(st, (t) => appendParas([t])); } };
+  const anda = () => { const k = Math.min(1, (performance.now() - t0) / DUR); b.style.setProperty('--k', k.toFixed(3));
+    if (vei) vei.style.setProperty('--luz', Math.min(1, (st.luz / 100) + k).toFixed(3));
+    if (marca && !passou && k >= marca) { passou = true; b.classList.add('passou'); A.ctx && A.on && A.tone(784, .9, 'sine', .05); }
+    if (k >= 1) { if (vei) setTimeout(() => vei.style.removeProperty('--luz'), 900); return escolher(p, o.id); } raf = requestAnimationFrame(anda); };
+  b.addEventListener('pointerdown', (ev) => { if (st.escolhas[e.id]) return; ev.preventDefault(); t0 = performance.now(); A.ctx && A.on && A.tone(220, DUR / 1000, 'sawtooth', .03, 0, 2); raf = requestAnimationFrame(anda); });
+  ['pointerup', 'pointerleave', 'pointercancel'].forEach((ev) => b.addEventListener(ev, () => { if (!st.escolhas[e.id] && t0) larga(); }));
+  b.addEventListener('contextmenu', (ev) => ev.preventDefault());
+  b.addEventListener('keydown', (ev) => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); escolher(p, o.id); } });
 }
 function aplicar(o) {
   if (!o) return;
